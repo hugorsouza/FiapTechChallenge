@@ -1,4 +1,5 @@
 ﻿using Ecommerce.Application.DTO;
+using Ecommerce.Application.Model;
 using Ecommerce.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,9 +16,9 @@ namespace Ecommerce.API.Controller
         }
 
         [HttpPost("FazerPedido")]
-        public IActionResult FazerPedido(FazerPedidoDTO fazerPedidoDTO)
+        public IActionResult FazerPedido(FazerPedidoModel fazerPedidoModel)
         {
-            var retorno = _fazerPedidoService.FazerPedido(fazerPedidoDTO);
+            var retorno = _fazerPedidoService.FazerPedido(fazerPedidoModel);
             return Ok(retorno);
         }
     }

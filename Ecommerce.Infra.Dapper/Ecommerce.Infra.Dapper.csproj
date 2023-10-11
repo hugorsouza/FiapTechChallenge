@@ -11,7 +11,27 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DataBase\Queries\" />
+    <PackageReference Include="Dapper" Version="2.1.4" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ecommerce.Domain\Ecommerce.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="DataBase\Queries\AllQueries.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AllQueries.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="DataBase\Queries\AllQueries.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AllQueries.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 
 </Project>

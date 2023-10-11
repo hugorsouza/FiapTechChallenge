@@ -8,4 +8,5 @@
         public bool Status { get; set; }
         public bool TipoPedido { get; set; }
     }
+
 }

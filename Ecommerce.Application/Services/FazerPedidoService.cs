@@ -1,4 +1,5 @@
 ﻿using Ecommerce.Application.DTO;
+using Ecommerce.Application.Model;
 using Ecommerce.Application.Services.Interfaces;
 
 namespace Ecommerce.Application.Services
@@ -9,10 +10,18 @@ namespace Ecommerce.Application.Services
         public FazerPedidoService()
         {
         }
-        public FazerPedidoDTO FazerPedido(FazerPedidoDTO fazerPedidoDTO)
+
+        public FazerPedidoModel FazerPedido(FazerPedidoModel fazerPedidoModel)
         {
-            //var fazerPedido = _fazerPedidoService.FazerPedido(fazerPedidoDTO); 
-            return fazerPedidoDTO;
+            var fazerPedido = new FazerPedidoModel
+            {
+                DataPedido = DateTime.Now,
+                Id = 999,
+                Status = 0,
+                TipoPedido = 1,
+                Usuario = "Teste"
+            };
+            return fazerPedido;
         }
     }
 }
