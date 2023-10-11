@@ -1,6 +1,6 @@
 ﻿using Ecommerce.Domain.Entity;
+using Ecommerce.Domain.Interfaces;
 using Ecommerce.Domain.Interfaces.Repository;
-using Ecommerce.Domain.Interfaces.Services;
 
 namespace Ecommerce.Domain.Services
 {
