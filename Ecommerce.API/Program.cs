@@ -1,5 +1,6 @@
 using Ecommerce.Application.Services;
 using Ecommerce.Application.Services.Interfaces;
+using Ecommerce.Domain.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,8 @@ builder.Services.AddSwaggerGen();
 
 //builder.Services.AddDbContext<ApplicationDbContext>(ServiceLifetime.Scoped);
 builder.Services.AddScoped<IFazerPedidoService, FazerPedidoService>();
+
+builder.Services.AddTransient<IProdutoDomainService, ProdutoDomainService>();
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.
