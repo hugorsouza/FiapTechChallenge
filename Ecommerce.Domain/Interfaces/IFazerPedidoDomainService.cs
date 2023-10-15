@@ -1,4 +1,4 @@
-﻿using Ecommerce.Domain.Entity;
+﻿using Ecommerce.Domain.Entities;
 
 namespace Ecommerce.Domain.Interfaces
 {

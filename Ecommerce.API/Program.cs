@@ -1,5 +1,7 @@
 using Ecommerce.Application.Services;
 using Ecommerce.Application.Services.Interfaces;
+using Ecommerce.Domain.Interfaces;
+using Ecommerce.Domain.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
