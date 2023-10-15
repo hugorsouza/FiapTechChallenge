@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ﻿using Ecommerce.Application.DTO;
+=======
+﻿using Ecommerce.Application.Model;
+>>>>>>> b71a3fe (Dapper)
 using Ecommerce.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 

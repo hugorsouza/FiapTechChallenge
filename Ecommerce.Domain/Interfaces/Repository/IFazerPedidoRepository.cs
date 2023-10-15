@@ -1,8 +1,8 @@
 ﻿using Ecommerce.Domain.Entities;
 
-namespace Ecommerce.Domain.Services
+namespace Ecommerce.Domain.Interfaces.Repository
 {
-    public interface IFazerPedidoDomainService
+    public interface IFazerPedidoRepository
     {
         public FazerPedidoEntity FazerPedido(FazerPedidoEntity fazerPedidoEntity);
     }

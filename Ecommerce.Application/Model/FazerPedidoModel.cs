@@ -1,6 +1,6 @@
-﻿namespace Ecommerce.Application.DTO
+﻿namespace Ecommerce.Application.Model
 {
-    public class FazerPedidoDTO
+    public class FazerPedidoModel
     {
         public int Id { get; set; }
         public string Usuario { get; set; }
