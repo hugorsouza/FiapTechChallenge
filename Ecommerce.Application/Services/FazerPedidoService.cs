@@ -1,27 +1,25 @@
-﻿using Ecommerce.Application.DTO;
-using Ecommerce.Application.Model;
+
+﻿using Ecommerce.Application.Model;
 using Ecommerce.Application.Services.Interfaces;
+using Ecommerce.Domain.Entities;
+using Ecommerce.Domain.Interfaces;
 
 namespace Ecommerce.Application.Services
 {
     public class FazerPedidoService : IFazerPedidoService
     {
-        private readonly IFazerPedidoService _fazerPedidoService;
+        private readonly IFazerPedidoDomainService _fazerPedidoDomainService;
         public FazerPedidoService()
         {
         }
 
         public FazerPedidoModel FazerPedido(FazerPedidoModel fazerPedidoModel)
         {
-            var fazerPedido = new FazerPedidoModel
+            var pedido = new FazerPedidoEntity
             {
-                DataPedido = DateTime.Now,
                 Id = 999,
-                Status = 0,
-                TipoPedido = 1,
-                Usuario = "Teste"
             };
-            return fazerPedido;
+            return fazerPedidoModel;
         }
     }
 }

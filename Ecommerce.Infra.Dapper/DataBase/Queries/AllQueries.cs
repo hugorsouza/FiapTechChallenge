@@ -21,5 +21,18 @@ namespace Ecommerce.Infra.Dapper.DataBase.Queries
             }
         } 
 
+		private static string _FazerPedido;
+        public static string FazerPedido
+        {
+            get
+            {
+                if (_FazerPedido is null)
+                    _FazerPedido = GetQuery();
+
+                return _FazerPedido;
+            }
+            set { _FazerPedido = value; }
+        }
+
     }
 }

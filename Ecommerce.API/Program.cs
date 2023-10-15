@@ -4,6 +4,8 @@ using Ecommerce.API.Middleware;
 using Ecommerce.Application;
 using Ecommerce.Application.Services;
 using Ecommerce.Application.Services.Interfaces;
+using Ecommerce.Domain.Interfaces;
+using Ecommerce.Domain.Services;
 using Ecommerce.Infra.Auth.Extensions;
 using Ecommerce.Infra.Dapper.Extensions;
 using FluentValidation;

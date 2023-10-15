@@ -60,10 +60,7 @@ namespace Ecommerce.Infra.Dapper.Services
                     returnList = _connection.Query<T>(commandText, parameters, transaction, commandType: cmdType).ToList();
                     transaction.Commit();
                 }
-
                 return returnList;
-
-
             }
             finally
             {
@@ -83,7 +80,6 @@ namespace Ecommerce.Infra.Dapper.Services
             {
                 CloseConnection();
             }
-
         }
 
         public T ExecuteScriptWithTransactionNoList<T>(string commandText, DynamicParameters parameters, CommandType cmdType = CommandType.Text)
@@ -100,7 +96,6 @@ namespace Ecommerce.Infra.Dapper.Services
                 }
 
                 return returno;
-
             }
             finally
             {
