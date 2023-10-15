@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -48,6 +48,10 @@
 
   <ItemGroup>
     <Folder Include="Registration\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ecommerce.Application\Ecommerce.Application.csproj" />
   </ItemGroup>
 
 </Project>

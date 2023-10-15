@@ -1,8 +1,13 @@
-﻿namespace Ecommerce.Infra.Dapper.DataBase.Queries
+﻿ 
+using System;
+using System.IO;
+using System.Runtime.CompilerServices;
+
+namespace Ecommerce.Infra.Dapper.DataBase.Queries
 {
     public static class AllQueries 
     {
-		private static string GetQuery(string propertyName = null)
+		private static string GetQuery([CallerMemberName]string propertyName = null)
         {
             var fileName = $"Ecommerce.Infra.Dapper.DataBase.Queries.{propertyName}.sql";
 
@@ -15,19 +20,19 @@
                 return sr.ReadToEnd(); 
             }
         } 
-        private static string _fazerPedido;
-        
+
+		private static string _FazerPedido;
         public static string FazerPedido
         {
             get
             {
-                if (_fazerPedido is null)
-                    _fazerPedido = GetQuery();
-                return _fazerPedido;
-            }
-            set { _fazerPedido = value;}
-        }
-    }
+                if (_FazerPedido is null)
+                    _FazerPedido = GetQuery();
 
-    
+                return _FazerPedido;
+            }
+            set { _FazerPedido = value; }
+        }
+
+    }
 }

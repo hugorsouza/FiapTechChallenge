@@ -1,3 +1,4 @@
+
 ﻿using Ecommerce.Application.Model;
 using Ecommerce.Application.Services.Interfaces;
 using Ecommerce.Domain.Entities;
@@ -18,7 +19,6 @@ namespace Ecommerce.Application.Services
             {
                 Id = 999,
             };
-            
             return fazerPedidoModel;
         }
     }
