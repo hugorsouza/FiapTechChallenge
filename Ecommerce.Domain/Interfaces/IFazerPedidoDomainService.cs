@@ -1,6 +1,6 @@
 ﻿using Ecommerce.Domain.Entities;
 
-namespace Ecommerce.Domain.Services
+namespace Ecommerce.Domain.Interfaces
 {
     public interface IFazerPedidoDomainService
     {
