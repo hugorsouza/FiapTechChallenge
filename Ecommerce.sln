@@ -19,7 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ecommerce.Domain", "Ecommer
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04-Infra", "04-Infra", "{D3C141E5-FB25-439B-ACBB-3D4140635D7B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ecommerce.Infra.Dapper", "Ecommerce.Infra.Dapper\Ecommerce.Infra.Dapper.csproj", "{8B4F3929-CDB3-4725-99CA-8E93639EF046}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ecommerce.Infra.Dapper", "Ecommerce.Infra.Dapper\Ecommerce.Infra.Dapper.csproj", "{8B4F3929-CDB3-4725-99CA-8E93639EF046}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ecommerce.Infra.Auth", "Ecommerce.Infra.Auth\Ecommerce.Infra.Auth.csproj", "{2FDE9079-D0C3-4F4A-B465-5933894D412B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +45,10 @@ Global
 		{8B4F3929-CDB3-4725-99CA-8E93639EF046}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B4F3929-CDB3-4725-99CA-8E93639EF046}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B4F3929-CDB3-4725-99CA-8E93639EF046}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FDE9079-D0C3-4F4A-B465-5933894D412B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FDE9079-D0C3-4F4A-B465-5933894D412B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FDE9079-D0C3-4F4A-B465-5933894D412B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FDE9079-D0C3-4F4A-B465-5933894D412B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -56,6 +62,7 @@ Global
 		{623815EA-B6EF-4768-BB5F-FBF1CBF73F64} = {FAD89886-4494-4264-8F73-8162545522D2}
 		{D3C141E5-FB25-439B-ACBB-3D4140635D7B} = {B77AFB33-5054-49FA-AFC1-C1A6B112A191}
 		{8B4F3929-CDB3-4725-99CA-8E93639EF046} = {D3C141E5-FB25-439B-ACBB-3D4140635D7B}
+		{2FDE9079-D0C3-4F4A-B465-5933894D412B} = {D3C141E5-FB25-439B-ACBB-3D4140635D7B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CD677007-6141-47A7-9CD1-4F38A7197107}
