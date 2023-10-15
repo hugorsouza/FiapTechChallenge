@@ -11,7 +11,7 @@ namespace Ecommerce.Application.Services
         }
         public FazerPedidoDTO FazerPedido(FazerPedidoDTO fazerPedidoDTO)
         {
-            //var fazerPedido = _fazerPedidoService.FazerPedido(fazerPedidoDTO); 
+            var fazerPedido = _fazerPedidoService.FazerPedido(fazerPedidoDTO); 
             return fazerPedidoDTO;
         }
     }

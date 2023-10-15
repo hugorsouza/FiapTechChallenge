@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ecommerce.Domain.Entity
 {
-    public class Fornecedores : Entidade
+    public class Fornecedor : Entidade
     {
         public string CNPJ { get; set; }
         public Endereco Endereco { get; set; }
