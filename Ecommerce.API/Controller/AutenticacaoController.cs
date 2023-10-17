@@ -1,6 +1,6 @@
 ﻿using Ecommerce.Application.Model.Autenticacao;
 using Ecommerce.Application.Services.Interfaces.Autenticacao;
-using Ecommerce.Domain.Entity.Autenticacao;
+using Ecommerce.Domain.Entities.Autenticacao;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

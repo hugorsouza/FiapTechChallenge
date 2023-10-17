@@ -1,8 +1,8 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using Ecommerce.Domain.Entity;
-using Ecommerce.Domain.Entity.Autenticacao;
-using Ecommerce.Domain.Entity.Shared;
+using Ecommerce.Domain.Entities;
+using Ecommerce.Domain.Entities.Autenticacao;
+using Ecommerce.Domain.Entities.Shared;
 using Ecommerce.Infra.Auth.Constants;
 
 namespace Ecommerce.Infra.Auth.Extensions

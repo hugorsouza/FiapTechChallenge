@@ -4,7 +4,6 @@ using Ecommerce.Domain.Exceptions;
 using Ecommerce.Domain.Interfaces.Repository;
 using Ecommerce.Infra.Auth.Interfaces;
 using FluentValidation;
-using Microsoft.AspNetCore.Http;
 
 namespace Ecommerce.Infra.Auth.Services
 {
@@ -32,11 +31,11 @@ namespace Ecommerce.Infra.Auth.Services
             if(usuario is null || !_hasher.ValidarSenha(credenciais.Senha, usuario.Senha))
                 throw RequisicaoInvalidaException.PorMotivo("Credenciais inválidas");
 
-            var pessoa = await _pessoaFisicaRepository.ObterPessoaPorUsuario(usuario.Id);
-            pessoa.Usuario = usuario;
+            if (usuario.PessoaFisica is null)
+                throw new NotImplementedException("Ainda não temos login por empresa");
 
-            var accessToken = _jwtFactory.GenerateAccessToken(pessoa);
-            var refreshToken = _jwtFactory.GenerateAccessToken(pessoa);
+            var accessToken = _jwtFactory.GenerateAccessToken(usuario.PessoaFisica);
+            var refreshToken = _jwtFactory.GenerateAccessToken(usuario.PessoaFisica);
 
             return new LoginResponse
             {

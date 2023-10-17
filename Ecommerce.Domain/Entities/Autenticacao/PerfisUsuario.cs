@@ -1,4 +1,4 @@
-﻿namespace Ecommerce.Domain.Entity;
+﻿namespace Ecommerce.Domain.Entities.Autenticacao;
 
 public enum PerfisUsuario
 {

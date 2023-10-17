@@ -1,5 +1,5 @@
 ﻿using System.Collections.Concurrent;
-using Ecommerce.Domain.Entity.Autenticacao;
+using Ecommerce.Domain.Entities.Autenticacao;
 using Ecommerce.Domain.Interfaces.Repository;
 
 namespace Ecommerce.Infra.Dapper.Repositories

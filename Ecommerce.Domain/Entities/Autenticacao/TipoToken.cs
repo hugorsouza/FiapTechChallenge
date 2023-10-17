@@ -1,4 +1,4 @@
-﻿namespace Ecommerce.Domain.Entity.Autenticacao
+﻿namespace Ecommerce.Domain.Entities.Autenticacao
 {
     public enum TipoToken
     {

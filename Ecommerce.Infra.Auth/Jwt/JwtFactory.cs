@@ -1,14 +1,14 @@
-﻿using Ecommerce.Domain.Entity.Autenticacao;
-using Ecommerce.Infra.Auth.Configuration;
+﻿using Ecommerce.Infra.Auth.Configuration;
 using Ecommerce.Infra.Auth.Models;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
-using Ecommerce.Domain.Entity.Shared;
 using Ecommerce.Infra.Auth.Constants;
-using Ecommerce.Infra.Auth.Extensions;
 using Ecommerce.Infra.Auth.Interfaces;
+using Ecommerce.Domain.Entities.Shared;
+using Ecommerce.Domain.Entities.Autenticacao;
+using Ecommerce.Infra.Auth.Extensions;
 
 namespace Ecommerce.Infra.Auth.Jwt
 {
