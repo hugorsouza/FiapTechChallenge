@@ -1,7 +1,7 @@
 ﻿using Dapper;
 using System.Data;
 
-namespace Ecommerce.Infra.Dapper.Services.Interfaces
+namespace Ecommerce.Infra.Dapper.Interfaces
 {
     public interface ICrudBaseDapper<TEntity> where TEntity : class
     {

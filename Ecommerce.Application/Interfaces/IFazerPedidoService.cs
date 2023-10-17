@@ -1,6 +1,6 @@
 ﻿using Ecommerce.Application.Model;
 
-namespace Ecommerce.Application.Services.Interfaces
+namespace Ecommerce.Application.Interfaces
 {
     public interface IFazerPedidoService
     {

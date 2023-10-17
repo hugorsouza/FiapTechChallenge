@@ -1,6 +1,6 @@
 ﻿using Dapper;
 using Ecommerce.Domain.Entities;
-using Ecommerce.Domain.Interfaces.Repository;
+using Ecommerce.Domain.Interfaces;
 using Ecommerce.Infra.Dapper.DataBase.Queries;
 using Ecommerce.Infra.Dapper.Services;
 
@@ -12,7 +12,7 @@ namespace Ecommerce.Infra.Dapper.Repositories
         {  
         }
 
-        public FazerPedidoEntity FazerPedido(FazerPedidoEntity fazerPedidoEntity)
+        public FazerPedidoEntity FazerPedidoDomain(FazerPedidoEntity fazerPedidoEntity)
         {
             string script = AllQueries.FazerPedido;
             var param = new DynamicParameters();

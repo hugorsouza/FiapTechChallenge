@@ -1,15 +1,23 @@
+using Ecommerce.Application.Interfaces;
 using Ecommerce.Application.Services;
-using Ecommerce.Application.Services.Interfaces;
+using Ecommerce.Domain.Interfaces;
+using Ecommerce.Infra.Dapper.Interfaces;
+using Ecommerce.Infra.Dapper.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddTransient<IFazerPedidoService, FazerPedidoService>();
+builder.Services.AddTransient<IConsultarPedidoService, ConsultarPedidoService>();
+//builder.Services.AddTransient<IFazerPedidoDomainService, FazerPedidoDomainService>();
+builder.Services.AddTransient<IConsultarPedidoDomainService, ConsultarPedidoDomainService>();
+//builder.Services.AddTransient<IConsultarPedidoRepository, ConsultarPedidoRepository>();
+builder.Services.AddTransient<IConsultarPedidoRepositoryDapper, ConsultarPedidoRepositoryDapper>(_ => new ConsultarPedidoRepositoryDapper("Ecommerce"));
+//builder.Services.AddTransient<IConsultarPedidoRepositoryDapper, ConsultarPedidoRepository>();
+//builder.Services.AddScoped<ConsultarPedidoRepositoryDapper>();
+
 builder.Services.AddControllers();  
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-builder.Services.AddScoped<IFazerPedidoService, FazerPedidoService>();
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.

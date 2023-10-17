@@ -4,6 +4,6 @@ namespace Ecommerce.Domain.Interfaces
 {
     public interface IFazerPedidoDomainService
     {
-        public FazerPedidoEntity FazerPedido(FazerPedidoEntity fazerPedidoEntity);
+        public FazerPedidoEntity FazerPedidoDomain(FazerPedidoEntity fazerPedidoEntity);
     }
 }

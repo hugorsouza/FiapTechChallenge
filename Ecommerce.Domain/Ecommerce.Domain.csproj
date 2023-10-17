@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Interfaces\Repository\ApplicationDbContext.cs" />
+    <Compile Remove="Services\ConsultarPedidoDomainService.cs" />
+    <Compile Remove="Services\CrudBaseDapper.cs" />
+    <Compile Remove="Interfaces\IConsultarPedidoDomainService.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -15,6 +17,10 @@
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.12" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.12" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
   </ItemGroup>
 
 </Project>

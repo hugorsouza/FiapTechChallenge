@@ -1,6 +1,5 @@
-
-﻿using Ecommerce.Application.Model;
-using Ecommerce.Application.Services.Interfaces;
+﻿using Ecommerce.Application.Interfaces;
+using Ecommerce.Application.Model;
 using Ecommerce.Domain.Entities;
 using Ecommerce.Domain.Interfaces;
 
@@ -8,7 +7,7 @@ namespace Ecommerce.Application.Services
 {
     public class FazerPedidoService : IFazerPedidoService
     {
-        private readonly IFazerPedidoDomainService _fazerPedidoDomainService;
+        private  IFazerPedidoDomainService _fazerPedidoDomainService;
         public FazerPedidoService()
         {
         }
@@ -18,7 +17,13 @@ namespace Ecommerce.Application.Services
             var pedido = new FazerPedidoEntity
             {
                 Id = 999,
+                Usuario = "Teste",
+                DataPedido = DateTime.Now,
+                Status = 2,
+                TipoPedido = 3
             };
+
+            pedido = _fazerPedidoDomainService.FazerPedidoDomain(pedido);
             return fazerPedidoModel;
         }
     }

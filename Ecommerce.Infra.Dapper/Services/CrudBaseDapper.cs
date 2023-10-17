@@ -1,5 +1,6 @@
 ﻿using Dapper;
-using Ecommerce.Infra.Dapper.Services.Interfaces;
+using Ecommerce.Infra.Dapper.Interfaces;
+using Microsoft.Extensions.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -9,10 +10,16 @@ namespace Ecommerce.Infra.Dapper.Services
     {
         private SqlConnection _connection;
         internal string _connectionString;
+        private IConfiguration configuration;
 
         public CrudBaseDapper(string connectionString)
         {
             _connectionString = connectionString;
+        }
+
+        public CrudBaseDapper(IConfiguration configuration)
+        {
+            this.configuration = configuration;
         }
 
         public void OpenConnection()

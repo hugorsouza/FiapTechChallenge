@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -8,12 +8,16 @@
 
   <ItemGroup>
     <Compile Remove="Interfaces\**" />
+    <Compile Remove="Registration\**" />
     <EmbeddedResource Remove="Interfaces\**" />
+    <EmbeddedResource Remove="Registration\**" />
     <None Remove="Interfaces\**" />
+    <None Remove="Registration\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Registration\RegistrationDapper.cs" />
+    <Compile Include="Interfaces\IConsultarPedidoRepositoryDapper.cs" />
+    <Compile Include="Interfaces\ICrudBaseDapper.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,7 +31,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Ecommerce.Application\Ecommerce.Application.csproj" />
     <ProjectReference Include="..\Ecommerce.Domain\Ecommerce.Domain.csproj" />
   </ItemGroup>
 
@@ -44,14 +47,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AllQueries.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Registration\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Ecommerce.Application\Ecommerce.Application.csproj" />
   </ItemGroup>
 
 </Project>
