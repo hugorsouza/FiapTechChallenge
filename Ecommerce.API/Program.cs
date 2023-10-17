@@ -14,6 +14,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IFazerPedidoService, FazerPedidoService>();
 
 builder.Services.AddTransient<IProdutoDomainService, ProdutoDomainService>();
+builder.Services.AddTransient<ICategoriaDomainService, CategoriaDomainService>();
+builder.Services.AddTransient<IFabricanteDomainService, FabricanteDomainService>();
+builder.Services.AddTransient<IFornecedorDomainService, FornecedorDomainService>();
+
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.
