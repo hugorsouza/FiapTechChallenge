@@ -1,8 +1,9 @@
-﻿namespace Ecommerce.Domain.Entity.Autenticacao
+﻿using Ecommerce.Domain.Entities.Shared;
+
+namespace Ecommerce.Domain.Entities.Autenticacao
 {
-    public class Usuario
+    public class Usuario : EntityBase
     {
-        public int Id { get; set; }
         public string NomeExibicao { get; set; }
         public string Email { get; set; }
         public string EmailNormalizado { get; set; }
@@ -10,5 +11,6 @@
         public DateTime DataCadastro { get; set; }
         public DateTime DataAlteracao { get; set; }
         public PerfilUsuario Perfil { get; set; }
+        public virtual PessoaFisica? PessoaFisica { get; set; }
     }
 }

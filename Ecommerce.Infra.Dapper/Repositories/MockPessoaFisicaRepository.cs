@@ -1,5 +1,5 @@
 ﻿using System.Collections.Concurrent;
-using Ecommerce.Domain.Entity;
+using Ecommerce.Domain.Entities;
 using Ecommerce.Domain.Interfaces.Repository;
 
 namespace Ecommerce.Infra.Dapper.Repositories
@@ -19,7 +19,7 @@ namespace Ecommerce.Infra.Dapper.Repositories
 
         public async Task<PessoaFisica?> ObterPessoaPorUsuario(int usuarioId)
         {
-            return _pessoas.FirstOrDefault(x => x.UsuarioId == usuarioId);
+            return _pessoas.FirstOrDefault(x => x.Usuario?.Id == usuarioId);
         }
 
         public async Task<PessoaFisica> Inserir(PessoaFisica pessoa)

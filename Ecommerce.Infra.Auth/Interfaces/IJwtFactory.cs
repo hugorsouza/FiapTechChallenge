@@ -1,4 +1,4 @@
-﻿using Ecommerce.Domain.Entity.Shared;
+﻿using Ecommerce.Domain.Entities.Shared;
 using Ecommerce.Infra.Auth.Models;
 
 namespace Ecommerce.Infra.Auth.Interfaces
