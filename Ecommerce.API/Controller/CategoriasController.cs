@@ -6,18 +6,19 @@ namespace Ecommerce.API.Controller
 {
     [Route("api/[Controller]")]
     [ApiController]
-    public class ProdutoController : ControllerBase
+    public class CategoriaController : ControllerBase
     {
-        private readonly IProdutoDomainService _produtoDomainService;
-        public ProdutoController(IProdutoDomainService produtoDomainService)
+        private readonly ICategoriaDomainService _categoriaDomainService;
+        public CategoriaController(ICategoriaDomainService categoriaDomainService)
         {
-            _produtoDomainService= produtoDomainService;
+            _categoriaDomainService= categoriaDomainService;
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] Produto produto)
+        [Route("Cadastrar")]
+        public IActionResult Cadastrar([FromBody] Categoria categoria)
         {
-            _produtoDomainService.Cadastrar(produto);
+            _categoriaDomainService.Cadastrar(categoria);
             return Ok();
         }
 
@@ -25,11 +26,11 @@ namespace Ecommerce.API.Controller
         [Route("ObterPorId/{id}")]
         public IActionResult ObterPorId(int id)
         {
-            var result = _produtoDomainService.ObterPorId(id);
+            var result = _categoriaDomainService.ObterPorId(id);
 
             if (result != null)
                 return Ok(result);
-
+        
             return NoContent();
         }
 
@@ -37,7 +38,7 @@ namespace Ecommerce.API.Controller
         [Route("ObterPorTodos")]
         public IActionResult Otertodos()
         {
-            var result = _produtoDomainService.ObterTodos();
+            var result = _categoriaDomainService.ObterTodos();
 
             if (result != null)
                 return Ok(result);
@@ -47,21 +48,22 @@ namespace Ecommerce.API.Controller
 
         [HttpGet]
         [Route("Alterar")]
-        public IActionResult Alterar([FromBody] Produto produto)
+        public IActionResult Alterar([FromBody] Categoria categoria)
         {
-            _produtoDomainService.Alterar(produto);
+            _categoriaDomainService.Alterar(categoria);
 
-            return Ok();
+            return Ok();            
         }
 
         [HttpGet]
         [Route("Deletar/{id}")]
         public IActionResult Deletar(int id)
         {
-            _produtoDomainService.Deletar(id);
+            _categoriaDomainService.Deletar(id);
 
+            
             return Ok();
-
+                       
         }
     }
 }

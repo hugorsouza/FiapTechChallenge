@@ -1,4 +1,5 @@
-﻿using Ecommerce.Domain.Entity;
+﻿using Ecommerce.Application.Services;
+using Ecommerce.Domain.Entity;
 using Ecommerce.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,18 +7,19 @@ namespace Ecommerce.API.Controller
 {
     [Route("api/[Controller]")]
     [ApiController]
-    public class ProdutoController : ControllerBase
+    public class FabricanteController : ControllerBase
     {
-        private readonly IProdutoDomainService _produtoDomainService;
-        public ProdutoController(IProdutoDomainService produtoDomainService)
+        private readonly IFabricanteDomainService _fabricanteDomainService;
+        public FabricanteController(IFabricanteDomainService fabricanteDomainService)
         {
-            _produtoDomainService= produtoDomainService;
+            _fabricanteDomainService = fabricanteDomainService;
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] Produto produto)
+        [Route("Cadastrar")]
+        public IActionResult Cadastrar([FromBody] Fabricante fabricante)
         {
-            _produtoDomainService.Cadastrar(produto);
+            _fabricanteDomainService.Cadastrar(fabricante);
             return Ok();
         }
 
@@ -25,11 +27,11 @@ namespace Ecommerce.API.Controller
         [Route("ObterPorId/{id}")]
         public IActionResult ObterPorId(int id)
         {
-            var result = _produtoDomainService.ObterPorId(id);
+            var result = _fabricanteDomainService.ObterPorId(id);
 
             if (result != null)
                 return Ok(result);
-
+        
             return NoContent();
         }
 
@@ -37,7 +39,7 @@ namespace Ecommerce.API.Controller
         [Route("ObterPorTodos")]
         public IActionResult Otertodos()
         {
-            var result = _produtoDomainService.ObterTodos();
+            var result = _fabricanteDomainService.ObterTodos();
 
             if (result != null)
                 return Ok(result);
@@ -47,21 +49,23 @@ namespace Ecommerce.API.Controller
 
         [HttpGet]
         [Route("Alterar")]
-        public IActionResult Alterar([FromBody] Produto produto)
+        public IActionResult Alterar([FromBody] Fabricante fabricante)
         {
-            _produtoDomainService.Alterar(produto);
+            _fabricanteDomainService.Alterar(fabricante);
 
-            return Ok();
+            return Ok();            
         }
 
         [HttpGet]
         [Route("Deletar/{id}")]
         public IActionResult Deletar(int id)
         {
-            _produtoDomainService.Deletar(id);
+            _fabricanteDomainService.Deletar(id);
 
+            
             return Ok();
 
+           
         }
     }
 }
