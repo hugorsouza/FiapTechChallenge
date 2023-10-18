@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace Ecommerce.Application.Services
 {
-    public class FornecedorDomainService : DomainService<Fornecedor>, IFornecedorDomainService
+    public class CategoriaService : Service<Categoria>, ICategoriaService
     {
-        public override void Alterar(Fornecedor entidade)
+        public override void Alterar(Categoria entidade)
         {
             throw new NotImplementedException();
         }
 
-        public override void Cadastrar(Fornecedor entidade)
+        public override void Cadastrar(Categoria entidade)
         {
             throw new NotImplementedException();
         }
@@ -25,12 +25,12 @@ namespace Ecommerce.Application.Services
             throw new NotImplementedException();
         }
 
-        public override Fornecedor ObterPorId(int id)
+        public override Categoria ObterPorId(int id)
         {
             throw new NotImplementedException();
         }
 
-        public override IList<Fornecedor> ObterTodos()
+        public override IList<Categoria> ObterTodos()
         {
             throw new NotImplementedException();
         }

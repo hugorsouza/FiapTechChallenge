@@ -21,11 +21,8 @@ builder.Services
     .AddAutenticacaoJwt(builder.Configuration)
     .AddValidatorsFromAssemblyContaining<IApplicationAssemblyMarker>()
     .AddScoped<IFazerPedidoService, FazerPedidoService>()
-    .AddScoped<ExceptionMiddleware>();
-builder.Services.AddTransient<IProdutoDomainService, ProdutoDomainService>();
-builder.Services.AddTransient<ICategoriaDomainService, CategoriaDomainService>();
-builder.Services.AddTransient<IFabricanteDomainService, FabricanteDomainService>();
-builder.Services.AddTransient<IFornecedorDomainService, FornecedorDomainService>();
+    .AddScoped<ExceptionMiddleware>()
+    .AddAppServices();
 
 
 var app = builder.Build();

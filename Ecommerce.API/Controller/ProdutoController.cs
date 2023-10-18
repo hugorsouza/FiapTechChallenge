@@ -8,8 +8,8 @@ namespace Ecommerce.API.Controller
     [ApiController]
     public class ProdutoController : ControllerBase
     {
-        private readonly IProdutoDomainService _produtoDomainService;
-        public ProdutoController(IProdutoDomainService produtoDomainService)
+        private readonly IProdutoService _produtoDomainService;
+        public ProdutoController(IProdutoService produtoDomainService)
         {
             _produtoDomainService= produtoDomainService;
         }

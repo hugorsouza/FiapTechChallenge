@@ -8,8 +8,8 @@ namespace Ecommerce.API.Controller
     [ApiController]
     public class CategoriaController : ControllerBase
     {
-        private readonly ICategoriaDomainService _categoriaDomainService;
-        public CategoriaController(ICategoriaDomainService categoriaDomainService)
+        private readonly ICategoriaService _categoriaDomainService;
+        public CategoriaController(ICategoriaService categoriaDomainService)
         {
             _categoriaDomainService= categoriaDomainService;
         }

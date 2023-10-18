@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ecommerce.Domain.Services
 {
-    public interface IDomainService<T> where T : class
+    public interface IService<T> where T : class
     {
         void Cadastrar(T entidade);
         T ObterPorId(int id);

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Ecommerce.Application.Services
 {
-    public class FabricanteDomainService : DomainService<Fabricante>, IFabricanteDomainService
+    public class FabricanteService : Service<Fabricante>, IFabricanteService
     {
         public override void Alterar(Fabricante entidade)
         {

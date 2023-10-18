@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Ecommerce.Domain.Services
 {
-    public interface IFabricanteDomainService : IDomainService<Fabricante>
+    public interface IFornecedorService : IService<Fornecedor>
     {
 
     }

@@ -8,8 +8,8 @@ namespace Ecommerce.API.Controller
     [ApiController]
     public class FornecedorController : ControllerBase
     {
-        private readonly IFornecedorDomainService _fornecedorDomainService;
-        public FornecedorController(IFornecedorDomainService fornecedorDomainService)
+        private readonly IFornecedorService _fornecedorDomainService;
+        public FornecedorController(IFornecedorService fornecedorDomainService)
         {
             _fornecedorDomainService= fornecedorDomainService;
         }

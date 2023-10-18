@@ -9,8 +9,8 @@ namespace Ecommerce.API.Controller
     [ApiController]
     public class FabricanteController : ControllerBase
     {
-        private readonly IFabricanteDomainService _fabricanteDomainService;
-        public FabricanteController(IFabricanteDomainService fabricanteDomainService)
+        private readonly IFabricanteService _fabricanteDomainService;
+        public FabricanteController(IFabricanteService fabricanteDomainService)
         {
             _fabricanteDomainService = fabricanteDomainService;
         }

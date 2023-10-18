@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Ecommerce.Application.Services
 {
-    public abstract class DomainService<T> : IDomainService<T> where T : class
+    public abstract class Service<T> : IService<T> where T : class
     {
         public abstract void Alterar(T entidade);
         public abstract void Cadastrar(T entidade);
