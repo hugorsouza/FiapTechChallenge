@@ -13,5 +13,6 @@ namespace Ecommerce.Domain.Services
         IList<T> ObterTodos();
         void Alterar(T entidade);
         void Deletar(int id);
+
     }
 }

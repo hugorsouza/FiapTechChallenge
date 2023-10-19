@@ -10,5 +10,6 @@ namespace Ecommerce.Domain.Services
     public interface IFabricanteService : IService<Fabricante>
     {
 
+
     }
 }
