@@ -11,5 +11,6 @@ namespace Ecommerce.Domain.Entity
         public string CNPJ { get; set; }
         public Endereco Endereco { get; set; }
 
+
     }
 }

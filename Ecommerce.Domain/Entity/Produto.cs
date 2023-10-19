@@ -20,5 +20,6 @@ namespace Ecommerce.Domain.Entity
         public string UrlImagem { get; set; }
 
 
+
     }
 }

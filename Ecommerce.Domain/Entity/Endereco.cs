@@ -16,5 +16,6 @@ namespace Ecommerce.Domain.Entity
         public string Cidade { get; set; }
         public string Estado { get; set; }
         public int IdEntidade { get; set; }
+
     }
 }
