@@ -9,5 +9,6 @@ namespace Ecommerce.Domain.Entity
     public class Categoria
     {
         public string Descricao { get; set; }
+
     }
 }
