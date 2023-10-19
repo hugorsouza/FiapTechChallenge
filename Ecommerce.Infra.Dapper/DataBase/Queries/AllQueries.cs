@@ -44,6 +44,5 @@ namespace Ecommerce.Infra.Dapper.DataBase.Queries
             }
             set { _consultarPedido = value; }
         }
-
     }
 }

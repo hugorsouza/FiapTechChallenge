@@ -1,6 +1,6 @@
-﻿using Ecommerce.Application.Interfaces;
+﻿
+using Ecommerce.Application.Interfaces;
 using Ecommerce.Application.Services;
-using Ecommerce.Domain.Interfaces;
 using Ecommerce.Infra.Dapper.Interfaces;
 using Ecommerce.Infra.Dapper.Repositories;
 using Microsoft.Extensions.Configuration;
@@ -16,15 +16,15 @@ namespace Ecommerce.Application.Registration
         {
             _services = services;
 
-            //services.AddTransient<IConsultarPedidoService>(s =>
-            //{
-            //    var service = s.GetRequiredService<IConsultarPedidoDomainService>();
-            //    var consultarPedidoDomainService = s.GetRequiredService<IConsultarPedidoDomainService>();
+            services.AddTransient<IConsultarPedidoService>(s =>
+            {
+                var service = s.GetRequiredService<IConsultarPedidoDomainService>();
+                var consultarPedidoDomainService = s.GetRequiredService<IConsultarPedidoDomainService>();
 
-            //    return new ConsultarPedidoService(consultarPedidoDomainService);
-            //});
+                return new ConsultarPedidoService(consultarPedidoDomainService);
+            });
 
-            //services.AddTransient<IConsultarPedidoDomainService, ConsultarPedidoDomainService>();
+            services.AddTransient<IConsultarPedidoDomainService, ConsultarPedidoDomainService>();
             services.AddTransient<IConsultarPedidoRepositoryDapper>(s =>
             {
                 return new ConsultarPedidoRepositoryDapper(configuration.GetConnectionString("Ecommerce"));

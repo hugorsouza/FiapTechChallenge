@@ -7,16 +7,16 @@ namespace Ecommerce.Application.Services
 {
     public class ConsultarPedidoService : IConsultarPedidoService
     {
-        private readonly IConsultarPedidoDomainService _consultarPedidoDomainService;
+        private readonly IConsultarPedidoDapperService _consultarPedidoDapperService;
         private readonly IMapper _mapper = AutoMapper.AutoMapperConfig.Mapper;
-        public ConsultarPedidoService(IConsultarPedidoDomainService consultarPedidoDomainService)
+        public ConsultarPedidoService(IConsultarPedidoDapperService consultarPedidoDomainService)
         {
-            _consultarPedidoDomainService = consultarPedidoDomainService;
+            _consultarPedidoDapperService = consultarPedidoDomainService;
         }
 
         public ConsultarPedidoEntity ConsultarPedido(string usuario)
         {
-            var consultaPedido = _mapper.Map<ConsultarPedidoEntity>(_consultarPedidoDomainService.ConsultarPedidoDomain(usuario));
+            var consultaPedido = _mapper.Map<ConsultarPedidoEntity>(_consultarPedidoDapperService.ConsultarPedidoDomain(usuario));
 
             return consultaPedido;
         }

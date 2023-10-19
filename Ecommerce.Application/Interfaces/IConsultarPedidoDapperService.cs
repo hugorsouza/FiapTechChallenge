@@ -2,7 +2,7 @@
 
 namespace Ecommerce.Application.Interfaces
 {
-    public interface IConsultarPedidoDomainService
+    public interface IConsultarPedidoDapperService
     {
         public ConsultarPedidoEntity ConsultarPedidoDomain(string usuario);
     }

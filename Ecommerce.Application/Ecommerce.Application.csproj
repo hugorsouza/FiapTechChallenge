@@ -7,8 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Registration\**" />
     <Compile Remove="Repository\**" />
+    <EmbeddedResource Remove="Registration\**" />
     <EmbeddedResource Remove="Repository\**" />
+    <None Remove="Registration\**" />
     <None Remove="Repository\**" />
   </ItemGroup>
 

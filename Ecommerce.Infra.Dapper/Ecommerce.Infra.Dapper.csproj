@@ -16,8 +16,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="DataBase\Queries\ConsultarPedido.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Include="Interfaces\IConsultarPedidoRepositoryDapper.cs" />
     <Compile Include="Interfaces\ICrudBaseDapper.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="DataBase\Queries\ConsultarPedido.sql" />
   </ItemGroup>
 
   <ItemGroup>

@@ -15,7 +15,6 @@ namespace Ecommerce.Application.AutoMapper
                 {
                     var config = new MapperConfiguration(conf =>
                     {
-                        conf.AddProfile<FazerPedidoMapper>();
                         conf.AddProfile<ConsultarPedidoMapper>();
                     });
                     _mapper = config.CreateMapper();

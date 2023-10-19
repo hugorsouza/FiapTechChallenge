@@ -1,19 +1,17 @@
 using Ecommerce.Application.Interfaces;
 using Ecommerce.Application.Services;
-using Ecommerce.Domain.Interfaces;
 using Ecommerce.Infra.Dapper.Interfaces;
 using Ecommerce.Infra.Dapper.Repositories;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddTransient<IFazerPedidoService, FazerPedidoService>();
 builder.Services.AddTransient<IConsultarPedidoService, ConsultarPedidoService>();
-//builder.Services.AddTransient<IFazerPedidoDomainService, FazerPedidoDomainService>();
-builder.Services.AddTransient<IConsultarPedidoDomainService, ConsultarPedidoDomainService>();
-//builder.Services.AddTransient<IConsultarPedidoRepository, ConsultarPedidoRepository>();
-builder.Services.AddTransient<IConsultarPedidoRepositoryDapper, ConsultarPedidoRepositoryDapper>(_ => new ConsultarPedidoRepositoryDapper("Ecommerce"));
-//builder.Services.AddTransient<IConsultarPedidoRepositoryDapper, ConsultarPedidoRepository>();
-//builder.Services.AddScoped<ConsultarPedidoRepositoryDapper>();
+builder.Services.AddTransient<IConsultarPedidoDapperService, ConsultarPedidoDapperService>();
+builder.Services.AddTransient<IConsultarPedidoRepositoryDapper, ConsultarPedidoRepositoryDapper>
+    (AppSettingsReader => new ConsultarPedidoRepositoryDapper(
+        //"Server=.\\SQLEXPRESS01;Database=Ecommerce;TrustServerCertificate=True;User ID=TechChallenge; Password=Fiap@2000;Trusted_Connection=True"
+        "ConnectionStrings:Ecommerce"));
 
 builder.Services.AddControllers();  
 builder.Services.AddEndpointsApiExplorer();

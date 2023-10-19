@@ -7,12 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Services\ConsultarPedidoDomainService.cs" />
-    <Compile Remove="Services\CrudBaseDapper.cs" />
-    <Compile Remove="Interfaces\IConsultarPedidoDomainService.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Dapper" Version="2.1.11" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.12" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.12" />
