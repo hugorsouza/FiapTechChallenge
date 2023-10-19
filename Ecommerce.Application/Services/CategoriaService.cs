@@ -11,6 +11,7 @@ namespace Ecommerce.Application.Services
 {
     public class CategoriaService : Service<Categoria>, ICategoriaService
     {
+
         private readonly ICategoriaRepository _categoriaRepository;
 
         public CategoriaService(ICategoriaRepository categoriaRepository)

@@ -8,6 +8,7 @@ namespace Ecommerce.Application.Services
 {
     public class FazerPedidoService : IFazerPedidoService
     {
+
         private readonly IFazerPedidoDomainService _fazerPedidoDomainService;
         public FazerPedidoService()
         {
