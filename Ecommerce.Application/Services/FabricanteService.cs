@@ -10,29 +10,36 @@ namespace Ecommerce.Application.Services
 {
     public class FabricanteService : Service<Fabricante>, IFabricanteService
     {
+        private readonly IFabricanteService _fabricanteService;
+
+        public FabricanteService(IFabricanteService fabricanteService)
+        {
+            _fabricanteService = fabricanteService;
+        }
+
         public override void Alterar(Fabricante entidade)
         {
-            throw new NotImplementedException();
+            _fabricanteService.Alterar(entidade);
         }
 
         public override void Cadastrar(Fabricante entidade)
         {
-            throw new NotImplementedException();
+            _fabricanteService.Cadastrar(entidade);
         }
 
         public override void Deletar(int id)
         {
-            throw new NotImplementedException();
+            _fabricanteService.Deletar(id);
         }
 
         public override Fabricante ObterPorId(int id)
         {
-            throw new NotImplementedException();
+            return _fabricanteService.ObterPorId(id);
         }
 
         public override IList<Fabricante> ObterTodos()
         {
-            throw new NotImplementedException();
+            return _fabricanteService.ObterTodos();
         }
     }
 }

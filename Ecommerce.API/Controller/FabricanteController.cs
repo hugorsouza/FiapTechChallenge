@@ -9,17 +9,17 @@ namespace Ecommerce.API.Controller
     [ApiController]
     public class FabricanteController : ControllerBase
     {
-        private readonly IFabricanteService _fabricanteDomainService;
-        public FabricanteController(IFabricanteService fabricanteDomainService)
+        private readonly IFabricanteService _fabricanteservice;
+        public FabricanteController(IFabricanteService fabricanteservice)
         {
-            _fabricanteDomainService = fabricanteDomainService;
+            _fabricanteservice = fabricanteservice;
         }
 
         [HttpPost]
         [Route("Cadastrar")]
         public IActionResult Cadastrar([FromBody] Fabricante fabricante)
         {
-            _fabricanteDomainService.Cadastrar(fabricante);
+            _fabricanteservice.Cadastrar(fabricante);
             return Ok();
         }
 
@@ -27,7 +27,7 @@ namespace Ecommerce.API.Controller
         [Route("ObterPorId/{id}")]
         public IActionResult ObterPorId(int id)
         {
-            var result = _fabricanteDomainService.ObterPorId(id);
+            var result = _fabricanteservice.ObterPorId(id);
 
             if (result != null)
                 return Ok(result);
@@ -39,7 +39,7 @@ namespace Ecommerce.API.Controller
         [Route("ObterPorTodos")]
         public IActionResult Otertodos()
         {
-            var result = _fabricanteDomainService.ObterTodos();
+            var result = _fabricanteservice.ObterTodos();
 
             if (result != null)
                 return Ok(result);
@@ -47,20 +47,20 @@ namespace Ecommerce.API.Controller
             return NoContent();
         }
 
-        [HttpGet]
+        [HttpPut]
         [Route("Alterar")]
         public IActionResult Alterar([FromBody] Fabricante fabricante)
         {
-            _fabricanteDomainService.Alterar(fabricante);
+            _fabricanteservice.Alterar(fabricante);
 
             return Ok();            
         }
 
-        [HttpGet]
+        [HttpDelete]
         [Route("Deletar/{id}")]
         public IActionResult Deletar(int id)
         {
-            _fabricanteDomainService.Deletar(id);
+            _fabricanteservice.Deletar(id);
 
             
             return Ok();

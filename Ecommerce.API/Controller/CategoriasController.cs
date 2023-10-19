@@ -8,17 +8,17 @@ namespace Ecommerce.API.Controller
     [ApiController]
     public class CategoriaController : ControllerBase
     {
-        private readonly ICategoriaService _categoriaDomainService;
-        public CategoriaController(ICategoriaService categoriaDomainService)
+        private readonly ICategoriaService _categoriaservice;
+        public CategoriaController(ICategoriaService categoriaservice)
         {
-            _categoriaDomainService= categoriaDomainService;
+            _categoriaservice= categoriaservice;
         }
 
         [HttpPost]
         [Route("Cadastrar")]
         public IActionResult Cadastrar([FromBody] Categoria categoria)
         {
-            _categoriaDomainService.Cadastrar(categoria);
+            _categoriaservice.Cadastrar(categoria);
             return Ok();
         }
 
@@ -26,7 +26,7 @@ namespace Ecommerce.API.Controller
         [Route("ObterPorId/{id}")]
         public IActionResult ObterPorId(int id)
         {
-            var result = _categoriaDomainService.ObterPorId(id);
+            var result = _categoriaservice.ObterPorId(id);
 
             if (result != null)
                 return Ok(result);
@@ -38,7 +38,7 @@ namespace Ecommerce.API.Controller
         [Route("ObterPorTodos")]
         public IActionResult Otertodos()
         {
-            var result = _categoriaDomainService.ObterTodos();
+            var result = _categoriaservice.ObterTodos();
 
             if (result != null)
                 return Ok(result);
@@ -46,20 +46,20 @@ namespace Ecommerce.API.Controller
             return NoContent();
         }
 
-        [HttpGet]
+        [HttpPut]
         [Route("Alterar")]
         public IActionResult Alterar([FromBody] Categoria categoria)
         {
-            _categoriaDomainService.Alterar(categoria);
+            _categoriaservice.Alterar(categoria);
 
             return Ok();            
         }
 
-        [HttpGet]
+        [HttpDelete]
         [Route("Deletar/{id}")]
         public IActionResult Deletar(int id)
         {
-            _categoriaDomainService.Deletar(id);
+            _categoriaservice.Deletar(id);
 
             
             return Ok();

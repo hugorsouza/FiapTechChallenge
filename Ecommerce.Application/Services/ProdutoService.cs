@@ -1,4 +1,5 @@
 ﻿using Ecommerce.Domain.Entity;
+using Ecommerce.Domain.Repository;
 using Ecommerce.Domain.Services;
 using System;
 using System.Collections.Generic;
@@ -10,35 +11,35 @@ namespace Ecommerce.Application.Services
 {
     public class ProdutoService : Service<Produto>, IProdutoService
     {
-        public override void Alterar(Produto entidade)
+        private readonly IProdutoRepository _produtoRepository;
+
+        public ProdutoService(IProdutoRepository produtoRepository)
         {
-            throw new NotImplementedException();
+            _produtoRepository = produtoRepository;
         }
 
         public override void Cadastrar(Produto entidade)
         {
-            Console.WriteLine($"Nome: {entidade.Nome}");
-            Console.WriteLine($"Ativo: {entidade.Ativo}");
-            Console.WriteLine($"Preco: {entidade.Preco}");
-            Console.WriteLine($"Descricao: {entidade.Descricao}");
-            Console.WriteLine($"IdFabricante: {entidade.IdFabricante}");
-            Console.WriteLine($"UrlImagem: {entidade.UrlImagem}");
-            Console.WriteLine($"Nome: {entidade.Nome}");
+            _produtoRepository.Cadastrar(entidade);
         }
 
+        public override void Alterar(Produto entidade)
+        {
+            _produtoRepository.Alterar(entidade);
+        }     
         public override void Deletar(int id)
         {
-            throw new NotImplementedException();
+            _produtoRepository.Deletar(id);
         }
 
         public override Produto ObterPorId(int id)
         {
-            throw new NotImplementedException();
+           return  _produtoRepository.ObterPorId(id);
         }
 
         public override IList<Produto> ObterTodos()
         {
-            throw new NotImplementedException();
+            return _produtoRepository.ObterTodos();
         }
     }
 }

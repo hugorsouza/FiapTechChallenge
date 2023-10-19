@@ -8,16 +8,16 @@ namespace Ecommerce.API.Controller
     [ApiController]
     public class ProdutoController : ControllerBase
     {
-        private readonly IProdutoService _produtoDomainService;
-        public ProdutoController(IProdutoService produtoDomainService)
+        private readonly IProdutoService _produtoservice;
+        public ProdutoController(IProdutoService produtoservice)
         {
-            _produtoDomainService= produtoDomainService;
+            _produtoservice= produtoservice;
         }
 
         [HttpPost]
         public IActionResult Post([FromBody] Produto produto)
         {
-            _produtoDomainService.Cadastrar(produto);
+            _produtoservice.Cadastrar(produto);
             return Ok();
         }
 
@@ -25,7 +25,7 @@ namespace Ecommerce.API.Controller
         [Route("ObterPorId/{id}")]
         public IActionResult ObterPorId(int id)
         {
-            var result = _produtoDomainService.ObterPorId(id);
+            var result = _produtoservice.ObterPorId(id);
 
             if (result != null)
                 return Ok(result);
@@ -37,7 +37,7 @@ namespace Ecommerce.API.Controller
         [Route("ObterPorTodos")]
         public IActionResult Otertodos()
         {
-            var result = _produtoDomainService.ObterTodos();
+            var result = _produtoservice.ObterTodos();
 
             if (result != null)
                 return Ok(result);
@@ -45,20 +45,20 @@ namespace Ecommerce.API.Controller
             return NoContent();
         }
 
-        [HttpGet]
+        [HttpPut]
         [Route("Alterar")]
         public IActionResult Alterar([FromBody] Produto produto)
         {
-            _produtoDomainService.Alterar(produto);
+            _produtoservice.Alterar(produto);
 
             return Ok();
         }
 
-        [HttpGet]
+        [HttpDelete]
         [Route("Deletar/{id}")]
         public IActionResult Deletar(int id)
         {
-            _produtoDomainService.Deletar(id);
+            _produtoservice.Deletar(id);
 
             return Ok();
 

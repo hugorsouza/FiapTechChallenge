@@ -8,17 +8,17 @@ namespace Ecommerce.API.Controller
     [ApiController]
     public class FornecedorController : ControllerBase
     {
-        private readonly IFornecedorService _fornecedorDomainService;
-        public FornecedorController(IFornecedorService fornecedorDomainService)
+        private readonly IFornecedorService _fornecedorservice;
+        public FornecedorController(IFornecedorService fornecedorservice)
         {
-            _fornecedorDomainService= fornecedorDomainService;
+            _fornecedorservice= fornecedorservice;
         }
 
         [HttpPost]
         [Route("Cadastrar")]
         public IActionResult Cadastrar([FromBody] Fornecedor fornecedor)
         {
-            _fornecedorDomainService.Cadastrar(fornecedor);
+            _fornecedorservice.Cadastrar(fornecedor);
             return Ok();
         }
 
@@ -26,7 +26,7 @@ namespace Ecommerce.API.Controller
         [Route("ObterPorId/{id}")]
         public IActionResult ObterPorId(int id)
         {
-            var result = _fornecedorDomainService.ObterPorId(id);
+            var result = _fornecedorservice.ObterPorId(id);
 
             if (result != null)
                 return Ok(result);
@@ -38,7 +38,7 @@ namespace Ecommerce.API.Controller
         [Route("ObterPorTodos")]
         public IActionResult Otertodos()
         {
-            var result = _fornecedorDomainService.ObterTodos();
+            var result = _fornecedorservice.ObterTodos();
 
             if (result != null)
                 return Ok(result);
@@ -46,20 +46,20 @@ namespace Ecommerce.API.Controller
             return NoContent();
         }
 
-        [HttpGet]
+        [HttpPut]
         [Route("Alterar")]
         public IActionResult Alterar([FromBody] Fornecedor fornecedor)
         {
-            _fornecedorDomainService.Alterar(fornecedor);
+            _fornecedorservice.Alterar(fornecedor);
 
             return Ok();            
         }
 
-        [HttpGet]
+        [HttpDelete]
         [Route("Deletar/{id}")]
         public IActionResult Deletar(int id)
         {
-            _fornecedorDomainService.Deletar(id);
+            _fornecedorservice.Deletar(id);
 
             
             return Ok();
