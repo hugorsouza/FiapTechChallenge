@@ -9,6 +9,7 @@ namespace Ecommerce.Application.Services
 {
     public abstract class Service<T> : IService<T> where T : class
     {
+
         public abstract void Alterar(T entidade);
         public abstract void Cadastrar(T entidade);
         public abstract void Deletar(int id);    

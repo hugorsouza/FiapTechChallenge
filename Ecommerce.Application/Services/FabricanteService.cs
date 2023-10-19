@@ -10,6 +10,7 @@ namespace Ecommerce.Application.Services
 {
     public class FabricanteService : Service<Fabricante>, IFabricanteService
     {
+
         private readonly IFabricanteService _fabricanteService;
 
         public FabricanteService(IFabricanteService fabricanteService)

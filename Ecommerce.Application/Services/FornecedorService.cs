@@ -10,6 +10,7 @@ namespace Ecommerce.Application.Services
 {
     public class FornecedorService : Service<Fornecedor>, IFornecedorService
     {
+
         public override void Alterar(Fornecedor entidade)
         {
             throw new NotImplementedException();
