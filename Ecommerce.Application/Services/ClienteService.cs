@@ -28,7 +28,7 @@ public class ClienteService : IClienteService
         
         var usuario = _usuarioManager.CriarUsuarioParaCliente(model);
         var cliente = BuildCliente(model, usuario);
-        await _clienteRepository.Inserir(cliente);
+        _clienteRepository.Cadastrar(cliente);
         
         var clienteViewModel = new ClienteViewModel
         {
@@ -49,6 +49,7 @@ public class ClienteService : IClienteService
     private Cliente BuildCliente(CadastroClienteModel model, Usuario usuario)
     {
         var cliente = new Cliente(
+            usuarioId: usuario.Id,
             nome: model.Nome,
             sobrenome: model.Sobrenome,
             cpf: model.Cpf,

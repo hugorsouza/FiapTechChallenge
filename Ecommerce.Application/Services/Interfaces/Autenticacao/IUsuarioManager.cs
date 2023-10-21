@@ -5,8 +5,8 @@ namespace Ecommerce.Application.Services.Interfaces.Autenticacao;
 
 public interface IUsuarioManager
 {
-    Task<Usuario> CadastrarUsuario(Usuario usuario);
-    Task<Usuario> AlterarSenha(Usuario usuario, string novaSenhaTextoPlano);
+    Usuario CadastrarUsuario(Usuario usuario);
+    Usuario AlterarSenha(Usuario usuario, string novaSenhaTextoPlano);
     Usuario CriarUsuarioParaCliente(CadastroClienteModel model);
     Usuario CriarUsuarioParaFuncionario(CadastroFuncionarioModel model);
 }

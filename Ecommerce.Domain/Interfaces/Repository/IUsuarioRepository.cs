@@ -2,11 +2,9 @@
 
 namespace Ecommerce.Domain.Interfaces.Repository;
 
-public interface IUsuarioRepository : IRepositoryBase<Usuario>
+public interface IUsuarioRepository : IRepository<Usuario>
 {
-    Task<Usuario?> ObterUsuarioPorId(int id);
+    Usuario ObterUsuarioPorEmail(string email);
 
-    Task<Usuario?> ObterUsuarioPorEmail(string email);
-
-    Task<Usuario> Inserir(Usuario usuario);
+    int CadastrarObterId(Usuario usuario);
 }

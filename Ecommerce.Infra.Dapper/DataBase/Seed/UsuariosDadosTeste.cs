@@ -5,7 +5,7 @@ using Ecommerce.Domain.Entities.Pessoas.Fisica;
 using Ecommerce.Domain.Entities.Pessoas.Juridica;
 using Ecommerce.Domain.Entities.Shared;
 
-namespace Ecommerce.Infra.Dados.Context.Seed
+namespace Ecommerce.Infra.Dapper.DataBase.Seed
 {
     internal static class UsuariosDadosTeste
     {
@@ -20,19 +20,19 @@ namespace Ecommerce.Infra.Dados.Context.Seed
             .RuleFor(x => x.Email, f => f.Person.Email.ToLowerInvariant())
             .RuleFor(x => x.NomeExibicao, f => f.Person.FullName)
             .RuleFor(x => x.Senha, f => TesteSenha)
-            .RuleFor(x => x.DataCadastroUtc, f => f.Date.Past(3))
+            .RuleFor(x => x.DataCadastro, f => f.Date.Past(3))
             .RuleFor(x => x.Ativo, _ => true)
-            .RuleFor(x => x.DataAlteracaoUtc, f => f.Date.Soon());
+            .RuleFor(x => x.DataAlteracao, f => f.Date.Soon());
         
         private static readonly Faker<Cliente> FakerCliente = new Faker<Cliente>("pt_BR")
             .RuleFor(x => x.Cpf, f => f.Person.Cpf(includeFormatSymbols: false))
             .RuleFor(x => x.Nome, f => f.Person.FirstName)
             .RuleFor(x => x.Sobrenome, f => f.Person.LastName)
             .RuleFor(x => x.DataNascimento, f => f.Person.DateOfBirth)
-            .RuleFor(x => x.DataCadastroUtc, f => f.Date.Past(3))
-            .RuleFor(x => x.DataAlteracaoUtc, f => f.Date.Soon())
-            .RuleFor(x => x.DataCadastroUtc, f => f.Date.Past(3))
-            .RuleFor(x => x.DataAlteracaoUtc, f => f.Date.Soon())
+            .RuleFor(x => x.DataCadastro, f => f.Date.Past(3))
+            .RuleFor(x => x.DataAlteracao, f => f.Date.Soon())
+            .RuleFor(x => x.DataCadastro, f => f.Date.Past(3))
+            .RuleFor(x => x.DataAlteracao, f => f.Date.Soon())
             .RuleFor(x => x.Usuario, _ => FakerUsuario.Generate());
         
         private static readonly Faker<Funcionario> FakerFuncionario = new Faker<Funcionario>("pt_BR")
@@ -40,10 +40,10 @@ namespace Ecommerce.Infra.Dados.Context.Seed
             .RuleFor(x => x.Nome, f => f.Person.FirstName)
             .RuleFor(x => x.Sobrenome, f => f.Person.LastName)
             .RuleFor(x => x.DataNascimento, f => f.Person.DateOfBirth)
-            .RuleFor(x => x.DataCadastroUtc, f => f.Date.Past(3))
-            .RuleFor(x => x.DataAlteracaoUtc, f => f.Date.Soon())
-            .RuleFor(x => x.DataCadastroUtc, f => f.Date.Past(3))
-            .RuleFor(x => x.DataAlteracaoUtc, f => f.Date.Soon())
+            .RuleFor(x => x.DataCadastro, f => f.Date.Past(3))
+            .RuleFor(x => x.DataAlteracao, f => f.Date.Soon())
+            .RuleFor(x => x.DataCadastro, f => f.Date.Past(3))
+            .RuleFor(x => x.DataAlteracao, f => f.Date.Soon())
             .RuleFor(x => x.Cargo, _ => "Tester")
             .RuleFor(x => x.Usuario, _ => FakerUsuario.Generate());
 

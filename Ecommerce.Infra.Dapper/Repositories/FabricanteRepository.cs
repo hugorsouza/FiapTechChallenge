@@ -9,12 +9,13 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ecommerce.Infra.Dapper.Interfaces;
 
 namespace Ecommerce.Infra.Dapper.Repositories
 {
     public class FabricanteRepository : Repository<Fabricante>, IFabricanteRepository
     {
-        public FabricanteRepository(IConfiguration configuration) : base(configuration)
+        public FabricanteRepository(IConfiguration configuration, IUnitOfWork unitOfWork) : base(configuration, unitOfWork)
         {
         }
 

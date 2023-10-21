@@ -5,6 +5,7 @@ namespace Ecommerce.Domain.Entities.Pessoas.Fisica;
 public class Cliente : PessoaFisica
 {
     public Cliente(
+        int usuarioId,
         string nome, 
         string sobrenome,
         string cpf,
@@ -12,11 +13,12 @@ public class Cliente : PessoaFisica
         Usuario usuario,
         bool recebeNewsletterEmail = false) 
         : base(
-            nome, sobrenome, cpf,
+            usuarioId, nome, sobrenome, cpf,
             dataNascimento, usuario)
     {
         if (usuario.Perfil != PerfilUsuario.Cliente)
             throw new ArgumentException($"Perfil inválido para {GetType().Name}: {usuario.Perfil}");
+        Id = usuarioId;
         RecebeNewsletterEmail = recebeNewsletterEmail;
     }
 

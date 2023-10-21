@@ -6,8 +6,8 @@ using Ecommerce.Application.Services;
 using Ecommerce.Application.Services.Interfaces;
 using Ecommerce.Application.Services.Interfaces.Pessoas;
 using Ecommerce.Infra.Auth.Extensions;
-using Ecommerce.Infra.Dados.Context.Seed;
-using Ecommerce.Infra.Dados.Extensions;
+using Ecommerce.Infra.Dapper.DataBase.Seed;
+using Ecommerce.Infra.Dapper.Extensions;
 using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,7 +17,7 @@ builder.Services.AddControllers();
 builder.Services.AddDocumentacaoApi();
 
 builder.Services
-    .AddEntityFramework(builder.Configuration, builder.Environment.IsDevelopment())
+    .AddRepositories()
     .AddAutenticacaoJwt(builder.Configuration)
     .AddValidatorsFromAssemblyContaining<IApplicationAssemblyMarker>()
     .AddScoped<IFazerPedidoService, FazerPedidoService>()
@@ -33,7 +33,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 
-    app.SeedDatabase(true);
+    app.SeedDatabase();
 }
 
 app.UseHttpsRedirection();

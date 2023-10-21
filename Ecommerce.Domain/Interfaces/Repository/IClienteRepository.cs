@@ -4,9 +4,7 @@ using Ecommerce.Domain.Entities.Pessoas.Fisica;
 
 namespace Ecommerce.Domain.Interfaces.Repository
 {
-    public interface IClienteRepository : IRepositoryBase<Cliente>
+    public interface IClienteRepository : IRepository<Cliente>
     {
-        Task<Cliente> ObterPessoaPorId(int id);
-        Task<Cliente> Inserir(Cliente cliente);
     }
 }
