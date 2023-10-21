@@ -1,5 +1,6 @@
-﻿using Ecommerce.Domain.Entities;
-using Ecommerce.Domain.Entities.Autenticacao;
+﻿using Ecommerce.Domain.Entities.Pessoas.Autenticacao;
+using Ecommerce.Domain.Entities.Pessoas.Fisica;
+using Ecommerce.Domain.Entities.Pessoas.Juridica;
 using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerce.Infra.Dados.Context
@@ -11,10 +12,11 @@ namespace Ecommerce.Infra.Dados.Context
         {
             
         }
-
-        public DbSet<PessoaFisica> PessoasFisicas { get; set; }
-        public DbSet<Usuario> Usuarios { get; set; }
-
+    
+        public required DbSet<Cliente> Clientes { get; set; }
+        public required DbSet<Empresa> Empresas { get; set; }
+        public required DbSet<Funcionario> Funcionarios { get; set; }
+        public required DbSet<Usuario> Usuarios { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

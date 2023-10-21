@@ -7,8 +7,10 @@
             return (IsCpf(documento) || IsCnpj(documento));
         }
 
-        private static bool IsCpf(string cpf)
+        public static bool IsCpf(string cpf)
         {
+            if (string.IsNullOrWhiteSpace(cpf?.Trim()))
+                return false;
             int[] multiplicador1 = new int[9] { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
             int[] multiplicador2 = new int[10] { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
 
@@ -50,42 +52,68 @@
             return cpf.EndsWith(digito);
         }
 
-        private static bool IsCnpj(string cnpj)
+        private static readonly int[] cnpjMultiplicador1 = new[] { 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
+        private static readonly int[] cnpjMultiplicador2 = new[] { 6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
+        public static bool IsCnpj(string cnpj)
         {
-            int[] multiplicador1 = new int[12] { 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
-            int[] multiplicador2 = new int[13] { 6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
-
-            cnpj = cnpj.Trim().Replace(".", "").Replace("-", "").Replace("/", "");
-            if (cnpj.Length != 14)
+            if (cnpj is null)
                 return false;
 
-            string tempCnpj = cnpj.Substring(0, 12);
-            int soma = 0;
+            var digitosIdenticos = true;
+            var ultimoDigito = -1;
+            var posicao = 0;
+            var totalDigito1 = 0;
+            var totalDigito2 = 0;
 
-            for (int i = 0; i < 12; i++)
-                soma += int.Parse(tempCnpj[i].ToString()) * multiplicador1[i];
+            foreach (var c in cnpj)
+            {
+                if (!char.IsDigit(c)) 
+                    continue;
+                
+                var digito = c - '0';
+                if (posicao != 0 && ultimoDigito != digito)
+                {
+                    digitosIdenticos = false;
+                }
 
-            int resto = (soma % 11);
-            if (resto < 2)
-                resto = 0;
-            else
-                resto = 11 - resto;
+                ultimoDigito = digito;
+                switch (posicao)
+                {
+                    case < 12:
+                        totalDigito1 += digito * cnpjMultiplicador1[posicao];
+                        totalDigito2 += digito * cnpjMultiplicador2[posicao];
+                        break;
+                    case 12:
+                    {
+                        var dv1 = (totalDigito1 % 11);
+                        dv1 = dv1 < 2 
+                            ? 0 
+                            : 11 - dv1;
 
-            string digito = resto.ToString();
-            tempCnpj = tempCnpj + digito;
-            soma = 0;
-            for (int i = 0; i < 13; i++)
-                soma += int.Parse(tempCnpj[i].ToString()) * multiplicador2[i];
+                        if (digito != dv1)
+                            return false;
+                        
+                        totalDigito2 += dv1 * cnpjMultiplicador2[12];
+                        break;
+                    }
+                    case 13:
+                    {
+                        var dv2 = (totalDigito2 % 11);
 
-            resto = (soma % 11);
-            if (resto < 2)
-                resto = 0;
-            else
-                resto = 11 - resto;
+                        dv2 = dv2 < 2 
+                            ? 0 
+                            : 11 - dv2;
 
-            digito = digito + resto.ToString();
+                        if (digito != dv2)
+                            return false;
+                        break;
+                    }
+                }
 
-            return cnpj.EndsWith(digito);
+                posicao++;
+            }
+
+            return (posicao == 14) && !digitosIdenticos;
         }
     }
 }

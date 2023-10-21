@@ -8,8 +8,7 @@ namespace Ecommerce.Infra.Dapper.Extensions
     {
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
-            return services.AddScoped<IUsuarioRepository, MockUsuarioRepository>()
-                .AddScoped<IPessoaFisicaRepository, MockPessoaFisicaRepository>();
+            return services;
         }
     }
 }

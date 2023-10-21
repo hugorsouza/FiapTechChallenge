@@ -1,5 +1,6 @@
 ﻿using Ecommerce.Application.Model.Autenticacao;
 using Ecommerce.Application.Services.Interfaces.Autenticacao;
+using Ecommerce.Domain.Entities.Pessoas.Autenticacao;
 using Ecommerce.Domain.Exceptions;
 using Ecommerce.Domain.Interfaces.Repository;
 using Ecommerce.Infra.Auth.Interfaces;
@@ -12,14 +13,12 @@ namespace Ecommerce.Infra.Auth.Services
         private readonly IJwtFactory _jwtFactory;
         private readonly ISenhaHasher _hasher;
         private readonly IUsuarioRepository _usuarioRepository;
-        private readonly IPessoaFisicaRepository _pessoaFisicaRepository;
         private readonly IValidator<LoginModel> _validadorLogin;
 
-        public AutenticacaoService(ISenhaHasher hasher, IUsuarioRepository usuarioRepository, IPessoaFisicaRepository pessoaFisicaRepository, IJwtFactory jwtFactory, IValidator<LoginModel> validadorLogin)
+        public AutenticacaoService(ISenhaHasher hasher, IUsuarioRepository usuarioRepository, IJwtFactory jwtFactory, IValidator<LoginModel> validadorLogin)
         {
             _hasher = hasher;
             _usuarioRepository = usuarioRepository;
-            _pessoaFisicaRepository = pessoaFisicaRepository;
             _jwtFactory = jwtFactory;
             _validadorLogin = validadorLogin;
         }
@@ -30,12 +29,14 @@ namespace Ecommerce.Infra.Auth.Services
             var usuario = await _usuarioRepository.ObterUsuarioPorEmail(credenciais.Email.Trim());
             if(usuario is null || !_hasher.ValidarSenha(credenciais.Senha, usuario.Senha))
                 throw RequisicaoInvalidaException.PorMotivo("Credenciais inválidas");
+            
+            return GerarTokens(usuario);
+        }
 
-            if (usuario.PessoaFisica is null)
-                throw new NotImplementedException("Ainda não temos login por empresa");
-
-            var accessToken = _jwtFactory.GenerateAccessToken(usuario.PessoaFisica);
-            var refreshToken = _jwtFactory.GenerateAccessToken(usuario.PessoaFisica);
+        private LoginResponse GerarTokens(Usuario usuario)
+        {
+            var accessToken = _jwtFactory.GenerateAccessToken(usuario);
+            var refreshToken = _jwtFactory.GenerateRefreshToken(usuario);
 
             return new LoginResponse
             {
