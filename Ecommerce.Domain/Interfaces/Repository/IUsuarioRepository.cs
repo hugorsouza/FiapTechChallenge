@@ -1,4 +1,4 @@
-﻿using Ecommerce.Domain.Entities.Autenticacao;
+﻿using Ecommerce.Domain.Entities.Pessoas.Autenticacao;
 
 namespace Ecommerce.Domain.Interfaces.Repository;
 

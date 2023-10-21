@@ -65,6 +65,7 @@ namespace Ecommerce.Infra.Auth.Extensions
             });
             return services;
         }
+
         private static IServiceCollection AddOptions(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<JwtConfig>(configuration.GetSection(JwtConfig.AppSettingsKey));
@@ -76,7 +77,8 @@ namespace Ecommerce.Infra.Auth.Extensions
             services
                 .AddScoped<ISenhaHasher, BCryptSenhaHasher>()
                 .AddScoped<IJwtFactory, JwtFactory>()
-                .AddScoped<IAutenticacaoService, AutenticacaoService>();
+                .AddScoped<IAutenticacaoService, AutenticacaoService>()
+                .AddScoped<IUsuarioManager, UsuarioManager>();
             return services;
         }
     }

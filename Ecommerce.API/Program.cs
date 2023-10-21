@@ -4,6 +4,7 @@ using Ecommerce.API.Middleware;
 using Ecommerce.Application;
 using Ecommerce.Application.Services;
 using Ecommerce.Application.Services.Interfaces;
+using Ecommerce.Application.Services.Interfaces.Pessoas;
 using Ecommerce.Infra.Auth.Extensions;
 using Ecommerce.Infra.Dados.Context.Seed;
 using Ecommerce.Infra.Dados.Extensions;
@@ -20,6 +21,7 @@ builder.Services
     .AddAutenticacaoJwt(builder.Configuration)
     .AddValidatorsFromAssemblyContaining<IApplicationAssemblyMarker>()
     .AddScoped<IFazerPedidoService, FazerPedidoService>()
+    .AddScoped<IClienteService, ClienteService>()
     .AddScoped<ExceptionMiddleware>();
 
 var app = builder.Build();

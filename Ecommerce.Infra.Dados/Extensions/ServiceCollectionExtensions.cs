@@ -12,14 +12,12 @@ namespace Ecommerce.Infra.Dados.Extensions
     {
         public static IServiceCollection AddEntityFramework(this IServiceCollection services, IConfiguration configuration, bool isDev)
         {
-            var migrationAssembly = Assembly.GetCallingAssembly();
             services
                 .AddDbContext<ApplicationDbContext>(options =>
                 {
                     options.UseSqlServer(configuration.GetConnectionString("Ecommerce"),
                         b =>
                         {
-                            b.MigrationsAssembly(migrationAssembly.FullName);
                         }
                     );
                     options.EnableDetailedErrors(detailedErrorsEnabled: isDev);
