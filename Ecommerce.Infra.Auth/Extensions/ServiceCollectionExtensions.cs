@@ -1,21 +1,12 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Ecommerce.Infra.Auth.Services;
 using Ecommerce.Application.Services.Interfaces.Autenticacao;
-using Ecommerce.Domain.Entity.Shared;
-using Ecommerce.Domain.Interfaces.Repository;
 using Ecommerce.Infra.Auth.Configuration;
 using Ecommerce.Infra.Auth.Interfaces;
 using Ecommerce.Infra.Auth.Jwt;
-using Ecommerce.Infra.Dapper.Repositories;
 
 namespace Ecommerce.Infra.Auth.Extensions
 {
@@ -74,6 +65,7 @@ namespace Ecommerce.Infra.Auth.Extensions
             });
             return services;
         }
+
         private static IServiceCollection AddOptions(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<JwtConfig>(configuration.GetSection(JwtConfig.AppSettingsKey));
@@ -85,7 +77,8 @@ namespace Ecommerce.Infra.Auth.Extensions
             services
                 .AddScoped<ISenhaHasher, BCryptSenhaHasher>()
                 .AddScoped<IJwtFactory, JwtFactory>()
-                .AddScoped<IAutenticacaoService, AutenticacaoService>();
+                .AddScoped<IAutenticacaoService, AutenticacaoService>()
+                .AddScoped<IUsuarioManager, UsuarioManager>();
             return services;
         }
     }

@@ -1,37 +1,52 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+﻿using System.ComponentModel;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using Ecommerce.Domain.Entity;
-using Ecommerce.Domain.Entity.Autenticacao;
-using Ecommerce.Domain.Entity.Shared;
+using Ecommerce.Domain.Entities.Pessoas.Autenticacao;
+using Ecommerce.Domain.Entities.Pessoas.Fisica;
 using Ecommerce.Infra.Auth.Constants;
 
 namespace Ecommerce.Infra.Auth.Extensions
 {
     public static class UsuarioExtensions
     {
-        public static List<Claim> ObterClaims(this IUsuario pessoa)
+        public static Claim[] ObterClaims(this Usuario usuario)
         {
-            var perfil = PerfilUsuarioHelper.ObterClaimPerfil(pessoa.Usuario.Perfil);
+            var perfil = PerfilUsuarioHelper.ObterClaimPerfil(usuario.Perfil);
             var claims = new List<Claim> {
-                new(JwtRegisteredClaimNames.Sub, pessoa.Usuario.Id.ToString()),
-                new(JwtRegisteredClaimNames.UniqueName, pessoa.Usuario.EmailNormalizado),
-                new(JwtRegisteredClaimNames.Email, pessoa.Usuario.EmailNormalizado),
-                new(JwtRegisteredClaimNames.Name, pessoa.Usuario.NomeExibicao),
-                new(ClaimsIdentity.DefaultNameClaimType, pessoa.Usuario.NomeExibicao),
+                new(JwtRegisteredClaimNames.Sub, usuario.Id.ToString()),
+                new(JwtRegisteredClaimNames.UniqueName, usuario.EmailNormalizado),
+                new(JwtRegisteredClaimNames.Email, usuario.EmailNormalizado),
+                new(JwtRegisteredClaimNames.Name, usuario.NomeExibicao),
+                new(ClaimsIdentity.DefaultNameClaimType, usuario.NomeExibicao),
                 new(ClaimsIdentity.DefaultRoleClaimType, perfil)
             };
 
-            if (pessoa is PessoaFisica pessoaFisica)
+            switch (usuario.Perfil)
             {
-                claims.Add(
-                    new(JwtRegisteredClaimNames.GivenName, pessoaFisica.Nome));
-                claims.Add(
-                    new(JwtRegisteredClaimNames.GivenName, pessoaFisica.Sobrenome));
-                claims.Add(
-                    new(JwtRegisteredClaimNames.Birthdate, pessoaFisica.DataNascimento.ToString("s")));
-                claims.Add(new(CustomClaims.TipoPessoa, nameof(PessoaFisica)));
+                case PerfilUsuario.Cliente:
+                    claims.AddRange(ObterClaimsPessoa(usuario.Cliente));
+                    break;
+                case PerfilUsuario.Funcionario:
+                    claims.AddRange(ObterClaimsPessoa(usuario.Funcionario));
+                    break;
+                case PerfilUsuario.EmpresaTerceira:
+                    break;
+                default:
+                    throw new InvalidEnumArgumentException($"O perfil {usuario.Perfil} não foi implementado");
             }
 
+            return claims.ToArray();
+        }
+        
+        private static Claim[] ObterClaimsPessoa(PessoaFisica pessoaFisica)
+        {
+            var claims = new Claim[]
+            {
+                new(JwtRegisteredClaimNames.GivenName, pessoaFisica.Nome),
+                new(JwtRegisteredClaimNames.FamilyName, pessoaFisica.Sobrenome),
+                new(JwtRegisteredClaimNames.Birthdate, pessoaFisica.DataNascimento.ToString("s")),
+                new(CustomClaims.TipoPessoa, nameof(PessoaFisica))
+            };
             return claims;
         }
     }

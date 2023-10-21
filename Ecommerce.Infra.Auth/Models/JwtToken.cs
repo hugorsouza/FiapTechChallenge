@@ -1,4 +1,4 @@
-﻿using Ecommerce.Domain.Entity.Autenticacao;
+﻿using Ecommerce.Domain.Entities.Pessoas.Autenticacao;
 
 namespace Ecommerce.Infra.Auth.Models
 {

@@ -1,14 +1,13 @@
-﻿using Ecommerce.Domain.Entity.Autenticacao;
-using Ecommerce.Infra.Auth.Configuration;
+﻿using Ecommerce.Infra.Auth.Configuration;
 using Ecommerce.Infra.Auth.Models;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
-using Ecommerce.Domain.Entity.Shared;
+using Ecommerce.Domain.Entities.Pessoas.Autenticacao;
 using Ecommerce.Infra.Auth.Constants;
-using Ecommerce.Infra.Auth.Extensions;
 using Ecommerce.Infra.Auth.Interfaces;
+using Ecommerce.Infra.Auth.Extensions;
 
 namespace Ecommerce.Infra.Auth.Jwt
 {
@@ -21,7 +20,7 @@ namespace Ecommerce.Infra.Auth.Jwt
             _jwtConfig = jwtConfig.Value;
         }
 
-        public JwtToken GenerateAccessToken(IUsuario usuario)
+        public JwtToken GenerateAccessToken(Usuario usuario)
         {
             var criadoEm = DateTime.UtcNow;
             var expiraEm = criadoEm.AddTicks(TicksAteExpiracaoToken());
@@ -29,7 +28,7 @@ namespace Ecommerce.Infra.Auth.Jwt
             return token;
         }
 
-        public JwtToken GenerateRefreshToken(IUsuario usuario, DateTime? validoAte = null)
+        public JwtToken GenerateRefreshToken(Usuario usuario, DateTime? validoAte = null)
         {
             var criadoEm = DateTime.UtcNow;
             var expiraEm = validoAte ?? criadoEm.AddTicks(TicksAteExpiracaoRefreshToken());
@@ -37,7 +36,7 @@ namespace Ecommerce.Infra.Auth.Jwt
             return token;
         }
 
-        private JwtToken GenerateToken(IUsuario user, DateTime creationDate, DateTime expirationDate, TipoToken tipoToken)
+        private JwtToken GenerateToken(Usuario user, DateTime creationDate, DateTime expirationDate, TipoToken tipoToken)
         {
             var signingCredentials = ObterSigningCredentials();
             var userClaims = user.ObterClaims().ToList();
@@ -56,7 +55,7 @@ namespace Ecommerce.Infra.Auth.Jwt
             };
 
             var tokenString = new JsonWebTokenHandler().CreateToken(securityToken);
-            return new JwtToken(user.Usuario.Id, jti, tipoToken, tokenString, creationDate, expirationDate);
+            return new JwtToken(user.Id, jti, tipoToken, tokenString, creationDate, expirationDate);
         }
 
         public bool TentarLerToken(string tokenString, out JsonWebToken token)

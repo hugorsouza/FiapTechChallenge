@@ -1,6 +1,6 @@
 ﻿using Ecommerce.Application.Model.Autenticacao;
 using Ecommerce.Application.Services.Interfaces.Autenticacao;
-using Ecommerce.Domain.Entity.Autenticacao;
+using Ecommerce.Domain.Entities.Pessoas.Autenticacao;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -43,7 +43,7 @@ namespace Ecommerce.API.Controller
             return Ok();
         }
 
-        [Authorize(Roles = PerfilUsuarioHelper.Operador)]
+        [Authorize(Roles = PerfilUsuarioHelper.Funcionario)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [HttpGet("sou-operador")]
