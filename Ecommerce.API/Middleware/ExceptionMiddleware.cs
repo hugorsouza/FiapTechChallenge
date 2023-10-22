@@ -23,6 +23,10 @@ namespace Ecommerce.API.Middleware
             {
                 EscreverRetornoBadRequest(badReqEx, context);
             }
+            catch (DesautorizadoException unauthEx)
+            {
+                EscreverRetornoUnauthorized(unauthEx, context);
+            }
             catch (ValidationException valEx)
             {
                 EscreverRetornoErroValidacao(valEx, context);
@@ -61,6 +65,21 @@ namespace Ecommerce.API.Middleware
             var problemDetails = new ProblemDetails()
             {
                 Title = "Requisição inválida",
+                Detail = ex.Message,
+                Status = statusCode,
+                Instance = context.Request.Path,
+                Type = ""
+            };
+
+            EscreverResponse(context, statusCode, problemDetails);
+        }
+        
+        private void EscreverRetornoUnauthorized(DesautorizadoException ex, HttpContext context)
+        {
+            const int statusCode = StatusCodes.Status403Forbidden;
+            var problemDetails = new ProblemDetails()
+            {
+                Title = "Desautorizado",
                 Detail = ex.Message,
                 Status = statusCode,
                 Instance = context.Request.Path,

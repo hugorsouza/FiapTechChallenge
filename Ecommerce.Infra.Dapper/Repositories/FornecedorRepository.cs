@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ecommerce.Infra.Dapper.Interfaces;
 
 namespace Ecommerce.Infra.Dapper.Repositories
 {
@@ -15,7 +16,7 @@ namespace Ecommerce.Infra.Dapper.Repositories
     {
         private readonly IFornecedorRepository _fornecedorRepository;
 
-        public FornecedorRepository(IConfiguration configuration) : base(configuration)
+        public FornecedorRepository(IConfiguration configuration, IUnitOfWork unitOfWork) : base(configuration, unitOfWork)
         {
         }
 

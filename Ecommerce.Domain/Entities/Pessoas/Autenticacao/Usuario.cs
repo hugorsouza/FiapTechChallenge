@@ -13,8 +13,8 @@ namespace Ecommerce.Domain.Entities.Pessoas.Autenticacao
             Email = email;
             EmailNormalizado = email.Trim().ToUpperInvariant();
             Senha = senha;
-            DataCadastroUtc = dataCadastro;
-            DataAlteracaoUtc = dataCadastro; //não foi alterado
+            DataCadastro = dataCadastro;
+            DataAlteracao = dataCadastro; //não foi alterado
             Perfil = perfil;
             EmailConfirmado = false;
             Ativo = true;
@@ -29,8 +29,8 @@ namespace Ecommerce.Domain.Entities.Pessoas.Autenticacao
         public string Email { get; set; }
         public string EmailNormalizado { get; set; }
         public string Senha { get; set; }
-        public DateTime DataCadastroUtc { get; set; }
-        public DateTime DataAlteracaoUtc { get; set; }
+        public DateTime DataCadastro { get; set; }
+        public DateTime? DataAlteracao { get; set; }
         public PerfilUsuario Perfil { get; set; }
         public bool EmailConfirmado { get; set; }
         public bool Ativo { get; set; }

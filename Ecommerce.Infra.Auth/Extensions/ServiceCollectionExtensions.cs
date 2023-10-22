@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Ecommerce.Infra.Auth.Services;
 using Ecommerce.Application.Services.Interfaces.Autenticacao;
+using Ecommerce.Domain.Entities.Pessoas.Autenticacao;
 using Ecommerce.Infra.Auth.Configuration;
+using Ecommerce.Infra.Auth.Constants;
 using Ecommerce.Infra.Auth.Interfaces;
 using Ecommerce.Infra.Auth.Jwt;
 
@@ -15,7 +17,7 @@ namespace Ecommerce.Infra.Auth.Extensions
         public static IServiceCollection AddAutenticacaoJwt(this IServiceCollection services, IConfiguration configuration)
         {
             services
-                //.AddMemoryCache()
+                .AddHttpContextAccessor()
                 .AddOptions(configuration)
                 .AddServices()
                 .AddJwtSecurity(configuration);
@@ -61,6 +63,12 @@ namespace Ecommerce.Infra.Auth.Extensions
                     .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
                     .AddRequirements()
                     .RequireAuthenticatedUser()
+                    .Build());
+                auth.AddPolicy(CustomPolicies.SomenteAdministrador, new AuthorizationPolicyBuilder()
+                    .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+                    .RequireAuthenticatedUser()
+                    .RequireRole(PerfilUsuarioExtensions.Funcionario)
+                    .RequireClaim(CustomClaims.FlagAdmin, "true")
                     .Build());
             });
             return services;

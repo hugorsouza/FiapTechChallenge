@@ -1,4 +1,5 @@
-﻿using Ecommerce.Application.Model.Autenticacao;
+﻿using Ecommerce.Application.Model.Pessoas.Autenticacao;
+using Ecommerce.Application.Validations.Propriedades;
 using FluentValidation;
 
 namespace Ecommerce.Application.Validations.Pessoas.Autenticacao
@@ -13,8 +14,7 @@ namespace Ecommerce.Application.Validations.Pessoas.Autenticacao
                 .EmailAddress();
 
             RuleFor(x => x.Senha)
-                .NotEmpty()
-                .Length(6, 255);
+                .SetValidator(new SenhaValidator<LoginModel, string>());
         }
     }
 }

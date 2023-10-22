@@ -10,12 +10,13 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ecommerce.Infra.Dapper.Interfaces;
 
 namespace Ecommerce.Infra.Dapper.Repositories
 {
     public class ProdutoRepository : Repository<Produto>, IProdutoRepository
     {
-        public ProdutoRepository(IConfiguration configuration) : base(configuration)
+        public ProdutoRepository(IConfiguration configuration, IUnitOfWork unitOfWork) : base(configuration, unitOfWork)
         {
         }
 

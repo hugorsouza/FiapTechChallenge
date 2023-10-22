@@ -1,4 +1,4 @@
-﻿using Ecommerce.Application.Model.Autenticacao;
+﻿using Ecommerce.Application.Model.Pessoas.Autenticacao;
 
 namespace Ecommerce.Application.Services.Interfaces.Autenticacao
 {

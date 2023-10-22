@@ -1,4 +1,4 @@
-﻿namespace Ecommerce.Application.Model.Pessoas;
+﻿namespace Ecommerce.Application.Model.Pessoas.Cadastro;
 
 public abstract record CadastroPessoaModelBase : CadastroUsuarioModelBase
 {
@@ -11,4 +11,6 @@ public abstract record CadastroPessoaModelBase : CadastroUsuarioModelBase
     {
         return $"{Nome} {Sobrenome}".Trim();
     }
+    
+    public string ObterCpfSemFormatacao() => string.Join("", Cpf.Where(char.IsDigit).ToArray());
 }

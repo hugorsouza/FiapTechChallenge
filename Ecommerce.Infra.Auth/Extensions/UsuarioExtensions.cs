@@ -11,7 +11,7 @@ namespace Ecommerce.Infra.Auth.Extensions
     {
         public static Claim[] ObterClaims(this Usuario usuario)
         {
-            var perfil = PerfilUsuarioHelper.ObterClaimPerfil(usuario.Perfil);
+            var perfil = PerfilUsuarioExtensions.ObterClaimPerfil(usuario.Perfil);
             var claims = new List<Claim> {
                 new(JwtRegisteredClaimNames.Sub, usuario.Id.ToString()),
                 new(JwtRegisteredClaimNames.UniqueName, usuario.EmailNormalizado),
@@ -28,6 +28,7 @@ namespace Ecommerce.Infra.Auth.Extensions
                     break;
                 case PerfilUsuario.Funcionario:
                     claims.AddRange(ObterClaimsPessoa(usuario.Funcionario));
+                    claims.Add(new(CustomClaims.FlagAdmin, usuario.Funcionario.Administrador.ToString().ToLower()));
                     break;
                 case PerfilUsuario.EmpresaTerceira:
                     break;

@@ -1,4 +1,4 @@
-﻿using Ecommerce.Application.Model.Autenticacao;
+﻿using Ecommerce.Application.Model.Pessoas.Autenticacao;
 using Ecommerce.Application.Services.Interfaces.Autenticacao;
 using Ecommerce.Domain.Entities.Pessoas.Autenticacao;
 using Ecommerce.Domain.Exceptions;
@@ -12,13 +12,13 @@ namespace Ecommerce.Infra.Auth.Services
     {
         private readonly IJwtFactory _jwtFactory;
         private readonly ISenhaHasher _hasher;
-        private readonly IUsuarioRepository _usuarioRepository;
+        private readonly IUsuarioManager _usuarioManager;
         private readonly IValidator<LoginModel> _validadorLogin;
 
-        public AutenticacaoService(ISenhaHasher hasher, IUsuarioRepository usuarioRepository, IJwtFactory jwtFactory, IValidator<LoginModel> validadorLogin)
+        public AutenticacaoService(ISenhaHasher hasher, IUsuarioManager usuarioManager, IJwtFactory jwtFactory, IValidator<LoginModel> validadorLogin)
         {
             _hasher = hasher;
-            _usuarioRepository = usuarioRepository;
+            _usuarioManager = usuarioManager;
             _jwtFactory = jwtFactory;
             _validadorLogin = validadorLogin;
         }
@@ -26,8 +26,8 @@ namespace Ecommerce.Infra.Auth.Services
         public async Task<LoginResponse> Login(LoginModel credenciais)
         {
             await _validadorLogin.ValidateAndThrowAsync(credenciais);
-            var usuario = await _usuarioRepository.ObterUsuarioPorEmail(credenciais.Email.Trim());
-            if(usuario is null || !_hasher.ValidarSenha(credenciais.Senha, usuario.Senha))
+            var usuario = _usuarioManager.ObterUsuarioPorEmail(credenciais.Email.Trim());
+            if(usuario is null || !usuario.Ativo || !_hasher.ValidarSenha(credenciais.Senha, usuario.Senha))
                 throw RequisicaoInvalidaException.PorMotivo("Credenciais inválidas");
             
             return GerarTokens(usuario);

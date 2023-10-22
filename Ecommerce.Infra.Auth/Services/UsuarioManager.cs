@@ -1,8 +1,13 @@
 ﻿using System.ComponentModel;
-using Ecommerce.Application.Model.Pessoas;
+using Ecommerce.Application.Model.Pessoas.Autenticacao;
+using Ecommerce.Application.Model.Pessoas.Cadastro;
 using Ecommerce.Application.Services.Interfaces.Autenticacao;
 using Ecommerce.Domain.Entities.Pessoas.Autenticacao;
 using Ecommerce.Domain.Interfaces.Repository;
+using Ecommerce.Infra.Auth.Constants;
+using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 
 namespace Ecommerce.Infra.Auth.Services;
 
@@ -10,33 +15,104 @@ public class UsuarioManager : IUsuarioManager
 {
     private readonly ISenhaHasher _hasher;
     private readonly IUsuarioRepository _usuarioRepository;
+    private readonly IClienteRepository _clienteRepository;
+    private readonly IFuncionarioRepository _funcionarioRepository;
+    private readonly IHttpContextAccessor _contextAccessor;
+    private readonly IValidator<AlterarSenhaModel> _validatorAlterarSenha;
+    private readonly IAuthorizationService _authorizationService;
+    private HttpContext Context => _contextAccessor.HttpContext ?? throw new InvalidOperationException("Um método que depende do HttpContext foi invocado fora do contexto de um http request");
 
-    public UsuarioManager(ISenhaHasher hasher, IUsuarioRepository usuarioRepository)
+    public UsuarioManager(ISenhaHasher hasher, IUsuarioRepository usuarioRepository, IHttpContextAccessor contextAccessor, IClienteRepository clienteRepository, IValidator<AlterarSenhaModel> validatorAlterarSenha, IAuthorizationService authorizationService, IFuncionarioRepository funcionarioRepository)
     {
         _hasher = hasher;
         _usuarioRepository = usuarioRepository;
+        _clienteRepository = clienteRepository;
+        _validatorAlterarSenha = validatorAlterarSenha;
+        _authorizationService = authorizationService;
+        _funcionarioRepository = funcionarioRepository;
+        _contextAccessor = contextAccessor;
     }
 
-    public async Task<Usuario> CadastrarUsuario(Usuario usuario)
+    public Usuario CadastrarUsuario(Usuario usuario)
     {
-        await _usuarioRepository.Inserir(usuario);
+        usuario.Id = _usuarioRepository.CadastrarObterId(usuario);
         return usuario;
     }
     
-    public async Task<Usuario> AlterarSenha(Usuario usuario, string novaSenhaTextoPlano)
+    public Usuario Alterar(Usuario usuario)
     {
-        var senhaHash = GerarHashSenha(novaSenhaTextoPlano);
-        //await _usuarioRepository.Inserir(usuario);
+        _usuarioRepository.Alterar(usuario);
+        return usuario;
+    }
+    
+    public void AlterarSenha(AlterarSenhaModel model)
+    {
+        _validatorAlterarSenha.ValidateAndThrow(model);
+        var usuario = ObterUsuarioAtual();
+        AlterarSenha(model, usuario!);
+    }
+    
+    public void AlterarSenha(AlterarSenhaModel model, Usuario usuario)
+    {
+        _validatorAlterarSenha.ValidateAndThrow(model);
+        usuario.Senha = GerarHashSenha(model.Senha);
+        _usuarioRepository.AlterarSenha(usuario);
+    }
+
+    public Usuario? ObterUsuarioAtual()
+    {
+        var email = Context.User.Identity?.Name;
+        return email is null ? null : ObterUsuarioPorEmail(email);
+    }
+
+    public Usuario? ObterPorId(int id)
+    {
+        var usuario =  _usuarioRepository.ObterPorId(id);
+        return ObterDadosRelacionados(usuario);
+    }
+    
+    public Usuario? ObterUsuarioPorEmail(string email)
+    {
+        email = email.Trim().ToUpperInvariant();
+        var usuario = _usuarioRepository.ObterUsuarioPorEmail(email);
+        return ObterDadosRelacionados(usuario);
+    }
+
+    private Usuario? ObterDadosRelacionados(Usuario? usuario)
+    {
+        if (usuario is null)
+            return null;
+        
+        switch (usuario.Perfil)
+        {
+            case PerfilUsuario.Cliente:
+                usuario.Cliente = _clienteRepository.ObterPorId(usuario.Id);
+                break;
+            case PerfilUsuario.Funcionario:
+                usuario.Funcionario = _funcionarioRepository.ObterPorId(usuario.Id);
+                break;
+            case PerfilUsuario.EmpresaTerceira:
+            default:
+                break;
+        }
+
         return usuario;
     }
 
-    public Usuario CriarUsuarioParaCliente(CadastroClienteModel model) => CriarUsuario(model, PerfilUsuario.Cliente);
-
-    public Usuario CriarUsuarioParaFuncionario(CadastroFuncionarioModel model) => CriarUsuario(model, PerfilUsuario.Funcionario);
-
-    //public Usuario CriarUsuarioParaEmpresaTerceira(CadastroEmpresaModel model) => CriarUsuario(model, PerfilUsuario.EmpresaTerceira);
+    public async Task<bool> SouAdministrador()
+    {
+        var autorizado =
+            await _authorizationService.AuthorizeAsync(Context.User, null, CustomPolicies.SomenteAdministrador);
+        return autorizado.Succeeded;
+    }
     
-    private Usuario CriarUsuario<T>(T model, PerfilUsuario perfil)
+    public Usuario BuildUsuarioParaCliente(CadastroClienteModel model) => BuildUsuario(model, PerfilUsuario.Cliente);
+
+    public Usuario BuildUsuarioParaFuncionario(CadastroFuncionarioModel model) => BuildUsuario(model, PerfilUsuario.Funcionario);
+
+    //public Usuario CriarUsuarioParaEmpresaTerceira(CadastroEmpresaModel model) => BuildUsuario(model, PerfilUsuario.EmpresaTerceira);
+    
+    private Usuario BuildUsuario<T>(T model, PerfilUsuario perfil)
         where T : CadastroUsuarioModelBase
     {
         if (!Enum.IsDefined(perfil))

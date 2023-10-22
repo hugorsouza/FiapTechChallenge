@@ -1,10 +1,8 @@
 ﻿using Ecommerce.Application.Model.Pessoas;
-using Ecommerce.Application.Validations.Pessoas;
+using Ecommerce.Application.Model.Pessoas.Cadastro;
 using Ecommerce.Application.Validations.Pessoas.Cadastro;
-using Ecommerce.Domain.Entities.Pessoas.Autenticacao;
-using Ecommerce.Domain.Entities.Pessoas.Fisica;
 
-namespace Ecommerce.Application.Tests.CasosTeste.Pessoas;
+namespace Ecommerce.Application.Tests.CasosTeste.Pessoas.Cadastro;
 
 public class CadastroPessoaFisicaTest
 {
