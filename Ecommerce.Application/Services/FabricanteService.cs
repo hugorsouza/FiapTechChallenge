@@ -1,4 +1,5 @@
-﻿using Ecommerce.Domain.Entities.Produtos;
+﻿using Ecommerce.Application.Model.Produto;
+using Ecommerce.Domain.Entities.Produtos;
 using Ecommerce.Domain.Repository;
 using Ecommerce.Domain.Services;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Ecommerce.Application.Services
 {
-    public class FabricanteService : Service<Fabricante>, IFabricanteService
+    public class FabricanteService : IFabricanteService
     {
 
         private readonly IFabricanteRepository _fabricanteRepository;
@@ -19,29 +20,66 @@ namespace Ecommerce.Application.Services
             _fabricanteRepository = fabricanteRepository;
         }
 
-        public override void Alterar(Fabricante entidade)
+        public Fabricante Alterar(Fabricante entidade)
         {
+            var categoria = ObterPorId(entidade.Id);
+
+            if (categoria is null)
+            {
+                //Lançar erro
+            }
             _fabricanteRepository.Alterar(entidade);
+            
+            return entidade;
         }
 
-        public override void Cadastrar(Fabricante entidade)
+        public FabricanteViewModel Cadastrar(FabricanteViewModel model)
         {
-            _fabricanteRepository.Cadastrar(entidade);
+            var fabricante = BuidFabricante(model);
+
+            _fabricanteRepository.Cadastrar(fabricante);
+
+            var fabricanteViewModel = BuildViewModel(fabricante);
+
+            return fabricanteViewModel;
         }
 
-        public override void Deletar(int id)
+        public  void Deletar(int id)
         {
+            var fabricante = ObterPorId(id);
+
+            if (fabricante is null)
+            {
+                //Lançar Erro
+            }
             _fabricanteRepository.Deletar(id);
         }
 
-        public override Fabricante ObterPorId(int id)
+        public  Fabricante ObterPorId(int id)
         {
             return _fabricanteRepository.ObterPorId(id);
         }
 
-        public override IList<Fabricante> ObterTodos()
+        public  IList<Fabricante> ObterTodos()
         {
             return _fabricanteRepository.ObterTodos();
+        }
+
+        private FabricanteViewModel BuildViewModel(Fabricante fabricante)
+        {
+            if (fabricante is null)
+                return null;
+
+            return new FabricanteViewModel(fabricante.Nome, fabricante.Ativo, fabricante.CNPJ, fabricante.Endereco);
+        }
+
+        private Fabricante BuidFabricante(FabricanteViewModel model)
+        {
+            if (model is null)
+                return null;
+
+            return new Fabricante(model.Nome,model.CNPJ, model.Ativo, model.Endereco);
+
         }
     }
 }

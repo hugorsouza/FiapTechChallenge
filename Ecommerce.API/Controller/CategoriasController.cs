@@ -1,4 +1,5 @@
-﻿using Ecommerce.Domain.Entities.Produtos;
+﻿using Ecommerce.Application.Model.Produto;
+using Ecommerce.Domain.Entities.Produtos;
 using Ecommerce.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,10 +17,19 @@ namespace Ecommerce.API.Controller
 
         [HttpPost]
         [Route("Cadastrar")]
-        public IActionResult Cadastrar([FromBody] Categoria categoria)
+        public IActionResult Cadastrar([FromBody] CategoriaViewModel categoria)
         {
-            _categoriaservice.Cadastrar(categoria);
-            return Ok();
+            try
+            {
+                var result = _categoriaservice.Cadastrar(categoria);
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return BadRequest($"Erro ao Cadastrar a categoria {categoria.Nome}");
+            }
+            
+            
         }
 
         [HttpGet]
@@ -50,9 +60,20 @@ namespace Ecommerce.API.Controller
         [Route("Alterar")]
         public IActionResult Alterar([FromBody] Categoria categoria)
         {
-            _categoriaservice.Alterar(categoria);
+            try
+            {
+                _categoriaservice.Alterar(categoria);
 
-            return Ok();            
+                return Ok();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+          
+
         }
 
         [HttpDelete]
