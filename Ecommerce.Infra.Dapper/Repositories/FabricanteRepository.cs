@@ -27,16 +27,16 @@ namespace Ecommerce.Infra.Dapper.Repositories
 
             try
             {
-                var query1 = @"INSERT INTO FABRICANTE values (@Id, @Nome, @Ativo, @CNPJ);                          
+                var query1 = @"INSERT INTO FABRICANTE values (@Nome, @Ativo, @CNPJ);                          
                           SELECT CAST(SCOPE_IDENTITY() AS INT);";
 
                 entidade.Id = dbConnection.Query<int>(query1, entidade, transaction).Single();
 
                 if (entidade.Endereco != null)
                 {
-                    entidade.Endereco.IdEntidade = entidade.Id;
+                    entidade.Endereco.EntidadeId = entidade.Id;
 
-                    var query2 = @"INSERT INTO ENDERECO values (@Logradouro, @Numero, @CEP, @Bairro, @Cidade, @Estado, @IdEntidade)
+                    var query2 = @"INSERT INTO ENDERECO values (@Logradouro, @Numero, @CEP, @Bairro, @Cidade, @Estado, @EntidadeId)
                                SELECT CAST(SCOPE_IDENTITY() AS INT); ";
 
                     entidade.Endereco.Id = dbConnection.Query<int>(query2, entidade.Endereco, transaction).Single();
@@ -67,6 +67,7 @@ namespace Ecommerce.Infra.Dapper.Repositories
         {
             using var dbConnection = new SqlConnection(ConnectionString);
 
+            dbConnection.Open();
             var transaction = dbConnection.BeginTransaction();
 
 
@@ -106,8 +107,8 @@ namespace Ecommerce.Infra.Dapper.Repositories
         {
             using var dbConnection = new SqlConnection(ConnectionString);
 
+            dbConnection.Open();
             var transaction = dbConnection.BeginTransaction();
-
 
 
             try
@@ -115,10 +116,9 @@ namespace Ecommerce.Infra.Dapper.Repositories
                 var query1 = "DELETE FROM ENDERECO WHERE EntidadeId=@EntidadeId";
                 dbConnection.Execute(query1, new { EntidadeId = id }, transaction);
 
-                //TODO IMPLEMENTAÇÃO DO REPOSITORIO
-                // var query2 = "UPDATE ENDERECO SET Logradouro=@Logradouro, Numero=@Numero, CEP=@CEP, Bairro=@Bairro, Cidade=@Cidade, Estado=@Estado where Id=Id";
-                // dbConnection.Execute(query1, entidade.Endereco, transaction);
-
+                
+                var query2 = "DELETE FROM FABRICANTE WHERE Id=@Id";
+                dbConnection.Execute(query2, new {Id=id}, transaction);
 
 
                 transaction.Commit();
@@ -143,12 +143,34 @@ namespace Ecommerce.Infra.Dapper.Repositories
 
         public override Fabricante ObterPorId(int id)
         {
-            throw new NotImplementedException();
+            using var dbConnection = new SqlConnection(ConnectionString);
+
+            var query = "SELECT * FROM FABRICANTE F LEFT JOIN ENDERECO E ON F.ID=E.ENTIDADEID WHERE F.ID=@Id";
+
+            return dbConnection.Query<Fabricante, Endereco, Fabricante>(sql : query,
+                (fabricante, endereco) => 
+                {
+                    fabricante.Endereco = endereco;
+
+                    return fabricante;
+                }
+                ,param: new {Id = id }).SingleOrDefault();
+
         }
 
         public override IList<Fabricante> ObterTodos()
         {
-            throw new NotImplementedException();
+            using var dbConnection = new SqlConnection(ConnectionString);
+
+            var query = "SELECT * FROM FABRICANTE F LEFT JOIN ENDERECO E ON F.ID=E.ENTIDADEID";
+
+            return dbConnection.Query<Fabricante, Endereco, Fabricante>(sql: query,
+                (fabricante, endereco) =>
+                {
+                    fabricante.Endereco = endereco;
+
+                    return fabricante;
+                }).ToList();
         }
     }
 }

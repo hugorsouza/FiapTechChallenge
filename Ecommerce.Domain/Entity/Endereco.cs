@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Ecommerce.Domain.Entity
 {
     public class Endereco
     {
+        [JsonIgnore]
         public int Id { get; set; }
         public string Logradouro { get; set; }
         public string Numero { get; set; }
@@ -15,7 +17,7 @@ namespace Ecommerce.Domain.Entity
         public string Bairro { get; set; }
         public string Cidade { get; set; }
         public string Estado { get; set; }
-        public int IdEntidade { get; set; }
+        public int EntidadeId { get; set; }
 
     }
 }

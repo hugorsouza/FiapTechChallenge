@@ -1,4 +1,5 @@
 ﻿using Ecommerce.Domain.Entity;
+using Ecommerce.Domain.Repository;
 using Ecommerce.Domain.Services;
 using System;
 using System.Collections.Generic;
@@ -11,36 +12,36 @@ namespace Ecommerce.Application.Services
     public class FabricanteService : Service<Fabricante>, IFabricanteService
     {
 
-        private readonly IFabricanteService _fabricanteService;
+        private readonly IFabricanteRepository _fabricanteRepository;
 
-        public FabricanteService(IFabricanteService fabricanteService)
+        public FabricanteService(IFabricanteRepository fabricanteRepository)
         {
-            _fabricanteService = fabricanteService;
+            _fabricanteRepository = fabricanteRepository;
         }
 
         public override void Alterar(Fabricante entidade)
         {
-            _fabricanteService.Alterar(entidade);
+            _fabricanteRepository.Alterar(entidade);
         }
 
         public override void Cadastrar(Fabricante entidade)
         {
-            _fabricanteService.Cadastrar(entidade);
+            _fabricanteRepository.Cadastrar(entidade);
         }
 
         public override void Deletar(int id)
         {
-            _fabricanteService.Deletar(id);
+            _fabricanteRepository.Deletar(id);
         }
 
         public override Fabricante ObterPorId(int id)
         {
-            return _fabricanteService.ObterPorId(id);
+            return _fabricanteRepository.ObterPorId(id);
         }
 
         public override IList<Fabricante> ObterTodos()
         {
-            return _fabricanteService.ObterTodos();
+            return _fabricanteRepository.ObterTodos();
         }
     }
 }

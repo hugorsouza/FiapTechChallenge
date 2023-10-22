@@ -15,9 +15,10 @@ namespace Ecommerce.Domain.Entity
         [Required(AllowEmptyStrings = false)]
         public string Descricao { get; set; }
         [Required]
-        public int IdFabricante { get; set; }
+        public int FabricanteId { get; set; }
         [Required(AllowEmptyStrings = false)]
         public string UrlImagem { get; set; }
+        public int CategoriaId {get; set;}
 
 
 

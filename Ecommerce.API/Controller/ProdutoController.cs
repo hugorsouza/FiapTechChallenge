@@ -17,19 +17,36 @@ namespace Ecommerce.API.Controller
         [HttpPost]
         public IActionResult Post([FromBody] Produto produto)
         {
-            _produtoservice.Cadastrar(produto);
-            return Ok();
+            try
+            {
+                _produtoservice.Cadastrar(produto);
+                return Ok();
+            }
+            catch (Exception)
+            {
+
+                return BadRequest("Erro ao cadastrar o produto");
+            }
+            
+            
         }
 
         [HttpGet]
         [Route("ObterPorId/{id}")]
         public IActionResult ObterPorId(int id)
         {
-            var result = _produtoservice.ObterPorId(id);
+            try
+            {
+                var result = _produtoservice.ObterPorId(id);
+                if (result != null)
+                    return Ok(result);
+            }
+            catch (Exception)
+            {
 
-            if (result != null)
-                return Ok(result);
-
+                return BadRequest("Erro ao listar o produto");
+            }
+            
             return NoContent();
         }
 
@@ -37,10 +54,19 @@ namespace Ecommerce.API.Controller
         [Route("ObterPorTodos")]
         public IActionResult Otertodos()
         {
-            var result = _produtoservice.ObterTodos();
+            try
+            {
+                var result = _produtoservice.ObterTodos();
 
-            if (result != null)
-                return Ok(result);
+                if (result != null)
+                    return Ok(result);
+            }
+            catch (Exception)
+            {
+
+                return BadRequest("Erro ao listar os produtos");
+            }
+
 
             return NoContent();
         }
@@ -49,7 +75,16 @@ namespace Ecommerce.API.Controller
         [Route("Alterar")]
         public IActionResult Alterar([FromBody] Produto produto)
         {
-            _produtoservice.Alterar(produto);
+            try
+            {
+                _produtoservice.Alterar(produto);
+            }
+            catch (Exception)
+            {
+
+                return BadRequest("Erro ao Alterar o produto");
+            }
+
 
             return Ok();
         }
@@ -58,7 +93,15 @@ namespace Ecommerce.API.Controller
         [Route("Deletar/{id}")]
         public IActionResult Deletar(int id)
         {
-            _produtoservice.Deletar(id);
+            try
+            {
+                _produtoservice.Deletar(id);
+            }
+            catch (Exception)
+            {
+
+                return BadRequest("Erro ao deletar o produto");
+            }
 
             return Ok();
 

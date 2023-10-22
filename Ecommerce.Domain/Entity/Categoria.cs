@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ecommerce.Domain.Entity
 {
-    public class Categoria
+    public class Categoria : Entidade
     {
         public string Descricao { get; set; }
 

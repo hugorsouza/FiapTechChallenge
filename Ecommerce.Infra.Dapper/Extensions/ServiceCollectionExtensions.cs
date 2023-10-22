@@ -14,7 +14,7 @@ namespace Ecommerce.Infra.Dapper.Extensions
                 .AddScoped<IProdutoRepository, ProdutoRepository>()
                 .AddScoped<ICategoriaRepository, CategoriaRepository>()
                 .AddScoped<IFabricanteRepository, FabricanteRepository>()
-                .AddScoped<IFornecedorRepository, IFornecedorRepository>();
+                .AddScoped<IFornecedorRepository, FornecedorRepository>();
         }
     }
 }

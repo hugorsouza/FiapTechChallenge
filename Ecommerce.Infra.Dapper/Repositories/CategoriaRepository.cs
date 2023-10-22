@@ -32,7 +32,7 @@ namespace Ecommerce.Infra.Dapper.Repositories
         {
             using var dbConnection = new SqlConnection(ConnectionString);
 
-            var query = @"UPDATE CATEGORIA SET Nome=@Nome, Ativo=@Ativo, Descricao=@Descricao Id=@Id";
+            var query = @"UPDATE CATEGORIA SET Nome=@Nome, Ativo=@Ativo, Descricao=@Descricao WHERE Id=@Id";
 
             dbConnection.Query(query, entidade);
         }
