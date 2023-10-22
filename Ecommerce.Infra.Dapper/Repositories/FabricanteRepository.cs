@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using Ecommerce.Domain.Entity;
 using Ecommerce.Domain.Repository;
 using Ecommerce.Domain.Services;
 using Microsoft.Extensions.Configuration;
@@ -10,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Ecommerce.Infra.Dapper.Interfaces;
+using Ecommerce.Domain.Entities.Produtos;
 
 namespace Ecommerce.Infra.Dapper.Repositories
 {

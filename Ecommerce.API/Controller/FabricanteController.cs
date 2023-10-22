@@ -1,5 +1,5 @@
 ﻿using Ecommerce.Application.Services;
-using Ecommerce.Domain.Entity;
+using Ecommerce.Domain.Entities.Produtos;
 using Ecommerce.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 

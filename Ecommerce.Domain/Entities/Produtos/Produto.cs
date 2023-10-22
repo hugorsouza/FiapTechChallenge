@@ -4,8 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ecommerce.Domain.Entity;
 
-namespace Ecommerce.Domain.Entity
+namespace Ecommerce.Domain.Entities.Produtos
 {
     public class Produto : Entidade
     {
@@ -18,7 +19,7 @@ namespace Ecommerce.Domain.Entity
         public int FabricanteId { get; set; }
         [Required(AllowEmptyStrings = false)]
         public string UrlImagem { get; set; }
-        public int CategoriaId {get; set;}
+        public int CategoriaId { get; set; }
 
 
 

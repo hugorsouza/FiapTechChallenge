@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace Ecommerce.Domain.Entity
+namespace Ecommerce.Domain.Entities.Produtos
 {
     public class Endereco
     {

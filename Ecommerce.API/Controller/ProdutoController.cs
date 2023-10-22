@@ -1,4 +1,4 @@
-﻿using Ecommerce.Domain.Entity;
+﻿using Ecommerce.Domain.Entities.Produtos;
 using Ecommerce.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -38,6 +38,7 @@ namespace Ecommerce.API.Controller
             try
             {
                 var result = _produtoservice.ObterPorId(id);
+
                 if (result != null)
                     return Ok(result);
             }

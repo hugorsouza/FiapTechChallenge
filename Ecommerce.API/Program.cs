@@ -23,7 +23,6 @@ builder.Services
     .AddScoped<IFazerPedidoService, FazerPedidoService>()
     .AddScoped<IClienteService, ClienteService>()
     .AddScoped<IFuncionarioService, FuncionarioService>()
-    .AddScoped<ExceptionMiddleware>();
     .AddScoped<ExceptionMiddleware>()
     .AddAppServices();
 

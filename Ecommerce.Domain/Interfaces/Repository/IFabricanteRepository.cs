@@ -1,4 +1,4 @@
-﻿using Ecommerce.Domain.Entity;
+﻿using Ecommerce.Domain.Entities.Produtos;
 using Ecommerce.Domain.Interfaces.Repository;
 using System;
 using System.Collections.Generic;
