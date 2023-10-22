@@ -68,6 +68,7 @@ namespace Ecommerce.Infra.Auth.Extensions
                     .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
                     .RequireAuthenticatedUser()
                     .RequireRole(PerfilUsuarioExtensions.Funcionario)
+                    .RequireClaim(CustomClaims.FlagAdmin, "true")
                     .Build());
             });
             return services;

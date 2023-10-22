@@ -27,7 +27,7 @@ namespace Ecommerce.Infra.Auth.Services
         {
             await _validadorLogin.ValidateAndThrowAsync(credenciais);
             var usuario = _usuarioManager.ObterUsuarioPorEmail(credenciais.Email.Trim());
-            if(usuario is null || !_hasher.ValidarSenha(credenciais.Senha, usuario.Senha))
+            if(usuario is null || !usuario.Ativo || !_hasher.ValidarSenha(credenciais.Senha, usuario.Senha))
                 throw RequisicaoInvalidaException.PorMotivo("Credenciais inválidas");
             
             return GerarTokens(usuario);

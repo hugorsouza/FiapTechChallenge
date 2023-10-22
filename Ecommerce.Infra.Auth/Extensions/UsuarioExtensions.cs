@@ -28,6 +28,7 @@ namespace Ecommerce.Infra.Auth.Extensions
                     break;
                 case PerfilUsuario.Funcionario:
                     claims.AddRange(ObterClaimsPessoa(usuario.Funcionario));
+                    claims.Add(new(CustomClaims.FlagAdmin, usuario.Funcionario.Administrador.ToString().ToLower()));
                     break;
                 case PerfilUsuario.EmpresaTerceira:
                     break;
