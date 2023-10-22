@@ -17,7 +17,7 @@ builder.Services.AddControllers();
 builder.Services.AddDocumentacaoApi();
 
 builder.Services
-    .AddEntityFramework(builder.Configuration, builder.Environment.IsDevelopment())
+    .AddRepositories()
     .AddAutenticacaoJwt(builder.Configuration)
     .AddValidatorsFromAssemblyContaining<IApplicationAssemblyMarker>()
     .AddScoped<IFazerPedidoService, FazerPedidoService>()
@@ -26,7 +26,6 @@ builder.Services
     .AddScoped<ExceptionMiddleware>();
 
 var app = builder.Build();
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

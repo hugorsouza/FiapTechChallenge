@@ -21,8 +21,13 @@
     <ProjectReference Include="..\Ecommerce.Application\Ecommerce.Application.csproj" />
     <ProjectReference Include="..\Ecommerce.Domain\Ecommerce.Domain.csproj" />
     <ProjectReference Include="..\Ecommerce.Infra.Auth\Ecommerce.Infra.Auth.csproj" />
-    <ProjectReference Include="..\Ecommerce.Infra.Dados\Ecommerce.Infra.Dados.csproj" />
     <ProjectReference Include="..\Ecommerce.Infra.Dapper\Ecommerce.Infra.Dapper.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Ecommerce.Infra.Dapper">
+      <HintPath>..\Ecommerce.Infra.Dapper\bin\Debug\net7.0\Ecommerce.Infra.Dapper.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

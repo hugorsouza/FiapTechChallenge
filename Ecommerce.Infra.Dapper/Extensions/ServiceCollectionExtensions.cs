@@ -1,7 +1,6 @@
 ﻿using System.Reflection;
 using Ecommerce.Domain.Interfaces;
 using Ecommerce.Domain.Interfaces.Repository;
-using Ecommerce.Domain.Repository;
 using Ecommerce.Infra.Dapper.Factory;
 using Ecommerce.Infra.Dapper.Interfaces;
 using Ecommerce.Infra.Dapper.Repositories;
@@ -17,10 +16,6 @@ namespace Ecommerce.Infra.Dapper.Extensions
             return services
                 .AddConnection()
                 .AddRepositoriesComAssemblyScan();
-                //.AddScoped<IProdutoRepository, ProdutoRepository>()
-                //.AddScoped<ICategoriaRepository, CategoriaRepository>()
-                //.AddScoped<IFabricanteRepository, FabricanteRepository>()
-                //.AddScoped<IFornecedorRepository, IFornecedorRepository>();
 
         }
 
