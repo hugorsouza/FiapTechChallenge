@@ -1,5 +1,10 @@
 ﻿using Ecommerce.Domain.Interfaces.Repository;
 using Microsoft.Extensions.Configuration;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Data;
 using Dapper;
 using Ecommerce.Infra.Dapper.Interfaces;
@@ -41,7 +46,7 @@ namespace Ecommerce.Infra.Dapper.Repositories
             return new CommandDefinition(sql, parametros, transaction: Transaction, cancellationToken: cancellationToken);
         }
     } 
-    
+
     public abstract class Repository<T> : Repository, IRepository<T> where T : class
     {
         protected Repository(IConfiguration configuration, IUnitOfWork unitOfWork) : base(configuration, unitOfWork)
@@ -54,5 +59,6 @@ namespace Ecommerce.Infra.Dapper.Repositories
         public abstract void Deletar(int id);
         public abstract T ObterPorId(int id);
         public abstract IList<T> ObterTodos();
+
     }
 }
