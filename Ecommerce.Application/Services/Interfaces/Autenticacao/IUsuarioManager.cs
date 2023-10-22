@@ -15,4 +15,6 @@ public interface IUsuarioManager
     Usuario ObterUsuarioPorEmail(string email);
     Usuario BuildUsuarioParaCliente(CadastroClienteModel model);
     Usuario BuildUsuarioParaFuncionario(CadastroFuncionarioModel model);
+    Usuario ObterPorId(int id);
+    Task<bool> SouAdministrador();
 }

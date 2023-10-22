@@ -6,8 +6,8 @@ using Ecommerce.Application.Services;
 using Ecommerce.Application.Services.Interfaces;
 using Ecommerce.Application.Services.Interfaces.Pessoas;
 using Ecommerce.Infra.Auth.Extensions;
-using Ecommerce.Infra.Dapper.DataBase.Seed;
 using Ecommerce.Infra.Dapper.Extensions;
+using Ecommerce.Infra.Dapper.Seed;
 using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +22,7 @@ builder.Services
     .AddValidatorsFromAssemblyContaining<IApplicationAssemblyMarker>()
     .AddScoped<IFazerPedidoService, FazerPedidoService>()
     .AddScoped<IClienteService, ClienteService>()
+    .AddScoped<IFuncionarioService, FuncionarioService>()
     .AddScoped<ExceptionMiddleware>();
 
 var app = builder.Build();

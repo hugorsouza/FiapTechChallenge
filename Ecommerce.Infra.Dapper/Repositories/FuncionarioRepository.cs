@@ -59,11 +59,11 @@ public class FuncionarioRepository : Repository<Funcionario>, IFuncionarioReposi
     public override void Deletar(int id)
     { 
         const string sql = @"
-            UPDATE c 
+            UPDATE f 
             SET 
-                c.DataAlteracao = @Agora
-            FROM Funcionario c 
-            WHERE c.Id = @Id
+                f.DataAlteracao = @Agora
+            FROM Funcionario f 
+            WHERE f.Id = @Id
             
             UPDATE u 
             SET 
@@ -77,8 +77,21 @@ public class FuncionarioRepository : Repository<Funcionario>, IFuncionarioReposi
 
     public override Funcionario ObterPorId(int id)
     {
-        const string sql = "SELECT * FROM Funcionario WHERE Id = @Id";
-        return Connection.QueryFirst<Funcionario>(NovoComando(sql, new {Id = id}));
+        const string sql = @"SELECT TOP 1
+                f.*, 
+                u.* 
+            FROM Funcionario f
+            JOIN Usuario u on f.Id = u.Id
+            WHERE f.Id = @Id";
+        return Connection.Query<Funcionario, Usuario, Funcionario>(sql, (funcionario, usuario) =>
+            {
+                funcionario.Usuario ??= usuario;
+                usuario.Funcionario ??= funcionario;
+                return funcionario;
+            }, 
+            param: new {Id = id},
+            splitOn: "Id", 
+            transaction: Transaction).FirstOrDefault();
     }
 
     public override void Cadastrar(Funcionario entidade)
@@ -103,7 +116,7 @@ public class FuncionarioRepository : Repository<Funcionario>, IFuncionarioReposi
             entidade.DataNascimento,
             entidade.DataCadastro,
             entidade.Cargo,
-            Administrador = false
+            entidade.Administrador
         };
         Connection.Execute(NovoComando(sql, parametros));
     }

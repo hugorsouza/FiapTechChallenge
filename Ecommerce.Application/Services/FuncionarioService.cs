@@ -3,6 +3,7 @@ using Ecommerce.Application.Services.Interfaces.Autenticacao;
 using Ecommerce.Application.Services.Interfaces.Pessoas;
 using Ecommerce.Domain.Entities.Pessoas.Autenticacao;
 using Ecommerce.Domain.Entities.Pessoas.Fisica;
+using Ecommerce.Domain.Exceptions;
 using Ecommerce.Domain.Interfaces;
 using Ecommerce.Domain.Interfaces.Repository;
 using FluentValidation;
@@ -62,9 +63,25 @@ public class FuncionarioService : IFuncionarioService
     public async Task<FuncionarioViewModel> Alterar(AlterarFuncionarioModel model)
     {
         await _validatorAlteracao.ValidateAsync(model);
-        var agora = DateTime.Now;
         var usuario = _usuarioManager.ObterUsuarioAtual();
+        return Alterar(model, usuario);
+    }
+    
+    public async Task<FuncionarioViewModel> Alterar(AlterarFuncionarioModel model, int usuarioId)
+    {
+        if (!(await _usuarioManager.SouAdministrador()))
+            throw DesautorizadoException.RequerPermissaoAdmin();
+        await _validatorAlteracao.ValidateAsync(model);
+        
+        var usuario = _usuarioManager.ObterPorId(usuarioId);
+        return Alterar(model, usuario);
+    }
+    
+    private FuncionarioViewModel Alterar(AlterarFuncionarioModel model, Usuario usuario)
+    {
+        var agora = DateTime.Now;
         var funcionario = usuario.Funcionario;
+        
         funcionario.Nome = model.Nome;
         funcionario.Sobrenome = model.Sobrenome;
         funcionario.DataNascimento = model.DataNascimento;

@@ -1,5 +1,4 @@
-﻿using Ecommerce.Application.Model.Pessoas;
-using Ecommerce.Application.Model.Pessoas.Cadastro;
+﻿using Ecommerce.Application.Model.Pessoas.Cadastro;
 using Ecommerce.Application.Services.Interfaces.Autenticacao;
 using Ecommerce.Application.Services.Interfaces.Pessoas;
 using Ecommerce.Domain.Entities.Pessoas.Autenticacao;
@@ -91,6 +90,7 @@ public class ClienteService : IClienteService
             sobrenome: model.Sobrenome,
             cpf: model.Cpf,
             dataNascimento: model.DataNascimento,
+            recebeNewsletterEmail: model.RecebeNewsletterEmail,
             usuario: usuario
         );
         return cliente;
@@ -98,6 +98,7 @@ public class ClienteService : IClienteService
     
     public ClienteViewModel BuildViewModel(Cliente cliente)
     {
+        if (cliente is null) return null;
         var clienteViewModel = new ClienteViewModel(cpf: cliente.Cpf, nome: cliente.Nome, sobrenome: cliente.Sobrenome,
             dataNascimento: cliente.DataNascimento, recebeNewsletterEmail: cliente.RecebeNewsletterEmail,
             usuario: cliente.Usuario is null

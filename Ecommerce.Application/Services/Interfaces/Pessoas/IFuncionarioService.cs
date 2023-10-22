@@ -10,4 +10,5 @@ public interface IFuncionarioService
     Task<IEnumerable<FuncionarioViewModel>> ObterTodos();
     Task<FuncionarioViewModel> Alterar(AlterarFuncionarioModel model);
     FuncionarioViewModel BuildViewModel(Funcionario funcionario);
+    Task<FuncionarioViewModel> Alterar(AlterarFuncionarioModel model, int usuarioId);
 }

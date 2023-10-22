@@ -5,11 +5,11 @@ using Ecommerce.Domain.Entities.Pessoas.Fisica;
 using Ecommerce.Domain.Entities.Pessoas.Juridica;
 using Ecommerce.Domain.Entities.Shared;
 
-namespace Ecommerce.Infra.Dapper.DataBase.Seed
+namespace Ecommerce.Infra.Dapper.Seed
 {
     internal static class UsuariosDadosTeste
     {
-        private const string TesteSenha = "$2a$12$0ttSqbAV5ckzSv/suZLxfeNqjMUbxVAfjmtRcWWrmM0e.g2pdenUy";//12345678
+        private const string TesteSenha = "$2a$12$UtM3mPfEyKfkyahgAO/y4erVhvQk4ShIJPfCLaTkwwP60ueaufHbK";//123456
         private const string EmailTesteCliente = "cliente@hotmail.com";
         private const string EmailTesteFuncionario = "admin@hotmail.com";
         private const string EmailTesteEmpresa = "bill.gates@microsoft.com";
@@ -64,6 +64,9 @@ namespace Ecommerce.Infra.Dapper.DataBase.Seed
         {
             usuario.Usuario.Email = email.ToLowerInvariant();
             usuario.Usuario.EmailNormalizado = email.Trim().ToUpperInvariant();
+            if (usuario is Funcionario func &&
+                string.Equals(email, EmailTesteFuncionario, StringComparison.InvariantCultureIgnoreCase))
+                func.Administrador = true;
         }
         
         private static TPessoa GerarNovo<TPessoa>(Faker<TPessoa> faker, string? email = null)

@@ -1,15 +1,13 @@
-﻿using Ecommerce.Application.Model.Pessoas;
-using Ecommerce.Application.Model.Pessoas.Cadastro;
+﻿using Ecommerce.Application.Model.Pessoas.Cadastro;
 using Ecommerce.Application.Services.Interfaces.Autenticacao;
 using Ecommerce.Application.Services.Interfaces.Pessoas;
 using Ecommerce.Domain.Entities.Pessoas.Autenticacao;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ecommerce.API.Controller;
 
-[Authorize(Roles = PerfilUsuarioExtensions.Cliente)]
+[Authorize(Roles = $"{PerfilUsuarioExtensions.Cliente},{PerfilUsuarioExtensions.Funcionario}")]
 [ApiController]
 [Route("[controller]")]
 public class ClienteController : ControllerBase
@@ -22,8 +20,19 @@ public class ClienteController : ControllerBase
         _usuarioManager = usuarioManager;
     }
     
+    [Authorize(Roles = PerfilUsuarioExtensions.Funcionario)]
+    [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<ClienteViewModel>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> ObterTodos()
+    {
+        var resultado = await _clienteService.ObterTodos();
+        return Ok(resultado);
+    }
+    
     [AllowAnonymous]
-    [HttpPost("Cadastrar")]
+    [HttpPost]
     [ProducesResponseType(typeof(ClienteViewModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Cadastrar([FromBody] CadastroClienteModel cadastro)
@@ -32,7 +41,8 @@ public class ClienteController : ControllerBase
         return Ok(resultado);
     } 
     
-    [HttpPost("Alterar")]
+    [Authorize(Roles = PerfilUsuarioExtensions.Cliente)]
+    [HttpPut]
     [ProducesResponseType(typeof(ClienteViewModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Alterar([FromBody] AlterarClienteModel cadastro)
@@ -41,7 +51,8 @@ public class ClienteController : ControllerBase
         return Ok(resultado);
     } 
     
-    [HttpGet("ObterDadosPessoais")]
+    [Authorize(Roles = PerfilUsuarioExtensions.Cliente)]
+    [HttpGet("MeusDados")]
     [ProducesResponseType(typeof(ClienteViewModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> ObterDadosPessoais()
@@ -52,22 +63,13 @@ public class ClienteController : ControllerBase
     }
     
     [Authorize(Roles = PerfilUsuarioExtensions.Funcionario)]
-    [HttpGet("ObterPorId")]
+    [HttpGet("{id}")]
     [ProducesResponseType(typeof(ClienteViewModel), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> ObterPorId([FromRoute] int id)
     {
         var resultado = await _clienteService.ObterPorId(id);
-        return Ok(resultado);
-    }
-    
-    [Authorize(Roles = PerfilUsuarioExtensions.Funcionario)]
-    [HttpGet("ObterTodos")]
-    [ProducesResponseType(typeof(IEnumerable<ClienteViewModel>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> ObterTodos()
-    {
-        var resultado = await _clienteService.ObterTodos();
         return Ok(resultado);
     }
 }

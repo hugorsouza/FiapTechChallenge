@@ -67,7 +67,7 @@ public class UsuarioRepository : Repository<Usuario>, IUsuarioRepository
     public override Usuario ObterPorId(int id)
     {
         const string sql = "SELECT * FROM Usuario WHERE Id = @Id";
-        return Connection.QueryFirst<Usuario>(NovoComando(sql, new {Id = id}));
+        return Connection.QueryFirstOrDefault<Usuario>(NovoComando(sql, new {Id = id}));
     }
     
     public Usuario ObterUsuarioPorEmail(string email)

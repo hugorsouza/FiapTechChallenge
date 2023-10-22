@@ -1,12 +1,12 @@
 ﻿using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
-using Ecommerce.Application.Model.Pessoas;
 using Ecommerce.Application.Model.Pessoas.Autenticacao;
 using Ecommerce.Application.Model.Pessoas.Cadastro;
 using Ecommerce.Application.Services.Interfaces.Autenticacao;
 using Ecommerce.Domain.Entities.Pessoas.Autenticacao;
 using Ecommerce.Domain.Interfaces.Repository;
+using Ecommerce.Infra.Auth.Constants;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 
 namespace Ecommerce.Infra.Auth.Services;
@@ -16,15 +16,21 @@ public class UsuarioManager : IUsuarioManager
     private readonly ISenhaHasher _hasher;
     private readonly IUsuarioRepository _usuarioRepository;
     private readonly IClienteRepository _clienteRepository;
-    private readonly HttpContext? _context;//Será nulo fora do escopo de requests
+    private readonly IFuncionarioRepository _funcionarioRepository;
+    private readonly IHttpContextAccessor _contextAccessor;
     private readonly IValidator<AlterarSenhaModel> _validatorAlterarSenha;
-    public UsuarioManager(ISenhaHasher hasher, IUsuarioRepository usuarioRepository, IHttpContextAccessor contextAccessor, IClienteRepository clienteRepository, IValidator<AlterarSenhaModel> validatorAlterarSenha)
+    private readonly IAuthorizationService _authorizationService;
+    private HttpContext Context => _contextAccessor.HttpContext ?? throw new InvalidOperationException("Um método que depende do HttpContext foi invocado fora do contexto de um http request");
+
+    public UsuarioManager(ISenhaHasher hasher, IUsuarioRepository usuarioRepository, IHttpContextAccessor contextAccessor, IClienteRepository clienteRepository, IValidator<AlterarSenhaModel> validatorAlterarSenha, IAuthorizationService authorizationService, IFuncionarioRepository funcionarioRepository)
     {
         _hasher = hasher;
         _usuarioRepository = usuarioRepository;
         _clienteRepository = clienteRepository;
         _validatorAlterarSenha = validatorAlterarSenha;
-        _context = contextAccessor.HttpContext;
+        _authorizationService = authorizationService;
+        _funcionarioRepository = funcionarioRepository;
+        _contextAccessor = contextAccessor;
     }
 
     public Usuario CadastrarUsuario(Usuario usuario)
@@ -55,15 +61,25 @@ public class UsuarioManager : IUsuarioManager
 
     public Usuario? ObterUsuarioAtual()
     {
-        NullGuardHttpContext(_context);
-        var email = _context.User.Identity?.Name;
+        var email = Context.User.Identity?.Name;
         return email is null ? null : ObterUsuarioPorEmail(email);
     }
 
+    public Usuario? ObterPorId(int id)
+    {
+        var usuario =  _usuarioRepository.ObterPorId(id);
+        return ObterDadosRelacionados(usuario);
+    }
+    
     public Usuario? ObterUsuarioPorEmail(string email)
     {
         email = email.Trim().ToUpperInvariant();
         var usuario = _usuarioRepository.ObterUsuarioPorEmail(email);
+        return ObterDadosRelacionados(usuario);
+    }
+
+    private Usuario? ObterDadosRelacionados(Usuario? usuario)
+    {
         if (usuario is null)
             return null;
         
@@ -73,6 +89,8 @@ public class UsuarioManager : IUsuarioManager
                 usuario.Cliente = _clienteRepository.ObterPorId(usuario.Id);
                 break;
             case PerfilUsuario.Funcionario:
+                usuario.Funcionario = _funcionarioRepository.ObterPorId(usuario.Id);
+                break;
             case PerfilUsuario.EmpresaTerceira:
             default:
                 break;
@@ -81,6 +99,13 @@ public class UsuarioManager : IUsuarioManager
         return usuario;
     }
 
+    public async Task<bool> SouAdministrador()
+    {
+        var autorizado =
+            await _authorizationService.AuthorizeAsync(Context.User, null, CustomPolicies.SomenteAdministrador);
+        return autorizado.Succeeded;
+    }
+    
     public Usuario BuildUsuarioParaCliente(CadastroClienteModel model) => BuildUsuario(model, PerfilUsuario.Cliente);
 
     public Usuario BuildUsuarioParaFuncionario(CadastroFuncionarioModel model) => BuildUsuario(model, PerfilUsuario.Funcionario);
@@ -105,10 +130,5 @@ public class UsuarioManager : IUsuarioManager
     private string GerarHashSenha(string senhaTexto)
     {
         return _hasher.Hash(senhaTexto);
-    }
-    
-    private static void NullGuardHttpContext([NotNull]HttpContext? context)
-    {
-        if (context is null) throw new InvalidOperationException("Um método que depende do HttpContext foi invocado fora do contexto de um http request");
     }
 }

@@ -76,8 +76,21 @@ public class ClienteRepository : Repository<Cliente>, IClienteRepository
 
     public override Cliente ObterPorId(int id)
     {
-        const string sql = "SELECT * FROM Cliente WHERE Id = @Id";
-        return Connection.QueryFirst<Cliente>(NovoComando(sql, new {Id = id}));
+        const string sql = @"SELECT TOP 1
+                c.*, 
+                u.* 
+            FROM Cliente c
+            JOIN Usuario u on c.Id = u.Id
+            WHERE c.Id = @Id";
+        return Connection.Query<Cliente, Usuario, Cliente>(sql, (cliente, usuario) =>
+            {
+                cliente.Usuario ??= usuario;
+                usuario.Cliente ??= cliente;
+                return cliente;
+            }, 
+            param: new {Id = id},
+            splitOn: "Id", 
+            transaction: Transaction).FirstOrDefault();
     }
 
     public override void Cadastrar(Cliente entidade)

@@ -1,10 +1,9 @@
-﻿using Ecommerce.Domain.Entities.Pessoas.Fisica;
-using Ecommerce.Domain.Interfaces.Repository;
+﻿using Ecommerce.Domain.Interfaces.Repository;
 using Ecommerce.Infra.Dapper.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Ecommerce.Infra.Dapper.DataBase.Seed
+namespace Ecommerce.Infra.Dapper.Seed
 {
     public static class InicializadorDadosTeste
     {
