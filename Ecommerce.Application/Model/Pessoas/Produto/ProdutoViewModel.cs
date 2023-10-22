@@ -1,22 +1,17 @@
-﻿using System;
+﻿using Ecommerce.Domain.Entities.Produtos;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Ecommerce.Domain.Entity;
 
-namespace Ecommerce.Domain.Entities.Produtos
+namespace Ecommerce.Application.Model.Produto
 {
-    public class Produto : Entidade
+    public class ProdutoViewModel
     {
-        public Produto()
-        {
 
-        }
-
-        public Produto(bool ativo, string nome, decimal preco,
-            string descricao, int fabricanteId, string urlImagem, int categoriaId)
+        public ProdutoViewModel(bool ativo, string nome, decimal preco, string descricao,int fabricanteId, string urlImagem, int categoriaId)
         {
             Ativo = ativo;
             Nome = nome;
@@ -26,19 +21,14 @@ namespace Ecommerce.Domain.Entities.Produtos
             UrlImagem = urlImagem;
             CategoriaId = categoriaId;
 
-        }
-        [Required]
-        [DataType(DataType.Currency, ErrorMessage = "Campo decimal Obrigatório")]
+
+        } 
+        public bool Ativo { get; set; }
+        public string Nome { get; set; }
         public decimal Preco { get; set; }
-        [Required(AllowEmptyStrings = false)]
         public string Descricao { get; set; }
-        [Required]
         public int FabricanteId { get; set; }
-        [Required(AllowEmptyStrings = false)]
         public string UrlImagem { get; set; }
         public int CategoriaId { get; set; }
-
-
-
     }
 }

@@ -1,4 +1,5 @@
-﻿using Ecommerce.Application.Services;
+﻿using Ecommerce.Application.Model.Produto;
+using Ecommerce.Application.Services;
 using Ecommerce.Domain.Entities.Produtos;
 using Ecommerce.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +18,7 @@ namespace Ecommerce.API.Controller
 
         [HttpPost]
         [Route("Cadastrar")]
-        public IActionResult Cadastrar([FromBody] Fabricante fabricante)
+        public IActionResult Cadastrar([FromBody] FabricanteViewModel fabricante)
         {
             _fabricanteservice.Cadastrar(fabricante);
             return Ok();

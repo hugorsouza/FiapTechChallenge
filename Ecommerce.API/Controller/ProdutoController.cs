@@ -1,4 +1,5 @@
-﻿using Ecommerce.Domain.Entities.Produtos;
+﻿using Ecommerce.Application.Model.Produto;
+using Ecommerce.Domain.Entities.Produtos;
 using Ecommerce.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,7 +16,7 @@ namespace Ecommerce.API.Controller
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] Produto produto)
+        public IActionResult Post([FromBody] ProdutoViewModel produto)
         {
             try
             {
