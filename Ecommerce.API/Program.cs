@@ -17,7 +17,7 @@ builder.Services.AddControllers();
 builder.Services.AddDocumentacaoApi();
 
 builder.Services
-    .AddRepositories()
+    .AddEntityFramework(builder.Configuration, builder.Environment.IsDevelopment())
     .AddAutenticacaoJwt(builder.Configuration)
     .AddValidatorsFromAssemblyContaining<IApplicationAssemblyMarker>()
     .AddScoped<IFazerPedidoService, FazerPedidoService>()

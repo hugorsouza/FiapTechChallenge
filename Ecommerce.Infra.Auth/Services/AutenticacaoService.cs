@@ -12,13 +12,13 @@ namespace Ecommerce.Infra.Auth.Services
     {
         private readonly IJwtFactory _jwtFactory;
         private readonly ISenhaHasher _hasher;
-        private readonly IUsuarioManager _usuarioManager;
+        private readonly IUsuarioRepository _usuarioRepository;
         private readonly IValidator<LoginModel> _validadorLogin;
 
-        public AutenticacaoService(ISenhaHasher hasher, IUsuarioManager usuarioManager, IJwtFactory jwtFactory, IValidator<LoginModel> validadorLogin)
+        public AutenticacaoService(ISenhaHasher hasher, IUsuarioRepository usuarioRepository, IJwtFactory jwtFactory, IValidator<LoginModel> validadorLogin)
         {
             _hasher = hasher;
-            _usuarioManager = usuarioManager;
+            _usuarioRepository = usuarioRepository;
             _jwtFactory = jwtFactory;
             _validadorLogin = validadorLogin;
         }
