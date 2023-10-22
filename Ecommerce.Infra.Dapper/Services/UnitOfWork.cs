@@ -32,12 +32,20 @@ public class UnitOfWork : IUnitOfWork, IDisposable
 
     public void Commit()
     {
-        if (_transaction == null)
+        try
         {
-            throw new InvalidOperationException("Nenhuma transação em andamento.");
+            if (_transaction == null)
+            {
+                throw new InvalidOperationException("Nenhuma transação em andamento.");
+            }
+
+            _transaction.Commit();
+            _transaction = null;
         }
-        _transaction.Commit();
-        _transaction = null;
+        finally
+        {
+            Close();
+        }
     }
 
     public void Rollback()
@@ -52,7 +60,7 @@ public class UnitOfWork : IUnitOfWork, IDisposable
         }
         finally
         {
-            Connection?.Close();
+            Close();
         }
     }
 
@@ -67,6 +75,18 @@ public class UnitOfWork : IUnitOfWork, IDisposable
         {
             return false;
         }
+    }
+
+    public void Open()
+    {
+        if(Connection.State == ConnectionState.Broken)
+            Connection.Close();
+        Connection.Open();
+    }
+    
+    public void Close()
+    {
+        Connection?.Close();
     }
 
     public void Dispose()

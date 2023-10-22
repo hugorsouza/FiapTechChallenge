@@ -18,7 +18,6 @@ public class Cliente : PessoaFisica
     {
         if (usuario.Perfil != PerfilUsuario.Cliente)
             throw new ArgumentException($"Perfil inválido para {GetType().Name}: {usuario.Perfil}");
-        Id = usuarioId;
         RecebeNewsletterEmail = recebeNewsletterEmail;
     }
 

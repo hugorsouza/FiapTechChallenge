@@ -1,7 +1,7 @@
-﻿using Ecommerce.Application.Model.Autenticacao;
+﻿using Ecommerce.Application.Model.Pessoas.Autenticacao;
 using Ecommerce.Application.Validations.Pessoas.Autenticacao;
 
-namespace Ecommerce.Application.Tests.CasosTeste.Autenticacao
+namespace Ecommerce.Application.Tests.CasosTeste.Pessoas.Autenticacao
 {
     public class LoginTest
     {

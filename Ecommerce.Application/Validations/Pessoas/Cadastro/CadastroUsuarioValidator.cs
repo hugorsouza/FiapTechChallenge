@@ -1,4 +1,6 @@
 ﻿using Ecommerce.Application.Model.Pessoas;
+using Ecommerce.Application.Model.Pessoas.Cadastro;
+using Ecommerce.Application.Validations.Propriedades;
 using FluentValidation;
 
 namespace Ecommerce.Application.Validations.Pessoas.Cadastro;
@@ -12,7 +14,6 @@ public class CadastroUsuarioValidator: AbstractValidator<CadastroUsuarioModelBas
             .EmailAddress();
         
         RuleFor(p => p.Senha)
-            .NotNull()
-            .Length(6, 255);
+            .SetValidator(new SenhaValidator<CadastroUsuarioModelBase, string>());
     }
 }

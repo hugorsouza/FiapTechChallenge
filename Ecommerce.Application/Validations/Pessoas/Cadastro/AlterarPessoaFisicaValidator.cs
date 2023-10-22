@@ -1,25 +1,18 @@
-﻿using Ecommerce.Application.Configuration;
-using Ecommerce.Application.Model.Pessoas;
+﻿using Ecommerce.Application.Model.Pessoas;
 using Ecommerce.Application.Model.Pessoas.Cadastro;
 using FluentValidation;
 
 namespace Ecommerce.Application.Validations.Pessoas.Cadastro
 {
-    public class CadastroPessoaFisicaValidator : AbstractValidator<CadastroPessoaModelBase>
+    public class AlterarPessoaFisicaValidator : AbstractValidator<AlterarPessoaModelBase>
     {
-        public CadastroPessoaFisicaValidator()
+        public AlterarPessoaFisicaValidator()
         {
-            Include(new CadastroUsuarioValidator());
-            
             RuleFor(p => p.Nome)
                 .NotEmpty();
 
             RuleFor(p => p.Sobrenome)
                 .NotEmpty();
-
-            RuleFor(p => p.Cpf)
-                .NotEmpty()
-                .Must(ValidarDocumento.IsCpf);
 
             RuleFor(p => p.DataNascimento)
                 .NotEmpty()

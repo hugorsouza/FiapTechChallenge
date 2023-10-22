@@ -9,65 +9,65 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Ecommerce.API.Controller;
 
-[Authorize(Roles = PerfilUsuarioExtensions.Cliente)]
+[Authorize(Roles = PerfilUsuarioExtensions.Funcionario)]
 [ApiController]
 [Route("[controller]")]
-public class ClienteController : ControllerBase
+public class FuncionarioController : ControllerBase
 {
-    private readonly IClienteService _clienteService;
+    private readonly IFuncionarioService _funcionarioService;
     private readonly IUsuarioManager _usuarioManager;
-    public ClienteController(IClienteService clienteService, IUsuarioManager usuarioManager)
+    public FuncionarioController(IFuncionarioService funcionarioService, IUsuarioManager usuarioManager)
     {
-        _clienteService = clienteService;
+        _funcionarioService = funcionarioService;
         _usuarioManager = usuarioManager;
     }
     
     [AllowAnonymous]
     [HttpPost("Cadastrar")]
-    [ProducesResponseType(typeof(ClienteViewModel), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(FuncionarioViewModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Cadastrar([FromBody] CadastroClienteModel cadastro)
+    public async Task<IActionResult> Cadastrar([FromBody] CadastroFuncionarioModel cadastro)
     {
-        var resultado = await _clienteService.Cadastrar(cadastro);
+        var resultado = await _funcionarioService.Cadastrar(cadastro);
         return Ok(resultado);
     } 
     
     [HttpPost("Alterar")]
-    [ProducesResponseType(typeof(ClienteViewModel), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(FuncionarioViewModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Alterar([FromBody] AlterarClienteModel cadastro)
+    public async Task<IActionResult> Alterar([FromBody] AlterarFuncionarioModel cadastro)
     {
-        var resultado = await _clienteService.Alterar(cadastro);
+        var resultado = await _funcionarioService.Alterar(cadastro);
         return Ok(resultado);
     } 
     
     [HttpGet("ObterDadosPessoais")]
-    [ProducesResponseType(typeof(ClienteViewModel), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(FuncionarioViewModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> ObterDadosPessoais()
     {
         var usuario = _usuarioManager.ObterUsuarioAtual();
-        var resultado = _clienteService.BuildViewModel(usuario.Cliente);
+        var resultado = _funcionarioService.BuildViewModel(usuario.Funcionario);
         return Ok(resultado);
     }
     
     [Authorize(Roles = PerfilUsuarioExtensions.Funcionario)]
     [HttpGet("ObterPorId")]
-    [ProducesResponseType(typeof(ClienteViewModel), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(FuncionarioViewModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> ObterPorId([FromRoute] int id)
     {
-        var resultado = await _clienteService.ObterPorId(id);
+        var resultado = await _funcionarioService.ObterPorId(id);
         return Ok(resultado);
     }
     
     [Authorize(Roles = PerfilUsuarioExtensions.Funcionario)]
     [HttpGet("ObterTodos")]
-    [ProducesResponseType(typeof(IEnumerable<ClienteViewModel>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(IEnumerable<FuncionarioViewModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> ObterTodos()
     {
-        var resultado = await _clienteService.ObterTodos();
+        var resultado = await _funcionarioService.ObterTodos();
         return Ok(resultado);
     }
 }

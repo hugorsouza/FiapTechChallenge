@@ -18,4 +18,5 @@ public class Funcionario : PessoaFisica
     }
     
     public string Cargo { get; set; }
+    public bool Administrador { get; set; }
 }

@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using Ecommerce.Domain.Entities.Pessoas.Autenticacao;
+using Ecommerce.Domain.Entities.Pessoas.Fisica;
 using Ecommerce.Domain.Interfaces.Repository;
 using Ecommerce.Infra.Dapper.Interfaces;
 using Microsoft.Extensions.Configuration;
@@ -21,14 +22,11 @@ public class UsuarioRepository : Repository<Usuario>, IUsuarioRepository
     public override void Alterar(Usuario entidade)
     {
         const string sql = @"
-            UPDATE Cliente
+            UPDATE Usuario
             SET
-                Nome = @Nome
-                ,Sobrenome = @Sobrenome
-                ,Cpf = @Cpf
-                ,DataNascimento = @DataNascimento
-                ,DataAlteracao = GETDATE()
-                ,RecebeNewsletterEmail = @RecebeNewsletterEmail
+                NomeExibicao = @NomeExibicao
+                ,DataAlteracao = @DataAlteracao
+                ,EmailConfirmado = @EmailConfirmado
             WHERE Id = @Id
         ";
         var parametros = new
@@ -36,11 +34,26 @@ public class UsuarioRepository : Repository<Usuario>, IUsuarioRepository
             entidade.Id,
             entidade.NomeExibicao,
             entidade.Email,
-            entidade.Senha,
-            DataCadastroUtc = entidade.DataCadastro,
-            DataAlteracaoUtc = entidade.DataAlteracao,
+            entidade.DataAlteracao,
             entidade.Perfil,
             entidade.EmailConfirmado
+        };
+        Connection.Execute(NovoComando(sql, parametros));
+    }
+    
+    public void AlterarSenha(Usuario entidade)
+    {
+        const string sql = @"
+            UPDATE Usuario
+            SET
+                Senha = @Senha
+            WHERE Id = @Id
+        ";
+        var parametros = new
+        {
+            entidade.Id,
+            entidade.Senha,
+            entidade.DataAlteracao
         };
         Connection.Execute(NovoComando(sql, parametros));
     }
@@ -60,8 +73,35 @@ public class UsuarioRepository : Repository<Usuario>, IUsuarioRepository
     public Usuario ObterUsuarioPorEmail(string email)
     {
         email = email?.Trim().ToUpperInvariant();
-        const string sql = "SELECT * FROM Usuario WHERE EmailNormalizado = @Email";
-        return Connection.QueryFirst<Usuario>(NovoComando(sql, new {Email = email}));
+        const string sql = @"
+            SELECT 
+                U.*, 
+                C.*,
+                F.*
+            FROM Usuario U
+            LEFT JOIN dbo.Cliente C on U.Id = C.Id
+            LEFT JOIN dbo.Funcionario F on U.Id = F.Id
+            WHERE 
+                u.EmailNormalizado = @Email";
+        return Connection.Query<Usuario, Cliente, Funcionario, Usuario>(sql, 
+            map: (usuario, cliente, funcionario) =>
+            {
+                switch (usuario.Perfil)
+                {
+                    case PerfilUsuario.Cliente:
+                        usuario.Cliente ??= cliente;
+                        cliente.Usuario ??= usuario;
+                        break;
+                    case PerfilUsuario.Funcionario:
+                        usuario.Funcionario ??= funcionario;
+                        funcionario.Usuario ??= usuario;
+                        break;
+                }
+                return usuario;
+            }
+            ,new {Email = email}
+            ,splitOn: "Id, Id"
+            ).FirstOrDefault();
     }
 
     public override void Cadastrar(Usuario entidade)

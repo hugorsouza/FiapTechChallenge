@@ -1,8 +1,13 @@
 ﻿using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using Ecommerce.Application.Model.Pessoas;
+using Ecommerce.Application.Model.Pessoas.Autenticacao;
+using Ecommerce.Application.Model.Pessoas.Cadastro;
 using Ecommerce.Application.Services.Interfaces.Autenticacao;
 using Ecommerce.Domain.Entities.Pessoas.Autenticacao;
 using Ecommerce.Domain.Interfaces.Repository;
+using FluentValidation;
+using Microsoft.AspNetCore.Http;
 
 namespace Ecommerce.Infra.Auth.Services;
 
@@ -10,33 +15,79 @@ public class UsuarioManager : IUsuarioManager
 {
     private readonly ISenhaHasher _hasher;
     private readonly IUsuarioRepository _usuarioRepository;
-
-    public UsuarioManager(ISenhaHasher hasher, IUsuarioRepository usuarioRepository)
+    private readonly IClienteRepository _clienteRepository;
+    private readonly HttpContext? _context;//Será nulo fora do escopo de requests
+    private readonly IValidator<AlterarSenhaModel> _validatorAlterarSenha;
+    public UsuarioManager(ISenhaHasher hasher, IUsuarioRepository usuarioRepository, IHttpContextAccessor contextAccessor, IClienteRepository clienteRepository, IValidator<AlterarSenhaModel> validatorAlterarSenha)
     {
         _hasher = hasher;
         _usuarioRepository = usuarioRepository;
+        _clienteRepository = clienteRepository;
+        _validatorAlterarSenha = validatorAlterarSenha;
+        _context = contextAccessor.HttpContext;
     }
 
-    public async Task<Usuario> CadastrarUsuario(Usuario usuario)
+    public Usuario CadastrarUsuario(Usuario usuario)
     {
-        await _usuarioRepository.Inserir(usuario);
+        usuario.Id = _usuarioRepository.CadastrarObterId(usuario);
         return usuario;
     }
     
-    public async Task<Usuario> AlterarSenha(Usuario usuario, string novaSenhaTextoPlano)
+    public Usuario Alterar(Usuario usuario)
     {
-        var senhaHash = GerarHashSenha(novaSenhaTextoPlano);
-        //await _usuarioRepository.Inserir(usuario);
+        _usuarioRepository.Alterar(usuario);
+        return usuario;
+    }
+    
+    public void AlterarSenha(AlterarSenhaModel model)
+    {
+        _validatorAlterarSenha.ValidateAndThrow(model);
+        var usuario = ObterUsuarioAtual();
+        AlterarSenha(model, usuario!);
+    }
+    
+    public void AlterarSenha(AlterarSenhaModel model, Usuario usuario)
+    {
+        _validatorAlterarSenha.ValidateAndThrow(model);
+        usuario.Senha = GerarHashSenha(model.Senha);
+        _usuarioRepository.AlterarSenha(usuario);
+    }
+
+    public Usuario? ObterUsuarioAtual()
+    {
+        NullGuardHttpContext(_context);
+        var email = _context.User.Identity?.Name;
+        return email is null ? null : ObterUsuarioPorEmail(email);
+    }
+
+    public Usuario? ObterUsuarioPorEmail(string email)
+    {
+        email = email.Trim().ToUpperInvariant();
+        var usuario = _usuarioRepository.ObterUsuarioPorEmail(email);
+        if (usuario is null)
+            return null;
+        
+        switch (usuario.Perfil)
+        {
+            case PerfilUsuario.Cliente:
+                usuario.Cliente = _clienteRepository.ObterPorId(usuario.Id);
+                break;
+            case PerfilUsuario.Funcionario:
+            case PerfilUsuario.EmpresaTerceira:
+            default:
+                break;
+        }
+
         return usuario;
     }
 
-    public Usuario CriarUsuarioParaCliente(CadastroClienteModel model) => CriarUsuario(model, PerfilUsuario.Cliente);
+    public Usuario BuildUsuarioParaCliente(CadastroClienteModel model) => BuildUsuario(model, PerfilUsuario.Cliente);
 
-    public Usuario CriarUsuarioParaFuncionario(CadastroFuncionarioModel model) => CriarUsuario(model, PerfilUsuario.Funcionario);
+    public Usuario BuildUsuarioParaFuncionario(CadastroFuncionarioModel model) => BuildUsuario(model, PerfilUsuario.Funcionario);
 
-    //public Usuario CriarUsuarioParaEmpresaTerceira(CadastroEmpresaModel model) => CriarUsuario(model, PerfilUsuario.EmpresaTerceira);
+    //public Usuario CriarUsuarioParaEmpresaTerceira(CadastroEmpresaModel model) => BuildUsuario(model, PerfilUsuario.EmpresaTerceira);
     
-    private Usuario CriarUsuario<T>(T model, PerfilUsuario perfil)
+    private Usuario BuildUsuario<T>(T model, PerfilUsuario perfil)
         where T : CadastroUsuarioModelBase
     {
         if (!Enum.IsDefined(perfil))
@@ -54,5 +105,10 @@ public class UsuarioManager : IUsuarioManager
     private string GerarHashSenha(string senhaTexto)
     {
         return _hasher.Hash(senhaTexto);
+    }
+    
+    private static void NullGuardHttpContext([NotNull]HttpContext? context)
+    {
+        if (context is null) throw new InvalidOperationException("Um método que depende do HttpContext foi invocado fora do contexto de um http request");
     }
 }

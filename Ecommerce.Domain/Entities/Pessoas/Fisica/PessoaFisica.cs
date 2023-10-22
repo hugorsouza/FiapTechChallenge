@@ -31,5 +31,7 @@ namespace Ecommerce.Domain.Entities.Pessoas.Fisica
         public DateTime DataCadastro { get; set; } = DateTime.Now;
         public DateTime? DataAlteracao { get; set; }
         public Usuario Usuario { get; set; }
+
+        public string NomeExibicao() => $"{Nome} {Sobrenome}";
     }
 }

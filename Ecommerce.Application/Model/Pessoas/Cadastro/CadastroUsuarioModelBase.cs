@@ -1,4 +1,4 @@
-﻿namespace Ecommerce.Application.Model.Pessoas;
+﻿namespace Ecommerce.Application.Model.Pessoas.Cadastro;
 
 public abstract record CadastroUsuarioModelBase
 {

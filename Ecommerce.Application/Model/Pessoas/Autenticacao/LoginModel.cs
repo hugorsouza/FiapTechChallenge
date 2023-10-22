@@ -1,4 +1,4 @@
-﻿namespace Ecommerce.Application.Model.Autenticacao
+﻿namespace Ecommerce.Application.Model.Pessoas.Autenticacao
 {
     public record LoginModel
     {

@@ -31,21 +31,27 @@ namespace Ecommerce.Infra.Dapper.DataBase.Seed
 
         public static void InserirUsuarios(IServiceProvider provider)
         {
-            var clienteRepository = provider.GetService<IClienteRepository>();
-            if (clienteRepository.ObterTodos().Any())
-                return;
-                
-            //var funcionarioRepository = provider.GetService<IFuncionarioRepository>();
             var usuarioRepository = provider.GetService<IUsuarioRepository>();
-            foreach (var cliente in UsuariosDadosTeste.Clientes)
+            var clienteRepository = provider.GetService<IClienteRepository>();
+            var funcionarioRepository = provider.GetService<IFuncionarioRepository>();
+            
+            if (!clienteRepository.ObterTodos().Any())
             {
-                cliente.Id = usuarioRepository.CadastrarObterId(cliente.Usuario);
-                clienteRepository.Cadastrar(cliente);
+               
+                foreach (var cliente in UsuariosDadosTeste.Clientes)
+                {
+                    cliente.Id = usuarioRepository.CadastrarObterId(cliente.Usuario);
+                    clienteRepository.Cadastrar(cliente);
+                }
             }
             
-            foreach (var funcionario in UsuariosDadosTeste.Funcionarios)
+            if (!funcionarioRepository.ObterTodos().Any())
             {
-                
+                foreach (var funcionario in UsuariosDadosTeste.Funcionarios)
+                {
+                    funcionario.Id = usuarioRepository.CadastrarObterId(funcionario.Usuario);
+                    funcionarioRepository.Cadastrar(funcionario);
+                }
             }
         }
     }

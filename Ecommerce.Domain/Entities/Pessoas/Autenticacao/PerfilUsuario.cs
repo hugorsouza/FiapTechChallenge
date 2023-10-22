@@ -7,7 +7,7 @@ public enum PerfilUsuario
     EmpresaTerceira
 }
 
-public static class PerfilUsuarioHelper
+public static class PerfilUsuarioExtensions
 {
     public const string Cliente = "C";
     public const string Funcionario = "F";

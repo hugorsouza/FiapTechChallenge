@@ -7,40 +7,41 @@ using Microsoft.Extensions.Configuration;
 
 namespace Ecommerce.Infra.Dapper.Repositories;
 
-public class ClienteRepository : Repository<Cliente>, IClienteRepository
+public class FuncionarioRepository : Repository<Funcionario>, IFuncionarioRepository
 {
-    public ClienteRepository(IConfiguration configuration, IUnitOfWork unitOfWork) : base(configuration, unitOfWork)
+    public FuncionarioRepository(IConfiguration configuration, IUnitOfWork unitOfWork) : base(configuration, unitOfWork)
     {
     }
 
-    public override IList<Cliente> ObterTodos()
+    public override IList<Funcionario> ObterTodos()
     {
         const string sql = @"SELECT 
                 c.*, 
                 u.* 
-            FROM Cliente c
+            FROM Funcionario c
             JOIN Usuario u on c.Id = u.Id
             ";
-        return Connection.Query<Cliente, Usuario, Cliente>(sql, (cliente, usuario) =>
+        return Connection.Query<Funcionario, Usuario, Funcionario>(sql, (funcionario, usuario) =>
             {
-                cliente.Usuario ??= usuario;
-                usuario.Cliente ??= cliente;
-                return cliente;
+                funcionario.Usuario ??= usuario;
+                usuario.Funcionario ??= funcionario;
+                return funcionario;
             }, 
             splitOn: "Id", 
             transaction: Transaction).ToList();
     }
 
-    public override void Alterar(Cliente entidade)
+    public override void Alterar(Funcionario entidade)
     {
         const string sql = @"
-            UPDATE Cliente
+            UPDATE Funcionario
             SET
                 Nome = @Nome
                 ,Sobrenome = @Sobrenome
                 ,DataNascimento = @DataNascimento
                 ,DataAlteracao = @DataAlteracao
-                ,RecebeNewsletterEmail = @RecebeNewsletterEmail
+                ,Cargo = @Cargo
+            
             WHERE Id = @Id
         ";
         var parametros = new
@@ -50,7 +51,7 @@ public class ClienteRepository : Repository<Cliente>, IClienteRepository
             entidade.Sobrenome,
             entidade.DataNascimento,
             entidade.DataAlteracao,
-            entidade.RecebeNewsletterEmail
+            entidade.Cargo
         };
         Connection.Execute(NovoComando(sql, parametros));
     }
@@ -61,7 +62,7 @@ public class ClienteRepository : Repository<Cliente>, IClienteRepository
             UPDATE c 
             SET 
                 c.DataAlteracao = @Agora
-            FROM Cliente c 
+            FROM Funcionario c 
             WHERE c.Id = @Id
             
             UPDATE u 
@@ -74,23 +75,23 @@ public class ClienteRepository : Repository<Cliente>, IClienteRepository
         Connection.Execute(NovoComando(sql, new { Id = id, Agora = DateTime.Now }));
     }
 
-    public override Cliente ObterPorId(int id)
+    public override Funcionario ObterPorId(int id)
     {
-        const string sql = "SELECT * FROM Cliente WHERE Id = @Id";
-        return Connection.QueryFirst<Cliente>(NovoComando(sql, new {Id = id}));
+        const string sql = "SELECT * FROM Funcionario WHERE Id = @Id";
+        return Connection.QueryFirst<Funcionario>(NovoComando(sql, new {Id = id}));
     }
 
-    public override void Cadastrar(Cliente entidade)
+    public override void Cadastrar(Funcionario entidade)
     {
         const string sql = @"
-            INSERT INTO Cliente
+            INSERT INTO Funcionario
                 (Id ,Nome ,Sobrenome
                 ,Cpf ,DataNascimento ,DataCadastro
-                ,RecebeNewsletterEmail)
+                ,Cargo ,Administrador)
             VALUES (
                @Id, @Nome, @Sobrenome
                ,@Cpf, @DataNascimento, @DataCadastro
-               ,@RecebeNewsletterEmail
+               ,@Cargo ,@Administrador 
             )
         ";
         var parametros = new
@@ -101,7 +102,8 @@ public class ClienteRepository : Repository<Cliente>, IClienteRepository
             entidade.Cpf,
             entidade.DataNascimento,
             entidade.DataCadastro,
-            entidade.RecebeNewsletterEmail
+            entidade.Cargo,
+            Administrador = false
         };
         Connection.Execute(NovoComando(sql, parametros));
     }

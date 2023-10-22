@@ -5,8 +5,8 @@
 /// </summary>
 public interface ITransactionService : IDisposable
 {
-    void BeginTransaction();
-    void Commit();
-    void Rollback();
-    bool TryRollback();
+    public void BeginTransaction();
+    public void Commit();
+    public void Rollback();
+    public bool TryRollback();
 }

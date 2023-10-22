@@ -1,6 +1,7 @@
-﻿using Ecommerce.Application.Model.Autenticacao;
+﻿using Ecommerce.Application.Model.Pessoas.Autenticacao;
 using Ecommerce.Application.Services.Interfaces.Autenticacao;
 using Ecommerce.Domain.Entities.Pessoas.Autenticacao;
+using Ecommerce.Infra.Auth.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,10 +13,12 @@ namespace Ecommerce.API.Controller
     public class AutenticacaoController : ControllerBase
     {
         private readonly IAutenticacaoService _autenticacaoService;
+        private readonly IUsuarioManager _usuarioManager;
 
-        public AutenticacaoController(IAutenticacaoService autenticacaoService)
+        public AutenticacaoController(IAutenticacaoService autenticacaoService, IUsuarioManager usuarioManager)
         {
             _autenticacaoService = autenticacaoService;
+            _usuarioManager = usuarioManager;
         }
 
         [AllowAnonymous]
@@ -28,13 +31,16 @@ namespace Ecommerce.API.Controller
             return Ok(resultado);
         }
 
-        [HttpGet("estou-logado")]
-        public IActionResult TesteAutorizacao()
+        [HttpPost("AlterarSenha")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Alterar([FromBody] AlterarSenhaModel model)
         {
+            _usuarioManager.AlterarSenha(model);
             return Ok();
-        }
+        } 
 
-        [Authorize(Roles = PerfilUsuarioHelper.Cliente)]
+        [Authorize(Roles = PerfilUsuarioExtensions.Cliente)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [HttpGet("sou-cliente")]
@@ -43,11 +49,20 @@ namespace Ecommerce.API.Controller
             return Ok();
         }
 
-        [Authorize(Roles = PerfilUsuarioHelper.Funcionario)]
+        [Authorize(Roles = PerfilUsuarioExtensions.Funcionario)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [HttpGet("sou-operador")]
         public IActionResult TesteRoleOperador()
+        {
+            return Ok();
+        }
+        
+        [Authorize(Policy = CustomPolicies.SomenteAdministrador)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [HttpGet("sou-administrador")]
+        public IActionResult TestePoliticaAdmin()
         {
             return Ok();
         }

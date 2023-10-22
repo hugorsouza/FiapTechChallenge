@@ -4,9 +4,9 @@ using Ecommerce.Application.Validations.Pessoas.Cadastro;
 
 namespace Ecommerce.Application.Tests.CasosTeste.Pessoas.Cadastro;
 
-public class CadastroPessoaFisicaTest
+public class AlteracaoPessoaFisicaTest
 {
-    public CadastroPessoaFisicaTest()
+    public AlteracaoPessoaFisicaTest()
     {
         
     }
@@ -14,48 +14,44 @@ public class CadastroPessoaFisicaTest
     [Fact]
     public async Task Dado_CadastroClienteVazio_DeveValidar()
     {
-        var sut = new CadastroClienteValidator();
-        var model = new CadastroClienteModel();
+        var sut = new AlterarClienteValidator();
+        var model = new AlterarClienteModel();
         DeveConterValidacoesCliente(await sut.TestValidateAsync(model));
     }
     
     [Fact]
-    public async Task Dado_CadastroFuncionarioVazio_DeveValidar()
+    public async Task Dado_Alteracao_Funcionario_DadosVazios_DeveValidar()
     {
-        var sut = new CadastroFuncionarioValidator();
-        var model = new CadastroFuncionarioModel();
+        var sut = new AlterarFuncionarioValidator();
+        var model = new AlterarFuncionarioModel();
         DeveConterValidacoesFuncionario(await sut.TestValidateAsync(model));
     }
     
     [Fact]
-    public async Task Dado_CadastroPessoaVazia_DeveValidar()
+    public async Task Dado_Alteracao_Pessoa_DadosVazios_DeveValidar()
     {
-        var sut = new CadastroPessoaFisicaValidator();
-        var modelCliente = new CadastroClienteModel() as CadastroPessoaModelBase;
-        var modelFuncionario = new CadastroClienteModel() as CadastroPessoaModelBase;
+        var sut = new AlterarPessoaFisicaValidator();
+        var modelCliente = new AlterarClienteModel() as AlterarPessoaModelBase;
+        var modelFuncionario = new AlterarFuncionarioModel() as AlterarPessoaModelBase;
         DeveConterValidacoesPessoaFisica(await sut.TestValidateAsync(modelCliente));
         DeveConterValidacoesPessoaFisica(await sut.TestValidateAsync(modelFuncionario));
     }
 
-    private void DeveConterValidacoesCliente(TestValidationResult<CadastroClienteModel> resultado)
+    private void DeveConterValidacoesCliente(TestValidationResult<AlterarClienteModel> resultado)
     {
         DeveConterValidacoesPessoaFisica(resultado);
         //Adicionar propriedades exclusivas aqui
     }
     
-    private void DeveConterValidacoesFuncionario(TestValidationResult<CadastroFuncionarioModel> resultado)
+    private void DeveConterValidacoesFuncionario(TestValidationResult<AlterarFuncionarioModel> resultado)
     {
         DeveConterValidacoesPessoaFisica(resultado);
         resultado.ShouldHaveValidationErrorFor(x => x.Cargo);
     }
     
     private void DeveConterValidacoesPessoaFisica<T>(TestValidationResult<T> resultado)
-        where T : CadastroPessoaModelBase
+        where T : AlterarPessoaModelBase
     {
-        resultado.ShouldHaveValidationErrorFor(x => x.Email);
-        resultado.ShouldHaveValidationErrorFor(x => x.Senha);
-        resultado.ShouldHaveValidationErrorFor(x => x.Cpf);
-        resultado.ShouldHaveValidationErrorFor(x => x.Senha);
         resultado.ShouldHaveValidationErrorFor(x => x.Nome);
         resultado.ShouldHaveValidationErrorFor(x => x.Sobrenome);
         resultado.ShouldHaveValidationErrorFor(x => x.DataNascimento);
