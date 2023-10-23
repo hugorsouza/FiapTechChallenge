@@ -20,8 +20,16 @@ namespace Ecommerce.API.Controller
         [Route("Cadastrar")]
         public IActionResult Cadastrar([FromBody] FabricanteViewModel fabricante)
         {
-            _fabricanteservice.Cadastrar(fabricante);
-            return Ok();
+            try
+            {
+               var result = _fabricanteservice.Cadastrar(fabricante);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
         }
 
         [HttpGet]
@@ -52,21 +60,34 @@ namespace Ecommerce.API.Controller
         [Route("Alterar")]
         public IActionResult Alterar([FromBody] Fabricante fabricante)
         {
-            _fabricanteservice.Alterar(fabricante);
+            try
+            {
+                var result = _fabricanteservice.Alterar(fabricante);
 
-            return Ok();            
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+               return BadRequest(ex.Message);
+            }
+            
         }
 
         [HttpDelete]
         [Route("Deletar/{id}")]
         public IActionResult Deletar(int id)
         {
-            _fabricanteservice.Deletar(id);
+            try
+            {
+                _fabricanteservice.Deletar(id);
 
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
             
-            return Ok();
-
-           
         }
     }
 }

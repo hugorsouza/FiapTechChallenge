@@ -1,5 +1,6 @@
 ﻿using Ecommerce.Application.Model.Produto;
 using Ecommerce.Domain.Entities.Produtos;
+using Ecommerce.Domain.Entity;
 using Ecommerce.Domain.Repository;
 using Ecommerce.Domain.Services;
 using System;
@@ -25,9 +26,8 @@ namespace Ecommerce.Application.Services
             var categoria = ObterPorId(entidade.Id);
 
             if (categoria is null)
-            {
-                //Lançar erro
-            }
+                throw new ArgumentException($"Erro: O Fabricante {entidade.Id} não está cadastrado na Base");
+
             _fabricanteRepository.Alterar(entidade);
             
             return entidade;
@@ -40,7 +40,10 @@ namespace Ecommerce.Application.Services
             fabricante.CNPJ = fabricante.ObterCnpjSemFormatacao();
 
             if (!validaCNPJ(fabricante.CNPJ))
-            //Lança Exceção
+                throw new ArgumentException($"Erro: CNPJ {fabricante.CNPJ} inválido");
+
+            if (ObterTodos().Any(x=> x.CNPJ.Equals(fabricante.CNPJ)))
+                throw new ArgumentException($"Erro: O fabrinte {fabricante.CNPJ} Já está cadastrado na base!");
 
             _fabricanteRepository.Cadastrar(fabricante);
 
@@ -54,9 +57,8 @@ namespace Ecommerce.Application.Services
             var fabricante = ObterPorId(id);
 
             if (fabricante is null)
-            {
-                //Lançar Erro
-            }
+                throw new ArgumentException($"Erro: O Fabricante {id} não está cadastrado na Base");
+
             _fabricanteRepository.Deletar(id);
         }
 

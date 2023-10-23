@@ -25,10 +25,8 @@ namespace Ecommerce.Application.Services
         {
             var produto = buidProduto(entidade);
 
-            var produtos = ObterTodos().ToList();
-
-            if (produtos.Any(x => x.Nome.Equals(produto.Nome)))
-                //Lança Exceção
+            if (ObterTodos().Any(x => x.Nome.Equals(produto.Nome)))
+                throw new ArgumentException($"Erro: O Produto {produto.Nome} já está cadastrado!");
                 
             _produtoRepository.Cadastrar(produto);
 
@@ -42,9 +40,7 @@ namespace Ecommerce.Application.Services
         {
             var produto = ObterPorId(entidade.Id);
             if (produto is null)
-            {
-                //Lançar Erro
-            }
+                throw new ArgumentException($"Erro: O Produto {entidade.Id} não está cadastrado na Base");
 
             _produtoRepository.Alterar(entidade);
 
@@ -58,7 +54,7 @@ namespace Ecommerce.Application.Services
             var produto = ObterPorId(id);
             if (produto is null)
             {
-                //Lançar Erro
+                throw new ArgumentException($"Erro: O Produto {id} não está cadastrado na Base");
             }
             _produtoRepository.Deletar(id);
         }
@@ -87,7 +83,8 @@ namespace Ecommerce.Application.Services
             if (model is null)
                 return null;
 
-            return new Produto();
+            return new Produto(model.Ativo, model.Nome, model.Preco,
+                model.Descricao, model.FabricanteId, model.UrlImagem, model.CategoriaId);
 
         }
     }

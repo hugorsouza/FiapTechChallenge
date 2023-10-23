@@ -24,9 +24,9 @@ namespace Ecommerce.API.Controller
                 var result = _categoriaservice.Cadastrar(categoria);
                 return Ok(result);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest($"Erro ao Cadastrar a categoria {categoria.Nome}");
+                return BadRequest(ex.Message);
             }
             
             
@@ -62,25 +62,32 @@ namespace Ecommerce.API.Controller
         {
             try
             {
-                _categoriaservice.Alterar(categoria);
+                var result = _categoriaservice.Alterar(categoria);
 
-                return Ok();
+                return Ok(result);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                return BadRequest(ex.Message);
             }
-
-          
-
         }
 
         [HttpDelete]
         [Route("Deletar/{id}")]
         public IActionResult Deletar(int id)
         {
-            _categoriaservice.Deletar(id);
+            try
+            {
+                _categoriaservice.Deletar(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+            
 
             
             return Ok();

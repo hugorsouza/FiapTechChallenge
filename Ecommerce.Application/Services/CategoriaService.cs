@@ -2,6 +2,7 @@
 using Ecommerce.Application.Model.Produto;
 using Ecommerce.Domain.Entities.Pessoas.Fisica;
 using Ecommerce.Domain.Entities.Produtos;
+using Ecommerce.Domain.Entity;
 using Ecommerce.Domain.Exceptions;
 using Ecommerce.Domain.Repository;
 using Ecommerce.Domain.Services;
@@ -28,10 +29,7 @@ namespace Ecommerce.Application.Services
             var categoria = ObterPorId(model.Id);
 
             if (categoria is null)
-            {
-                //Lançar Erro
-                
-            }
+                throw new ArgumentException($"Erro: A Categoria {model.Id} não está cadastrada na Base!");
 
             _categoriaRepository.Alterar(model);
 
@@ -42,10 +40,8 @@ namespace Ecommerce.Application.Services
         {
             var categoria = buidCategoria(model);
 
-            var categorias = ObterTodos().ToList();
-
-            if (categorias.Any(x => x.Nome.Equals(categoria.Nome))) 
-                  //Lança Exceção
+            if (ObterTodos().Any(x => x.Nome.Equals(categoria.Nome)))
+                throw new ArgumentException($"Erro: A Categoria {categoria.Nome} Já está cadastrada!");
 
             _categoriaRepository.Cadastrar(categoria);
 
@@ -60,10 +56,8 @@ namespace Ecommerce.Application.Services
             var categoria = ObterPorId(id);
 
             if (categoria is null)
-            {
-                //Lançar Erro
+                throw new ArgumentException($"Erro: A Categoria {id} não está cadastrada na Base");
 
-            }
             _categoriaRepository.Deletar(id);
         }
 

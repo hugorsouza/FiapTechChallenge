@@ -9,6 +9,7 @@ namespace Ecommerce.Domain.Entities.Produtos
 {
     public class Fabricante : Entidade
     {
+        public Fabricante() : base() { }
         public Fabricante(string nome, string cnpj ,bool ativo, Endereco endereco)
         {
             CNPJ = cnpj;
