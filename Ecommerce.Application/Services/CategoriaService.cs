@@ -42,6 +42,11 @@ namespace Ecommerce.Application.Services
         {
             var categoria = buidCategoria(model);
 
+            var categorias = ObterTodos().ToList();
+
+            if (categorias.Any(x => x.Nome.Equals(categoria.Nome))) 
+                  //Lança Exceção
+
             _categoriaRepository.Cadastrar(categoria);
 
             var categoriaViewModel = BuildViewModel(categoria);

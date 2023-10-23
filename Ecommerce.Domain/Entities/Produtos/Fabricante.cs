@@ -21,5 +21,7 @@ namespace Ecommerce.Domain.Entities.Produtos
         public string CNPJ { get; set; }
         public Endereco Endereco { get; set; }
 
+        public string ObterCnpjSemFormatacao() => string.Join("", CNPJ.Where(char.IsDigit).ToArray());
+
     }
 }

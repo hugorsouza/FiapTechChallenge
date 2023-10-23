@@ -25,6 +25,11 @@ namespace Ecommerce.Application.Services
         {
             var produto = buidProduto(entidade);
 
+            var produtos = ObterTodos().ToList();
+
+            if (produtos.Any(x => x.Nome.Equals(produto.Nome)))
+                //Lança Exceção
+                
             _produtoRepository.Cadastrar(produto);
 
             var produtoViewModel = BuildViewModel(produto);
