@@ -21,6 +21,11 @@ namespace Ecommerce.API.Controller
             _usuarioManager = usuarioManager;
         }
 
+        /// <summary>
+        /// Login de usuários
+        /// </summary>
+        /// <param name="login"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpPost("login")]
         [ProducesResponseType(typeof(LoginResponse), StatusCodes.Status200OK)]
@@ -31,6 +36,11 @@ namespace Ecommerce.API.Controller
             return Ok(resultado);
         }
 
+        /// <summary>
+        /// Alterar senha de usuário
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost("AlterarSenha")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
@@ -40,6 +50,10 @@ namespace Ecommerce.API.Controller
             return Ok();
         } 
 
+        /// <summary>
+        /// Verificar se token possui role de Cliente
+        /// </summary>
+        /// <returns></returns>
         [Authorize(Roles = PerfilUsuarioExtensions.Cliente)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
@@ -49,6 +63,10 @@ namespace Ecommerce.API.Controller
             return Ok();
         }
 
+        /// <summary>
+        /// Verificar se token possui role de Funcionário
+        /// </summary>
+        /// <returns></returns>
         [Authorize(Roles = PerfilUsuarioExtensions.Funcionario)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
@@ -58,6 +76,10 @@ namespace Ecommerce.API.Controller
             return Ok();
         }
         
+        /// <summary>
+        /// Verificar se token atende a política de acesso de "Administradores"
+        /// </summary>
+        /// <returns></returns>
         [Authorize(Policy = CustomPolicies.SomenteAdministrador)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
