@@ -12,14 +12,14 @@ namespace Ecommerce.API.Controller
         private readonly IProdutoService _produtoservice;
         public ProdutoController(IProdutoService produtoservice)
         {
-            _produtoservice= produtoservice;
+            _produtoservice = produtoservice;
         }
 
         [HttpPost]
         public IActionResult Post([FromBody] ProdutoViewModel produto)
         {
             try
-            {   
+            {
                 var result = _produtoservice.Cadastrar(produto);
                 return Ok(result);
             }
@@ -27,34 +27,49 @@ namespace Ecommerce.API.Controller
             {
                 return BadRequest(ex.Message);
             }
-            
-            
+
+
         }
 
         [HttpGet]
         [Route("ObterPorId/{id}")]
         public IActionResult ObterPorId(int id)
         {
+            try
+            {
                 var result = _produtoservice.ObterPorId(id);
 
                 if (result != null)
                     return Ok(result);
 
-            
-            return NoContent();
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
         }
 
         [HttpGet]
         [Route("ObterPorTodos")]
         public IActionResult Otertodos()
         {
-  
+            try
+            {
                 var result = _produtoservice.ObterTodos();
 
                 if (result != null)
                     return Ok(result);
-                            
-            return NoContent();
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
         }
 
         [HttpPut]
@@ -70,7 +85,7 @@ namespace Ecommerce.API.Controller
             {
                 return BadRequest(ex.Message);
             }
-                       
+
         }
 
         [HttpDelete]
@@ -86,8 +101,6 @@ namespace Ecommerce.API.Controller
             {
                 return BadRequest(ex.Message);
             }
-                      
-
         }
     }
 }

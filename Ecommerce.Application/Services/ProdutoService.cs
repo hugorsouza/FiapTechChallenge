@@ -25,7 +25,8 @@ namespace Ecommerce.Application.Services
         {
             var produto = buidProduto(entidade);
 
-            if (ObterTodos().Any(x => x.Nome.Equals(produto.Nome)))
+            if (ObterTodos().Where(x => x.Nome != null)
+                    .Any(x => x.Nome.Equals(produto.Nome)))
                 throw new ArgumentException($"Erro: O Produto {produto.Nome} já está cadastrado!");
                 
             _produtoRepository.Cadastrar(produto);
