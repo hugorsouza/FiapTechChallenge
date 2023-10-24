@@ -16,6 +16,11 @@ namespace Ecommerce.API.Controller
             _fabricanteservice = fabricanteservice;
         }
 
+        /// <summary>
+        /// Cadastrar fabricante
+        /// </summary>
+        /// <param name="fabricante"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("Cadastrar")]
         public IActionResult Cadastrar([FromBody] FabricanteViewModel fabricante)
@@ -32,6 +37,11 @@ namespace Ecommerce.API.Controller
 
         }
 
+        /// <summary>
+        /// Obter fabricante por ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("ObterPorId/{id}")]
         public IActionResult ObterPorId(int id)
@@ -53,6 +63,10 @@ namespace Ecommerce.API.Controller
 
         }
 
+        /// <summary>
+        /// Obter todos os fabricantes
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("ObterPorTodos")]
         public IActionResult Otertodos()
@@ -74,6 +88,11 @@ namespace Ecommerce.API.Controller
 
         }
 
+        /// <summary>
+        /// Alterar fabricante
+        /// </summary>
+        /// <param name="fabricante"></param>
+        /// <returns></returns>
         [HttpPut]
         [Route("Alterar")]
         public IActionResult Alterar([FromBody] Fabricante fabricante)
@@ -91,6 +110,11 @@ namespace Ecommerce.API.Controller
             
         }
 
+        /// <summary>
+        /// Deletar fabricante
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete]
         [Route("Deletar/{id}")]
         public IActionResult Deletar(int id)

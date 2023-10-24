@@ -29,12 +29,9 @@ builder.Services
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+app.UseDocumentacaoApi();
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-
     app.SeedDatabase();
 }
 

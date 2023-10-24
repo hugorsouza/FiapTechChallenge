@@ -20,6 +20,11 @@ public class ClienteController : ControllerBase
         _usuarioManager = usuarioManager;
     }
     
+    /// <summary>
+    /// Obter todos os clientes cadastrados.
+    /// Requer role de funcionário.
+    /// </summary>
+    /// <returns></returns>
     [Authorize(Roles = PerfilUsuarioExtensions.Funcionario)]
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<ClienteViewModel>), StatusCodes.Status200OK)]
@@ -31,6 +36,11 @@ public class ClienteController : ControllerBase
         return Ok(resultado);
     }
     
+    /// <summary>
+    /// Cadastrar clientes.
+    /// </summary>
+    /// <param name="cadastro"></param>
+    /// <returns></returns>
     [AllowAnonymous]
     [HttpPost]
     [ProducesResponseType(typeof(ClienteViewModel), StatusCodes.Status200OK)]
@@ -41,6 +51,11 @@ public class ClienteController : ControllerBase
         return Ok(resultado);
     } 
     
+    /// <summary>
+    /// Alterar dados pessoais do cliente logado.
+    /// </summary>
+    /// <param name="cadastro"></param>
+    /// <returns></returns>
     [Authorize(Roles = PerfilUsuarioExtensions.Cliente)]
     [HttpPut]
     [ProducesResponseType(typeof(ClienteViewModel), StatusCodes.Status200OK)]
@@ -51,6 +66,10 @@ public class ClienteController : ControllerBase
         return Ok(resultado);
     } 
     
+    /// <summary>
+    /// Obter dados pessoais do cliente logado.
+    /// </summary>
+    /// <returns></returns>
     [Authorize(Roles = PerfilUsuarioExtensions.Cliente)]
     [HttpGet("MeusDados")]
     [ProducesResponseType(typeof(ClienteViewModel), StatusCodes.Status200OK)]
@@ -62,6 +81,12 @@ public class ClienteController : ControllerBase
         return Ok(resultado);
     }
     
+    /// <summary>
+    /// Obter um cliente específico pelo ID.
+    /// Requer role de funcionário.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [Authorize(Roles = PerfilUsuarioExtensions.Funcionario)]
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(ClienteViewModel), StatusCodes.Status200OK)]

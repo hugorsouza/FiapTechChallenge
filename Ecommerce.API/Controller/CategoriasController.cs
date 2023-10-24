@@ -15,6 +15,11 @@ namespace Ecommerce.API.Controller
             _categoriaservice= categoriaservice;
         }
 
+        /// <summary>
+        /// Cadastrar categoria
+        /// </summary>
+        /// <param name="categoria"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("Cadastrar")]
         public IActionResult Cadastrar([FromBody] CategoriaViewModel categoria)
@@ -32,6 +37,11 @@ namespace Ecommerce.API.Controller
             
         }
 
+        /// <summary>
+        /// Obter categoria por ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("ObterPorId/{id}")]
         public IActionResult ObterPorId(int id)
@@ -52,6 +62,10 @@ namespace Ecommerce.API.Controller
 
         }
 
+        /// <summary>
+        /// Obter todas as categorias
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("ObterPorTodos")]
         public IActionResult Otertodos()
@@ -72,6 +86,11 @@ namespace Ecommerce.API.Controller
 
         }
 
+        /// <summary>
+        /// Alterar categoria
+        /// </summary>
+        /// <param name="categoria"></param>
+        /// <returns></returns>
         [HttpPut]
         [Route("Alterar")]
         public IActionResult Alterar([FromBody] Categoria categoria)
@@ -89,6 +108,11 @@ namespace Ecommerce.API.Controller
             }
         }
 
+        /// <summary>
+        /// Deletar categoria
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete]
         [Route("Deletar/{id}")]
         public IActionResult Deletar(int id)
