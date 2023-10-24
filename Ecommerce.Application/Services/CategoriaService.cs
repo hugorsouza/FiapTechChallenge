@@ -40,7 +40,8 @@ namespace Ecommerce.Application.Services
         {
             var categoria = buidCategoria(model);
 
-            if (ObterTodos().Any(x => x.Nome.Equals(categoria.Nome)))
+            if (ObterTodos().Where(x=> x!=null)
+                .Any(x => x.Nome.Equals(categoria.Nome)))
                 throw new ArgumentException($"Erro: A Categoria {categoria.Nome} Já está cadastrada!");
 
             _categoriaRepository.Cadastrar(categoria);

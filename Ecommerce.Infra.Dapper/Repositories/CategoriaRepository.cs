@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Ecommerce.Infra.Dapper.Interfaces;
 using Ecommerce.Domain.Entities.Produtos;
 using Ecommerce.Domain.Exceptions;
+using System.Reflection;
 
 namespace Ecommerce.Infra.Dapper.Repositories
 {
@@ -33,8 +34,7 @@ namespace Ecommerce.Infra.Dapper.Repositories
             }
             catch (Exception)
             {
-
-                throw;
+                throw new Exception($"Erro ao {MethodBase.GetCurrentMethod()}");
             }
 
         }
@@ -49,10 +49,10 @@ namespace Ecommerce.Infra.Dapper.Repositories
 
                 dbConnection.Query(query, entidade);
             }
-            catch (ExceptionPersonalizada)
+            catch (Exception)
             {
 
-                throw RequisicaoInvalidaException.PorMotivo($"Erro ao atualizar a Categoria:{entidade.Id} - {entidade.Descricao}");
+                throw new Exception($"Erro ao {MethodBase.GetCurrentMethod()}");
             }
 
         }
@@ -70,7 +70,7 @@ namespace Ecommerce.Infra.Dapper.Repositories
             catch (Exception)
             {
 
-                throw;
+                throw new Exception($"Erro ao {MethodBase.GetCurrentMethod()}");
             }
 
         }
@@ -89,7 +89,7 @@ namespace Ecommerce.Infra.Dapper.Repositories
             catch (Exception)
             {
 
-                throw;
+                throw new Exception($"Erro ao {MethodBase.GetCurrentMethod()}");
             }
 
         }
@@ -107,7 +107,7 @@ namespace Ecommerce.Infra.Dapper.Repositories
             catch (Exception)
             {
 
-                throw;
+                throw new Exception($"Erro ao {MethodBase.GetCurrentMethod()}");
             }
 
         }

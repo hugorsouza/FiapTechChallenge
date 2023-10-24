@@ -42,7 +42,8 @@ namespace Ecommerce.Application.Services
             if (!validaCNPJ(fabricante.CNPJ))
                 throw new ArgumentException($"Erro: CNPJ {fabricante.CNPJ} inválido");
 
-            if (ObterTodos().Any(x=> x.CNPJ.Equals(fabricante.CNPJ)))
+            if (ObterTodos().Where(x=> x.CNPJ != null)
+                .Any(x=> x.CNPJ.Equals(fabricante.CNPJ)))
                 throw new ArgumentException($"Erro: O fabrinte {fabricante.CNPJ} Já está cadastrado na base!");
 
             _fabricanteRepository.Cadastrar(fabricante);

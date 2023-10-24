@@ -36,24 +36,40 @@ namespace Ecommerce.API.Controller
         [Route("ObterPorId/{id}")]
         public IActionResult ObterPorId(int id)
         {
-            var result = _categoriaservice.ObterPorId(id);
+            try
+            {
+                var result = _categoriaservice.ObterPorId(id);
 
-            if (result != null)
-                return Ok(result);
-        
-            return NoContent();
+                if (result != null)
+                    return Ok(result);
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
         }
 
         [HttpGet]
         [Route("ObterPorTodos")]
         public IActionResult Otertodos()
         {
-            var result = _categoriaservice.ObterTodos();
+            try
+            {
+                var result = _categoriaservice.ObterTodos();
 
-            if (result != null)
-                return Ok(result);
+                if (result != null)
+                    return Ok(result);
 
-            return NoContent();
+                return NoContent();
+            }
+            catch (Exception ex) 
+            { 
+                return BadRequest(ex.Message); 
+            }
+
         }
 
         [HttpPut]
@@ -87,11 +103,7 @@ namespace Ecommerce.API.Controller
 
                 return BadRequest(ex.Message);
             }
-            
-
-            
-            return Ok();
-                       
+                                  
         }
     }
 }

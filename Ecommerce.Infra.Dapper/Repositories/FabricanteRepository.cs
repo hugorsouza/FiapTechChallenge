@@ -51,9 +51,8 @@ namespace Ecommerce.Infra.Dapper.Repositories
                     transaction.Rollback();
                 }
                 catch (Exception)
-                {
-                    //TODO TRATAR A MENSAGEM PARA A CONTROLLER
-                    throw;
+                {                    
+                    throw new Exception("Erro: Não foi possivel gravar o Fabricante");
                 }
                 
             }
@@ -95,8 +94,8 @@ namespace Ecommerce.Infra.Dapper.Repositories
                 }
                 catch (Exception)
                 {
-                    //TODO - TRATAR A EXCEÇÃO
-                    throw;
+                    throw new Exception("Erro: Não foi possivel salvar o Fabricante");
+                    
                 }
             }finally
             {
@@ -117,10 +116,6 @@ namespace Ecommerce.Infra.Dapper.Repositories
                 var query1 = "DELETE FROM ENDERECO WHERE EntidadeId=@EntidadeId";
                 dbConnection.Execute(query1, new { EntidadeId = id }, transaction);
 
-                //TODO IMPLEMENTAÇÃO DO REPOSITORIO
-                // var query2 = "UPDATE ENDERECO SET Logradouro=@Logradouro, Numero=@Numero, CEP=@CEP, Bairro=@Bairro, Cidade=@Cidade, Estado=@Estado where Id=Id";
-                // dbConnection.Execute(query1, entidade.Endereco, transaction);
-                
                 var query2 = "DELETE FROM FABRICANTE WHERE Id=@Id";
                 dbConnection.Execute(query2, new {Id=id}, transaction);
 
@@ -135,8 +130,7 @@ namespace Ecommerce.Infra.Dapper.Repositories
                 }
                 catch (Exception)
                 {
-                    //TODO - TRATAR A EXCEÇÃO
-                    throw;
+                    throw new Exception("Erro: Não foi possivel deletar o Fabricante");
                 }
             }
             finally

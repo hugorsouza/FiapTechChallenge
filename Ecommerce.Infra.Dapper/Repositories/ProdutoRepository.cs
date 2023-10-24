@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Ecommerce.Infra.Dapper.Interfaces;
 using Ecommerce.Domain.Entities.Produtos;
+using System.Reflection;
 
 namespace Ecommerce.Infra.Dapper.Repositories
 {
@@ -32,10 +33,10 @@ namespace Ecommerce.Infra.Dapper.Repositories
 
                 dbConnection.Query(query, entidade);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
-                throw;
+                throw new Exception($"Erro ao {MethodBase.GetCurrentMethod()}");
             }
             
         }
@@ -52,7 +53,7 @@ namespace Ecommerce.Infra.Dapper.Repositories
             catch (Exception)
             {
 
-                throw;
+                throw new Exception($"Erro ao {MethodBase.GetCurrentMethod()}");
             }
 
         }
@@ -71,7 +72,7 @@ namespace Ecommerce.Infra.Dapper.Repositories
             catch (Exception)
             {
 
-                throw;
+                throw new Exception($"Erro ao {MethodBase.GetCurrentMethod()}");
             }
 
         }
@@ -89,7 +90,7 @@ namespace Ecommerce.Infra.Dapper.Repositories
             catch (Exception)
             {
 
-                throw;
+                throw new Exception($"Erro ao {MethodBase.GetCurrentMethod()}");
             }
 
             
@@ -108,7 +109,7 @@ namespace Ecommerce.Infra.Dapper.Repositories
             catch (Exception)
             {
 
-                throw;
+                throw new Exception($"Erro ao {MethodBase.GetCurrentMethod()}");
             }
 
         }
