@@ -14,6 +14,11 @@ namespace Ecommerce.API.Controller
             _fornecedorservice= fornecedorservice;
         }
 
+        /// <summary>
+        /// Cadastro de fornecedor
+        /// </summary>
+        /// <param name="fornecedor"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("Cadastrar")]
         public IActionResult Cadastrar([FromBody] Fornecedor fornecedor)
@@ -22,6 +27,11 @@ namespace Ecommerce.API.Controller
             return Ok();
         }
 
+        /// <summary>
+        /// Obter fornecedor por ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("ObterPorId/{id}")]
         public IActionResult ObterPorId(int id)
@@ -34,6 +44,10 @@ namespace Ecommerce.API.Controller
             return NoContent();
         }
 
+        /// <summary>
+        /// Obter todos os fornecedores
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("ObterPorTodos")]
         public IActionResult Otertodos()
@@ -46,6 +60,11 @@ namespace Ecommerce.API.Controller
             return NoContent();
         }
 
+        /// <summary>
+        /// Alterar fornecedores
+        /// </summary>
+        /// <param name="fornecedor"></param>
+        /// <returns></returns>
         [HttpPut]
         [Route("Alterar")]
         public IActionResult Alterar([FromBody] Fornecedor fornecedor)
@@ -54,7 +73,12 @@ namespace Ecommerce.API.Controller
 
             return Ok();            
         }
-
+        
+        /// <summary>
+        /// Deletar fornecedor
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete]
         [Route("Deletar/{id}")]
         public IActionResult Deletar(int id)

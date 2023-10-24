@@ -15,6 +15,11 @@ namespace Ecommerce.API.Controller
             _produtoservice= produtoservice;
         }
 
+        /// <summary>
+        /// Cadastrar produto
+        /// </summary>
+        /// <param name="produto"></param>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult Post([FromBody] ProdutoViewModel produto)
         {
@@ -31,6 +36,11 @@ namespace Ecommerce.API.Controller
             
         }
 
+        /// <summary>
+        /// Obter produto por ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("ObterPorId/{id}")]
         public IActionResult ObterPorId(int id)
@@ -44,6 +54,10 @@ namespace Ecommerce.API.Controller
             return NoContent();
         }
 
+        /// <summary>
+        /// Obter todos os produtos
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("ObterPorTodos")]
         public IActionResult Otertodos()
@@ -57,6 +71,11 @@ namespace Ecommerce.API.Controller
             return NoContent();
         }
 
+        /// <summary>
+        /// Alterar produto
+        /// </summary>
+        /// <param name="produto"></param>
+        /// <returns></returns>
         [HttpPut]
         [Route("Alterar")]
         public IActionResult Alterar([FromBody] Produto produto)
@@ -73,6 +92,11 @@ namespace Ecommerce.API.Controller
                        
         }
 
+        /// <summary>
+        /// Deletar produto
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete]
         [Route("Deletar/{id}")]
         public IActionResult Deletar(int id)

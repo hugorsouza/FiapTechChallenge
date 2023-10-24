@@ -20,9 +20,7 @@ namespace Ecommerce.API.Extensions
 
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
-                    Description = @"Header de autorização utilizando JWTs. \r\n\r\n
-                      Informe 'Bearer' [espaço] e logo em seguida o seu token. 
-                      \r\n\r\Exemplo: 'Bearer 12345abcdef'",
+                    Description = @"Header de autorização utilizando JWTs. Informe 'Bearer' [espaço] e logo em seguida o seu token. Exemplo: 'Bearer 12345abcdef'",
                     Name = "Authorization",
                     In = ParameterLocation.Header,
                     Type = SecuritySchemeType.ApiKey,
