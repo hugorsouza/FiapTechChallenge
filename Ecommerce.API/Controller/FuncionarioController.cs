@@ -21,6 +21,12 @@ public class FuncionarioController : ControllerBase
         _usuarioManager = usuarioManager;
     }
     
+    /// <summary>
+    /// Obter todos os funcionários.
+    /// Requer permissão de administrador.
+    /// </summary>
+    /// <returns></returns>
+    [Authorize(Policy = CustomPolicies.SomenteAdministrador)]
     [HttpGet("ObterTodos")]
     [ProducesResponseType(typeof(IEnumerable<FuncionarioViewModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -31,6 +37,12 @@ public class FuncionarioController : ControllerBase
         return Ok(resultado);
     }
     
+    /// <summary>
+    /// Cadastrar funcionários.
+    /// Requer permissão de administrador.
+    /// </summary>
+    /// <param name="cadastro"></param>
+    /// <returns></returns>
     [Authorize(Policy = CustomPolicies.SomenteAdministrador)]
     [HttpPost("Cadastrar")]
     [ProducesResponseType(typeof(FuncionarioViewModel), StatusCodes.Status200OK)]
@@ -41,7 +53,14 @@ public class FuncionarioController : ControllerBase
         return Ok(resultado);
     } 
     
-    //[Authorize(Policy = CustomPolicies.SomenteAdministrador)]
+    /// <summary>
+    /// Alterar funcionário por ID.
+    /// Requer permissão de administrador.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="cadastro"></param>
+    /// <returns></returns>
+    [Authorize(Policy = CustomPolicies.SomenteAdministrador)]
     [HttpPut("{id}")]
     [ProducesResponseType(typeof(FuncionarioViewModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
@@ -51,6 +70,10 @@ public class FuncionarioController : ControllerBase
         return Ok(resultado);
     } 
     
+    /// <summary>
+    /// Obter dados pessoais do funcionário logado.
+    /// </summary>
+    /// <returns></returns>
     [HttpGet("MeusDados")]
     [ProducesResponseType(typeof(FuncionarioViewModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
@@ -61,7 +84,15 @@ public class FuncionarioController : ControllerBase
         return Ok(resultado);
     }
     
-    [HttpGet("{id}")]
+    /// <summary>
+    /// Obter funcionário por ID.
+    /// Requer permissão de administrador.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="cadastro"></param>
+    /// <returns></returns>
+    [Authorize(Policy = CustomPolicies.SomenteAdministrador)]
+    [HttpGet]
     [ProducesResponseType(typeof(FuncionarioViewModel), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]

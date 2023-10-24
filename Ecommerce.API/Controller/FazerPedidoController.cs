@@ -14,6 +14,11 @@ namespace Ecommerce.API.Controller
             _fazerPedidoService = fazerPedidoService;
         }
 
+        /// <summary>
+        /// Cadastro de pedido
+        /// </summary>
+        /// <param name="fazerPedidoModel"></param>
+        /// <returns></returns>
         [HttpPost("FazerPedido")]
         public IActionResult FazerPedido(FazerPedidoModel fazerPedidoModel)
         {

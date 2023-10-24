@@ -1,25 +1,26 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using System.Reflection;
+using Microsoft.OpenApi.Models;
 
 namespace Ecommerce.API.Extensions
 {
     public static class SwaggerConfig
     {
+        private const string VersaoApi = "v1";
+        private const string TituloApi = "E-commerce - Fiap Tech Challenge";
         public static IServiceCollection AddDocumentacaoApi(this IServiceCollection services)
         {
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc("v1", new OpenApiInfo
+                options.SwaggerDoc(VersaoApi, new OpenApiInfo
                 {
-                    Title = "E-commerce - Fiap Tech Challenge",
-                    Version = "v1"
+                    Title = TituloApi,
+                    Version = VersaoApi
                 });
 
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
-                    Description = @"Authorization header JWT usando o Bearer tokens. \r\n\r\n
-                      Informe 'Bearer' [espaço] e logo em seguida o seu token. 
-                      \r\n\r\Exemplo: 'Bearer 12345abcdef'",
+                    Description = @"Header de autorização utilizando JWTs. Informe 'Bearer' [espaço] e logo em seguida o seu token. Exemplo: 'Bearer 12345abcdef'",
                     Name = "Authorization",
                     In = ParameterLocation.Header,
                     Type = SecuritySchemeType.ApiKey,
@@ -42,9 +43,26 @@ namespace Ecommerce.API.Extensions
                         Array.Empty<string>()
                     }
                 });
+                
+                var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
             });
-
+            
+            
             return services;
+        }
+
+        public static IApplicationBuilder UseDocumentacaoApi(this IApplicationBuilder app)
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+            app.UseReDoc(c =>
+            {
+                c.DocumentTitle = $"{TituloApi} - Redoc";
+                c.SpecUrl = $"/swagger/{VersaoApi}/swagger.json";
+            });
+            
+            return app;
         }
     }
 }
