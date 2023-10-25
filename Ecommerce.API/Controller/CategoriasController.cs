@@ -10,9 +10,11 @@ namespace Ecommerce.API.Controller
     public class CategoriaController : ControllerBase
     {
         private readonly ICategoriaService _categoriaservice;
-        public CategoriaController(ICategoriaService categoriaservice)
+        private readonly ILogger<CategoriaController> _logger;
+        public CategoriaController(ICategoriaService categoriaservice, ILogger<CategoriaController> logger)
         {
             _categoriaservice= categoriaservice;
+            _logger = logger;
         }
 
         [HttpPost]
@@ -21,11 +23,14 @@ namespace Ecommerce.API.Controller
         {
             try
             {
+                _logger.LogInformation("Executando o método Cadastrar");
                 var result = _categoriaservice.Cadastrar(categoria);
                 return Ok(result);
             }
             catch (Exception ex)
             {
+                var erro = @$"{ex.Message} - {ex.StackTrace} - {ex.GetType}";
+                _logger.LogError(erro);
                 return BadRequest(ex.Message);
             }
             

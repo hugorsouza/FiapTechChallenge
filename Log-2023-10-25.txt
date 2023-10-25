@@ -1,0 +1,51 @@
+Information:ListeningOnAddress - Now listening on: https://localhost:7111
+Information:ListeningOnAddress - Now listening on: http://localhost:5287
+Information:0 - Application started. Press Ctrl+C to shut down.
+Information:0 - Hosting environment: Development
+Information:0 - Content root path: C:\Projetos\FIAP\FiapTechChallenge\Ecommerce.API
+Information:0 - Executando o método Cadastrar
+Information:0 - Executando o método Cadastrar
+Information:0 - Executando o método Cadastrar
+Information:ListeningOnAddress - Now listening on: https://localhost:7111
+Information:ListeningOnAddress - Now listening on: http://localhost:5287
+Information:0 - Application started. Press Ctrl+C to shut down.
+Information:0 - Hosting environment: Development
+Information:0 - Content root path: C:\Projetos\FIAP\FiapTechChallenge\Ecommerce.API
+Information:ListeningOnAddress - Now listening on: https://localhost:7111
+Information:ListeningOnAddress - Now listening on: http://localhost:5287
+Information:0 - Application started. Press Ctrl+C to shut down.
+Information:0 - Hosting environment: Development
+Information:0 - Content root path: C:\Projetos\FIAP\FiapTechChallenge\Ecommerce.API
+Information:0 - Executando o método Cadastrar
+Error:0 - Teste
+Information:0 - Executando o método Cadastrar
+Error:0 - Teste
+Information:0 - Executando o método Cadastrar
+Error:0 - Teste
+Information:ListeningOnAddress - Now listening on: https://localhost:7111
+Information:ListeningOnAddress - Now listening on: http://localhost:5287
+Information:0 - Application started. Press Ctrl+C to shut down.
+Information:0 - Hosting environment: Development
+Information:0 - Content root path: C:\Projetos\FIAP\FiapTechChallenge\Ecommerce.API
+Information:0 - Executando o método Cadastrar
+Error:0 - Erro: A Categoria string Já está cadastrada! -    at Ecommerce.Application.Services.CategoriaService.Cadastrar(CategoriaViewModel model) in C:\Projetos\FIAP\FiapTechChallenge\Ecommerce.Application\Services\CategoriaService.cs:line 45
+   at Ecommerce.API.Controller.CategoriaController.Cadastrar(CategoriaViewModel categoria) in C:\Projetos\FIAP\FiapTechChallenge\Ecommerce.API\Controller\CategoriasController.cs:line 27 - System.Func`1[System.Type]
+Information:0 - Executando o método Cadastrar
+Error:0 - Erro: A Categoria string Já está cadastrada! -    at Ecommerce.Application.Services.CategoriaService.Cadastrar(CategoriaViewModel model) in C:\Projetos\FIAP\FiapTechChallenge\Ecommerce.Application\Services\CategoriaService.cs:line 45
+   at Ecommerce.API.Controller.CategoriaController.Cadastrar(CategoriaViewModel categoria) in C:\Projetos\FIAP\FiapTechChallenge\Ecommerce.API\Controller\CategoriasController.cs:line 27 - System.Func`1[System.Type]
+25/10/2023 15:10:50 - Information:ListeningOnAddress - Now listening on: https://localhost:7111
+25/10/2023 15:10:50 - Information:ListeningOnAddress - Now listening on: http://localhost:5287
+25/10/2023 15:10:50 - Information:0 - Application started. Press Ctrl+C to shut down.
+25/10/2023 15:10:50 - Information:0 - Hosting environment: Development
+25/10/2023 15:10:50 - Information:0 - Content root path: C:\Projetos\FIAP\FiapTechChallenge\Ecommerce.API
+25/10/2023 15:11:42 - Information:0 - Executando o método Cadastrar
+25/10/2023 15:11:42 - Error:0 - Erro: A Categoria string Já está cadastrada! -    at Ecommerce.Application.Services.CategoriaService.Cadastrar(CategoriaViewModel model) in C:\Projetos\FIAP\FiapTechChallenge\Ecommerce.Application\Services\CategoriaService.cs:line 45
+   at Ecommerce.API.Controller.CategoriaController.Cadastrar(CategoriaViewModel categoria) in C:\Projetos\FIAP\FiapTechChallenge\Ecommerce.API\Controller\CategoriasController.cs:line 27 - System.Func`1[System.Type]
+25/10/2023 18:39:22 - Information:ListeningOnAddress - Now listening on: https://localhost:7111
+25/10/2023 18:39:22 - Information:ListeningOnAddress - Now listening on: http://localhost:5287
+25/10/2023 18:39:22 - Information:0 - Application started. Press Ctrl+C to shut down.
+25/10/2023 18:39:22 - Information:0 - Hosting environment: Development
+25/10/2023 18:39:22 - Information:0 - Content root path: C:\Projetos\FIAP\FiapTechChallenge\Ecommerce.API
+25/10/2023 18:39:49 - Information:0 - Executando o método Cadastrar
+25/10/2023 18:39:49 - Error:0 - Erro: A Categoria string Já está cadastrada! -    at Ecommerce.Application.Services.CategoriaService.Cadastrar(CategoriaViewModel model) in C:\Projetos\FIAP\FiapTechChallenge\Ecommerce.Application\Services\CategoriaService.cs:line 45
+   at Ecommerce.API.Controller.CategoriaController.Cadastrar(CategoriaViewModel categoria) in C:\Projetos\FIAP\FiapTechChallenge\Ecommerce.API\Controller\CategoriasController.cs:line 27 - System.Func`1[System.Type]
