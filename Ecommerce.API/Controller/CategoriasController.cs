@@ -23,7 +23,7 @@ namespace Ecommerce.API.Controller
         {
             try
             {
-                _logger.LogInformation("Executando o método Cadastrar");
+                
                 var result = _categoriaservice.Cadastrar(categoria);
                 return Ok(result);
             }
@@ -52,6 +52,8 @@ namespace Ecommerce.API.Controller
             }
             catch (Exception ex)
             {
+                var erro = @$"{ex.Message} - {ex.StackTrace} - {ex.GetType}";
+                _logger.LogError(erro);
                 return BadRequest(ex.Message);
             }
 
@@ -71,7 +73,9 @@ namespace Ecommerce.API.Controller
                 return NoContent();
             }
             catch (Exception ex) 
-            { 
+            {
+                var erro = @$"{ex.Message} - {ex.StackTrace} - {ex.GetType}";
+                _logger.LogError(erro);
                 return BadRequest(ex.Message); 
             }
 
@@ -89,7 +93,8 @@ namespace Ecommerce.API.Controller
             }
             catch (Exception ex)
             {
-
+                var erro = @$"{ex.Message} - {ex.StackTrace} - {ex.GetType}";
+                _logger.LogError(erro);
                 return BadRequest(ex.Message);
             }
         }
@@ -105,7 +110,8 @@ namespace Ecommerce.API.Controller
             }
             catch (Exception ex)
             {
-
+                var erro = @$"{ex.Message} - {ex.StackTrace} - {ex.GetType}";
+                _logger.LogError(erro);
                 return BadRequest(ex.Message);
             }
                                   

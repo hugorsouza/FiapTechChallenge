@@ -13,16 +13,16 @@ namespace Ecommerce.Infra.Logging.Logging
     {
         private readonly CustomLoggerProviderConfiguration _loggerConfig;
         private readonly ConcurrentDictionary<string, CustomLogger> loggers = new ConcurrentDictionary<string, CustomLogger>();
-       
+        private readonly IConfiguration _configuration;
 
-        public CustomLoggerProvider(CustomLoggerProviderConfiguration loggerConfig)
+        public CustomLoggerProvider(CustomLoggerProviderConfiguration loggerConfig, IConfiguration config)
         {
-            _loggerConfig= loggerConfig;
-           
+            _loggerConfig = loggerConfig;
+            _configuration= config;
         }
         public ILogger CreateLogger(string categoria)
         {
-            return loggers.GetOrAdd(categoria, nome => new CustomLogger(nome, _loggerConfig));
+           return loggers.GetOrAdd(categoria, nome => new CustomLogger(nome, _loggerConfig, _configuration));
         }
 
         public void Dispose()

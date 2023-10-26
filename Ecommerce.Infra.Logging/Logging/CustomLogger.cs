@@ -21,14 +21,13 @@ namespace Ecommerce.Infra.Logging.Logging
     {
         private readonly string _loggerName;
         private readonly CustomLoggerProviderConfiguration _configuration;
+        private readonly IConfiguration _config;
 
-        private static string conn = "DefaultEndpointsProtocol=https;AccountName=fiaptechchallenger;AccountKey=vRaK5kDVPsUmxfLznokJ03DJM0DXW7nOLx8fDYk6rb7BRNnVt5Etcct23vSQW/yhMNyvRvzWix3j+AStdULyTA==;EndpointSuffix=core.windows.net";
-        private static string local = "logaplicacao";
-        public CustomLogger(string nome, CustomLoggerProviderConfiguration configuration)
+        public CustomLogger(string nome, CustomLoggerProviderConfiguration configuration, IConfiguration config)
         {
             _loggerName= nome;
             _configuration= configuration;       
-
+            _config= config;
         }
 
         public IDisposable? BeginScope<TState>(TState state) where TState : notnull
@@ -74,8 +73,8 @@ namespace Ecommerce.Infra.Logging.Logging
 
         private async Task<TableClient> GetTableClient()
         {
-            var serviceClient = new TableServiceClient(conn);
-            var tableClient = serviceClient.GetTableClient(local);
+            var serviceClient = new TableServiceClient(_config.GetSection("BlobStorage:ConectionString").Value);
+            var tableClient = serviceClient.GetTableClient(_config.GetSection("BlobStorage:Table").Value);
 
             await tableClient.CreateIfNotExistsAsync();
             return tableClient;

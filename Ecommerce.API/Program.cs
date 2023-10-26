@@ -1,3 +1,4 @@
+
 using System.Globalization;
 using Ecommerce.API.Extensions;
 using Ecommerce.API.Middleware;
@@ -27,7 +28,7 @@ builder.Services
     .AddScoped<ExceptionMiddleware>()
     .AddAppServices();
 builder.Logging.ClearProviders()
-    .AddProvider(new CustomLoggerProvider( new CustomLoggerProviderConfiguration()));
+    .AddProvider(new CustomLoggerProvider( new CustomLoggerProviderConfiguration(), builder.Configuration));
 
 
 
