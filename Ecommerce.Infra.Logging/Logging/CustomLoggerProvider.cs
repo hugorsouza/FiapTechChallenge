@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -12,10 +13,12 @@ namespace Ecommerce.Infra.Logging.Logging
     {
         private readonly CustomLoggerProviderConfiguration _loggerConfig;
         private readonly ConcurrentDictionary<string, CustomLogger> loggers = new ConcurrentDictionary<string, CustomLogger>();
+       
 
         public CustomLoggerProvider(CustomLoggerProviderConfiguration loggerConfig)
         {
             _loggerConfig= loggerConfig;
+           
         }
         public ILogger CreateLogger(string categoria)
         {

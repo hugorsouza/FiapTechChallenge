@@ -26,9 +26,8 @@ builder.Services
     .AddScoped<IFuncionarioService, FuncionarioService>()
     .AddScoped<ExceptionMiddleware>()
     .AddAppServices();
-
 builder.Logging.ClearProviders()
-    .AddProvider(new CustomLoggerProvider(new CustomLoggerProviderConfiguration()));
+    .AddProvider(new CustomLoggerProvider( new CustomLoggerProviderConfiguration()));
 
 
 
