@@ -22,6 +22,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.ReDoc" Version="6.5.0" />
   </ItemGroup>
@@ -31,6 +32,7 @@
     <ProjectReference Include="..\Ecommerce.Domain\Ecommerce.Domain.csproj" />
     <ProjectReference Include="..\Ecommerce.Infra.Auth\Ecommerce.Infra.Auth.csproj" />
     <ProjectReference Include="..\Ecommerce.Infra.Dapper\Ecommerce.Infra.Dapper.csproj" />
+    <ProjectReference Include="..\Ecommerce.Infra.Logging\Ecommerce.Infra.Logging.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -9,11 +9,13 @@
   <ItemGroup>
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.12" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Ecommerce.Application\Ecommerce.Application.csproj" />
     <ProjectReference Include="..\Ecommerce.Infra.Dapper\Ecommerce.Infra.Dapper.csproj" />
+    <ProjectReference Include="..\Ecommerce.Infra.Logging\Ecommerce.Infra.Logging.csproj" />
   </ItemGroup>
 
 </Project>

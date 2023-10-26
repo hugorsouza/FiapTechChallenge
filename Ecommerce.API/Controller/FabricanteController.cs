@@ -3,6 +3,7 @@ using Ecommerce.Application.Services;
 using Ecommerce.Domain.Entities.Produtos;
 using Ecommerce.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace Ecommerce.API.Controller
 {
@@ -11,9 +12,11 @@ namespace Ecommerce.API.Controller
     public class FabricanteController : ControllerBase
     {
         private readonly IFabricanteService _fabricanteservice;
-        public FabricanteController(IFabricanteService fabricanteservice)
+        private readonly ILogger<CategoriaController> _logger;
+        public FabricanteController(IFabricanteService fabricanteservice, ILogger<CategoriaController> logger)
         {
             _fabricanteservice = fabricanteservice;
+            _logger = logger;
         }
 
         /// <summary>
@@ -32,6 +35,8 @@ namespace Ecommerce.API.Controller
             }
             catch (Exception ex)
             {
+                var erro = @$"{ex.Message} - {ex.StackTrace} - {ex.GetType}";
+                _logger.LogError(erro);
                 return BadRequest(ex.Message);
             }
 
@@ -57,7 +62,8 @@ namespace Ecommerce.API.Controller
             }
             catch (Exception ex)
             {
-
+                var erro = @$"{ex.Message} - {ex.StackTrace} - {ex.GetType}";
+                _logger.LogError(erro);
                 return BadRequest(ex.Message);
             }
 
@@ -82,7 +88,8 @@ namespace Ecommerce.API.Controller
             }
             catch (Exception ex)
             {
-
+                var erro = @$"{ex.Message} - {ex.StackTrace} - {ex.GetType}";
+                _logger.LogError(erro);
                 return BadRequest(ex.Message);
             }
 
@@ -105,7 +112,9 @@ namespace Ecommerce.API.Controller
             }
             catch (Exception ex)
             {
-               return BadRequest(ex.Message);
+                var erro = @$"{ex.Message} - {ex.StackTrace} - {ex.GetType}";
+                _logger.LogError(erro);
+                return BadRequest(ex.Message);
             }
             
         }
@@ -127,6 +136,8 @@ namespace Ecommerce.API.Controller
             }
             catch (Exception ex)
             {
+                var erro = @$"{ex.Message} - {ex.StackTrace} - {ex.GetType}";
+                _logger.LogError(erro);
                 return BadRequest(ex.Message);
             }
             

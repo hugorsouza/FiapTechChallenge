@@ -1,3 +1,4 @@
+
 using System.Globalization;
 using Ecommerce.API.Extensions;
 using Ecommerce.API.Middleware;
@@ -8,6 +9,7 @@ using Ecommerce.Application.Services.Interfaces.Pessoas;
 using Ecommerce.Infra.Auth.Extensions;
 using Ecommerce.Infra.Dapper.Extensions;
 using Ecommerce.Infra.Dapper.Seed;
+using Ecommerce.Infra.Logging.Logging;
 using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,6 +27,9 @@ builder.Services
     .AddScoped<IFuncionarioService, FuncionarioService>()
     .AddScoped<ExceptionMiddleware>()
     .AddAppServices();
+builder.Logging.ClearProviders()
+    .AddProvider(new CustomLoggerProvider( new CustomLoggerProviderConfiguration(), builder.Configuration));
+
 
 
 var app = builder.Build();

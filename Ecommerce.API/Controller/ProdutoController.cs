@@ -2,6 +2,7 @@
 using Ecommerce.Domain.Entities.Produtos;
 using Ecommerce.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace Ecommerce.API.Controller
 {
@@ -10,9 +11,11 @@ namespace Ecommerce.API.Controller
     public class ProdutoController : ControllerBase
     {
         private readonly IProdutoService _produtoservice;
-        public ProdutoController(IProdutoService produtoservice)
+        private readonly ILogger<CategoriaController> _logger;
+        public ProdutoController(IProdutoService produtoservice, ILogger<CategoriaController> logger)
         {
             _produtoservice = produtoservice;
+            _logger = logger;
         }
 
         /// <summary>
@@ -30,6 +33,8 @@ namespace Ecommerce.API.Controller
             }
             catch (Exception ex)
             {
+                var erro = @$"{ex.Message} - {ex.StackTrace} - {ex.GetType}";
+                _logger.LogError(erro);
                 return BadRequest(ex.Message);
             }
 
@@ -57,6 +62,8 @@ namespace Ecommerce.API.Controller
             }
             catch (Exception ex)
             {
+                var erro = @$"{ex.Message} - {ex.StackTrace} - {ex.GetType}";
+                _logger.LogError(erro);
                 return BadRequest(ex.Message);
             }
 
@@ -81,6 +88,8 @@ namespace Ecommerce.API.Controller
             }
             catch (Exception ex)
             {
+                var erro = @$"{ex.Message} - {ex.StackTrace} - {ex.GetType}";
+                _logger.LogError(erro);
                 return BadRequest(ex.Message);
             }
 
@@ -102,6 +111,8 @@ namespace Ecommerce.API.Controller
             }
             catch (Exception ex)
             {
+                var erro = @$"{ex.Message} - {ex.StackTrace} - {ex.GetType}";
+                _logger.LogError(erro);
                 return BadRequest(ex.Message);
             }
 
@@ -123,6 +134,8 @@ namespace Ecommerce.API.Controller
             }
             catch (Exception ex)
             {
+                var erro = @$"{ex.Message} - {ex.StackTrace} - {ex.GetType}";
+                _logger.LogError(erro);
                 return BadRequest(ex.Message);
             }
         }
