@@ -3,6 +3,7 @@ using Ecommerce.Domain.Entities.Produtos;
 using Ecommerce.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Ecommerce.API.Controller
 {
@@ -138,6 +139,45 @@ namespace Ecommerce.API.Controller
                 _logger.LogError(erro);
                 return BadRequest(ex.Message);
             }
+        }
+
+        [HttpPost]
+        [Route("Upload/{id}")]
+        public async Task<IActionResult> Upload(IFormFile arquivo, [FromRoute] int id)
+        {
+            try
+            {
+                var result = await _produtoservice.Upload(arquivo, id);
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                var erro = @$"{ex.Message} - {ex.StackTrace} - {ex.GetType}";
+                _logger.LogError(erro);
+                return BadRequest(ex.Message);
+            }
+
+        }
+
+
+        [HttpPost]
+        [Route("DeleteImagem/{id}")]
+        public async Task<IActionResult> DeleteImagem([FromRoute] int id)
+        {
+            try
+            {
+                await _produtoservice.DeletarimagemProduto(id);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                var erro = @$"{ex.Message} - {ex.StackTrace} - {ex.GetType}";
+                _logger.LogError(erro);
+                return BadRequest(ex.Message);
+            }
+
         }
     }
 }

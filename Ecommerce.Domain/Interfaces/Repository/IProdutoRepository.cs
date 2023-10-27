@@ -10,6 +10,7 @@ namespace Ecommerce.Domain.Repository
 {
     public interface IProdutoRepository : IRepository<Produto>
     {
-
+        void AdicionaUrlImagem(int idProduto, string diretorio);
+        void DeletarUrlImagem(int idProduto);
     }
 }
