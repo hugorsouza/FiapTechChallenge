@@ -41,7 +41,7 @@ public class FuncionarioController : ControllerBase
         return Ok(resultado);
     } 
     
-    //[Authorize(Policy = CustomPolicies.SomenteAdministrador)]
+    [Authorize(Policy = CustomPolicies.SomenteAdministrador)]
     [HttpPut("{id}")]
     [ProducesResponseType(typeof(FuncionarioViewModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]

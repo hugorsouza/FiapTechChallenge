@@ -1,5 +1,6 @@
 ﻿using Ecommerce.Application.Model.Produto;
 using Ecommerce.Domain.Entities.Produtos;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +16,7 @@ namespace Ecommerce.Domain.Services
         IList<Produto> ObterTodos();
         Produto Alterar(Produto entidade);
         void Deletar(int id);
+        Task<string> Upload(IFormFile arquivo, int id);
+        Task DeletarimagemProduto(int id);
     }
 }
