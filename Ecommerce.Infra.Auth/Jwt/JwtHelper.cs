@@ -11,10 +11,10 @@ using Ecommerce.Infra.Auth.Extensions;
 
 namespace Ecommerce.Infra.Auth.Jwt
 {
-    public class JwtFactory : IJwtFactory
+    public class JwtHelper : IJwtHelper
     {
         private readonly JwtConfig _jwtConfig;
-        public JwtFactory(IOptions<JwtConfig> jwtConfig)
+        public JwtHelper(IOptions<JwtConfig> jwtConfig)
         {
             ArgumentNullException.ThrowIfNull(jwtConfig);
             _jwtConfig = jwtConfig.Value;

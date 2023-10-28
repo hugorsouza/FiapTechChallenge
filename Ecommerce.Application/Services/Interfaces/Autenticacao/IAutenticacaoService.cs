@@ -4,6 +4,7 @@ namespace Ecommerce.Application.Services.Interfaces.Autenticacao
 {
     public interface IAutenticacaoService
     {
-        Task<LoginResponse> Login(LoginModel credenciais);
+        Task<LoginWithRefreshResponse> Login(LoginModel credenciais);
+        Task<LoginResponse> RefreshLogin(RefreshLoginModel credenciais);
     }
 }

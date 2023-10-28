@@ -28,11 +28,26 @@ namespace Ecommerce.API.Controller
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPost("login")]
-        [ProducesResponseType(typeof(LoginResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(LoginWithRefreshResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Login([FromBody] LoginModel login)
         {
             var resultado = await _autenticacaoService.Login(login);
+            return Ok(resultado);
+        }
+
+        /// <summary>
+        /// Login de usuários por refresh token
+        /// </summary>
+        /// <param name="login"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpPost("refresh")]
+        [ProducesResponseType(typeof(LoginResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Refresh([FromBody] RefreshLoginModel login)
+        {
+            var resultado = await _autenticacaoService.RefreshLogin(login);
             return Ok(resultado);
         }
 
