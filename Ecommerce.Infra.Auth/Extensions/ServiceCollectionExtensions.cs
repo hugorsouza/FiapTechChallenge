@@ -59,17 +59,19 @@ namespace Ecommerce.Infra.Auth.Extensions
             // a recursos deste projeto
             services.AddAuthorization(auth =>
             {
-                auth.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
-                    .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
-                    .AddRequirements()
-                    .RequireAuthenticatedUser()
+                const string defaultPolicyName = "Bearer";
+                auth.AddPolicy(defaultPolicyName, new AuthorizationPolicyBuilder()
+                    .ConfigurarPolicyAutenticadaPadrao()
                     .Build());
+
                 auth.AddPolicy(CustomPolicies.SomenteAdministrador, new AuthorizationPolicyBuilder()
-                    .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
-                    .RequireAuthenticatedUser()
+                    .ConfigurarPolicyAutenticadaPadrao()
                     .RequireRole(PerfilUsuarioExtensions.Funcionario)
                     .RequireClaim(CustomClaims.FlagAdmin, "true")
                     .Build());
+
+                auth.DefaultPolicy = auth.GetPolicy(defaultPolicyName) 
+                                     ?? throw new ArgumentException($"A política de autorização padrão [{defaultPolicyName}] não foi registrada");
             });
             return services;
         }
@@ -84,10 +86,18 @@ namespace Ecommerce.Infra.Auth.Extensions
         {
             services
                 .AddScoped<ISenhaHasher, BCryptSenhaHasher>()
-                .AddScoped<IJwtFactory, JwtFactory>()
+                .AddScoped<IJwtHelper, JwtHelper>()
                 .AddScoped<IAutenticacaoService, AutenticacaoService>()
                 .AddScoped<IUsuarioManager, UsuarioManager>();
             return services;
+        }
+
+        private static AuthorizationPolicyBuilder ConfigurarPolicyAutenticadaPadrao(this AuthorizationPolicyBuilder authBuilder)
+        {
+            authBuilder.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+                .RequireAuthenticatedUser()
+                .RequireClaim(CustomClaims.TipoToken, ((int)TipoToken.AccessToken).ToString());//Sem isso, refresh tokens seriam válidos
+            return authBuilder;
         }
     }
 }
