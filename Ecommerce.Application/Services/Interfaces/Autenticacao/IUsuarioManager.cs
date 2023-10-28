@@ -12,6 +12,7 @@ public interface IUsuarioManager
     void AlterarSenha(AlterarSenhaModel model);
     void AlterarSenha(AlterarSenhaModel model, Usuario usuario);
     Usuario ObterUsuarioAtual();
+    string? ObterEmailUsuarioAtual();
     Usuario ObterUsuarioPorEmail(string email);
     Usuario BuildUsuarioParaCliente(CadastroClienteModel model);
     Usuario BuildUsuarioParaFuncionario(CadastroFuncionarioModel model);
