@@ -61,8 +61,13 @@ public class UsuarioManager : IUsuarioManager
 
     public Usuario? ObterUsuarioAtual()
     {
-        var email = Context.User.Identity?.Name;
+        var email = ObterEmailUsuarioAtual();
         return email is null ? null : ObterUsuarioPorEmail(email);
+    }
+
+    public string? ObterEmailUsuarioAtual()
+    {
+        return Context.User.Identity?.Name;
     }
 
     public Usuario? ObterPorId(int id)
@@ -109,8 +114,6 @@ public class UsuarioManager : IUsuarioManager
     public Usuario BuildUsuarioParaCliente(CadastroClienteModel model) => BuildUsuario(model, PerfilUsuario.Cliente);
 
     public Usuario BuildUsuarioParaFuncionario(CadastroFuncionarioModel model) => BuildUsuario(model, PerfilUsuario.Funcionario);
-
-    //public Usuario CriarUsuarioParaEmpresaTerceira(CadastroEmpresaModel model) => BuildUsuario(model, PerfilUsuario.EmpresaTerceira);
     
     private Usuario BuildUsuario<T>(T model, PerfilUsuario perfil)
         where T : CadastroUsuarioModelBase
