@@ -2,8 +2,9 @@
 
 public class FuncionarioViewModel
 {
-    public FuncionarioViewModel(string nome, string sobrenome, string cpf, DateTime dataNascimento, string cargo, bool administrador, UsuarioViewModel usuario)
+    public FuncionarioViewModel(int id, string nome, string sobrenome, string cpf, DateTime dataNascimento, string cargo, bool administrador, UsuarioViewModel usuario)
     {
+        Id = id;
         Nome = nome;
         Sobrenome = sobrenome;
         Cpf = cpf;
@@ -13,6 +14,7 @@ public class FuncionarioViewModel
         Administrador = administrador;
     }
 
+    public int Id { get; set; }
     public string Nome { get; set; }
     public string Sobrenome { get; set; }
     public string Cpf { get; set; }

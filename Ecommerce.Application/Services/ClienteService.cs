@@ -3,6 +3,7 @@ using Ecommerce.Application.Services.Interfaces.Autenticacao;
 using Ecommerce.Application.Services.Interfaces.Pessoas;
 using Ecommerce.Domain.Entities.Pessoas.Autenticacao;
 using Ecommerce.Domain.Entities.Pessoas.Fisica;
+using Ecommerce.Domain.Exceptions;
 using Ecommerce.Domain.Interfaces;
 using Ecommerce.Domain.Interfaces.Repository;
 using FluentValidation;
@@ -81,7 +82,19 @@ public class ClienteService : IClienteService
         var clienteViewModel = BuildViewModel(cliente);
         return clienteViewModel;
     }
-    
+
+    public async Task Desativar(int clienteId)
+    {
+        if (!(await _usuarioManager.SouAdministrador()))
+            throw DesautorizadoException.RequerPermissaoAdmin();
+
+        var cliente = _clienteRepository.ObterPorId(clienteId);
+        if (cliente is null)
+            throw RequisicaoInvalidaException.PorMotivo($"Cliente de ID {clienteId} não encontrado");
+
+        _clienteRepository.Deletar(clienteId);
+    }
+
     private Cliente BuildCliente(CadastroClienteModel model, Usuario usuario)
     {
         var cliente = new Cliente(
@@ -99,7 +112,7 @@ public class ClienteService : IClienteService
     public ClienteViewModel BuildViewModel(Cliente cliente)
     {
         if (cliente is null) return null;
-        var clienteViewModel = new ClienteViewModel(cpf: cliente.Cpf, nome: cliente.Nome, sobrenome: cliente.Sobrenome,
+        var clienteViewModel = new ClienteViewModel(id: cliente.Id, cpf: cliente.Cpf, nome: cliente.Nome, sobrenome: cliente.Sobrenome,
             dataNascimento: cliente.DataNascimento, recebeNewsletterEmail: cliente.RecebeNewsletterEmail,
             usuario: cliente.Usuario is null
                 ? null

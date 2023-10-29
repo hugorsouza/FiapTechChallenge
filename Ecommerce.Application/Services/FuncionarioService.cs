@@ -76,7 +76,19 @@ public class FuncionarioService : IFuncionarioService
         var usuario = _usuarioManager.ObterPorId(usuarioId);
         return Alterar(model, usuario);
     }
-    
+
+    public async Task Desativar(int funcionarioId)
+    {
+        if (!(await _usuarioManager.SouAdministrador()))
+            throw DesautorizadoException.RequerPermissaoAdmin();
+
+        var funcionario = _funcionarioRepository.ObterPorId(funcionarioId);
+        if (funcionario is null)
+            throw RequisicaoInvalidaException.PorMotivo($"Funcionário de ID {funcionarioId} não encontrado");
+
+        _funcionarioRepository.Deletar(funcionarioId);
+    }
+
     private FuncionarioViewModel Alterar(AlterarFuncionarioModel model, Usuario usuario)
     {
         var agora = DateTime.Now;
@@ -86,6 +98,7 @@ public class FuncionarioService : IFuncionarioService
         funcionario.Sobrenome = model.Sobrenome;
         funcionario.DataNascimento = model.DataNascimento;
         funcionario.Cargo = model.Cargo;
+        funcionario.Administrador = model.Administrador;
         funcionario.DataAlteracao = agora;
 
         usuario.DataAlteracao = agora;
@@ -109,14 +122,15 @@ public class FuncionarioService : IFuncionarioService
             cpf: model.Cpf,
             dataNascimento: model.DataNascimento,
             usuario: usuario,
-            cargo: model.Cargo
+            cargo: model.Cargo,
+            administrador: model.Administrador
         );
         return funcionario;
     }
     
     public FuncionarioViewModel BuildViewModel(Funcionario funcionario)
     {
-        var funcionarioViewModel = new FuncionarioViewModel(cpf: funcionario.Cpf, nome: funcionario.Nome, sobrenome: funcionario.Sobrenome,
+        var funcionarioViewModel = new FuncionarioViewModel(id: funcionario.Id, cpf: funcionario.Cpf, nome: funcionario.Nome, sobrenome: funcionario.Sobrenome,
             dataNascimento: funcionario.DataNascimento, administrador: funcionario.Administrador, cargo: funcionario.Cargo,
             usuario: funcionario.Usuario is null
                 ? null

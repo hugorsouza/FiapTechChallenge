@@ -3,4 +3,5 @@
 public record CadastroFuncionarioModel : CadastroPessoaModelBase
 {
     public string Cargo { get; set; }
+    public bool Administrador { get; set; }
 }

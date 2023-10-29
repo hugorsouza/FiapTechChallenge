@@ -101,4 +101,21 @@ public class FuncionarioController : ControllerBase
         var resultado = await _funcionarioService.ObterPorId(id);
         return Ok(resultado);
     }
+
+    /// <summary>
+    /// Desativa funcionário pelo ID.
+    /// Requer permissão de administrador.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="cadastro"></param>
+    /// <returns></returns>
+    [Authorize(Policy = CustomPolicies.SomenteAdministrador)]
+    [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Desativar([FromRoute] int id)
+    {
+        await _funcionarioService.Desativar(id);
+        return Ok();
+    }
 }
