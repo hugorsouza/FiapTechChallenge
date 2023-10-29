@@ -11,4 +11,5 @@ public interface IClienteService
     Task<IEnumerable<ClienteViewModel>> ObterTodos();
     ClienteViewModel BuildViewModel(Cliente cliente);
     Task<ClienteViewModel> Alterar(AlterarClienteModel model);
+    Task Desativar(int clienteId);
 }

@@ -3,4 +3,5 @@
 public record AlterarFuncionarioModel : AlterarPessoaModelBase
 {
     public string Cargo { get; set; }
+    public bool Administrador { get; set; }
 }

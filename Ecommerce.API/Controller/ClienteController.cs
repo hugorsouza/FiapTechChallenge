@@ -2,6 +2,7 @@
 using Ecommerce.Application.Services.Interfaces.Autenticacao;
 using Ecommerce.Application.Services.Interfaces.Pessoas;
 using Ecommerce.Domain.Entities.Pessoas.Autenticacao;
+using Ecommerce.Infra.Auth.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -96,5 +97,22 @@ public class ClienteController : ControllerBase
     {
         var resultado = await _clienteService.ObterPorId(id);
         return Ok(resultado);
+    }
+
+    /// <summary>
+    /// Desativa cliente pelo ID.
+    /// Requer permissão de administrador.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="cadastro"></param>
+    /// <returns></returns>
+    [Authorize(Policy = CustomPolicies.SomenteAdministrador)]
+    [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Desativar([FromRoute] int id)
+    {
+        await _clienteService.Desativar(id);
+        return Ok();
     }
 }

@@ -2,8 +2,9 @@
 
 public class ClienteViewModel
 {
-    public ClienteViewModel(string cpf, string nome, string sobrenome, DateTime dataNascimento, bool recebeNewsletterEmail, UsuarioViewModel usuario)
+    public ClienteViewModel(int id, string cpf, string nome, string sobrenome, DateTime dataNascimento, bool recebeNewsletterEmail, UsuarioViewModel usuario)
     {
+        Id = id;
         Cpf = cpf;
         Nome = nome;
         Sobrenome = sobrenome;
@@ -12,6 +13,7 @@ public class ClienteViewModel
         Usuario = usuario;
     }
 
+    public int Id { get; set; }
     public string Nome { get; set; }
     public string Sobrenome { get; set; }
     public string Cpf { get; set; }

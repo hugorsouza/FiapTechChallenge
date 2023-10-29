@@ -41,7 +41,7 @@ public class FuncionarioRepository : Repository<Funcionario>, IFuncionarioReposi
                 ,DataNascimento = @DataNascimento
                 ,DataAlteracao = @DataAlteracao
                 ,Cargo = @Cargo
-            
+                ,Administrador = @Administrador            
             WHERE Id = @Id
         ";
         var parametros = new
@@ -51,7 +51,8 @@ public class FuncionarioRepository : Repository<Funcionario>, IFuncionarioReposi
             entidade.Sobrenome,
             entidade.DataNascimento,
             entidade.DataAlteracao,
-            entidade.Cargo
+            entidade.Cargo,
+            entidade.Administrador
         };
         Connection.Execute(NovoComando(sql, parametros));
     }

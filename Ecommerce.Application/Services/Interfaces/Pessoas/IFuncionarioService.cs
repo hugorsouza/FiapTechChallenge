@@ -11,4 +11,5 @@ public interface IFuncionarioService
     Task<FuncionarioViewModel> Alterar(AlterarFuncionarioModel model);
     FuncionarioViewModel BuildViewModel(Funcionario funcionario);
     Task<FuncionarioViewModel> Alterar(AlterarFuncionarioModel model, int usuarioId);
+    Task Desativar(int funcionarioId);
 }
