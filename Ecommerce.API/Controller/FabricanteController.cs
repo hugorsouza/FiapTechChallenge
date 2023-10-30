@@ -2,11 +2,14 @@
 using Ecommerce.Application.Services;
 using Ecommerce.Domain.Entities.Produtos;
 using Ecommerce.Domain.Services;
+using Ecommerce.Infra.Auth.Constants;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace Ecommerce.API.Controller
 {
+    [Authorize]
     [Route("api/[Controller]")]
     [ApiController]
     public class FabricanteController : ControllerBase
@@ -24,6 +27,7 @@ namespace Ecommerce.API.Controller
         /// </summary>
         /// <param name="fabricante"></param>
         /// <returns></returns>
+        [Authorize(Policy = CustomPolicies.SomenteAdministrador)]
         [HttpPost]
         [Route("Cadastrar")]
         public IActionResult Cadastrar([FromBody] FabricanteViewModel fabricante)
@@ -47,6 +51,7 @@ namespace Ecommerce.API.Controller
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [AllowAnonymous]
         [HttpGet]
         [Route("ObterPorId/{id}")]
         public IActionResult ObterPorId(int id)
@@ -73,6 +78,7 @@ namespace Ecommerce.API.Controller
         /// Obter todos os fabricantes
         /// </summary>
         /// <returns></returns>
+        [AllowAnonymous]
         [HttpGet]
         [Route("ObterPorTodos")]
         public IActionResult Otertodos()
@@ -100,6 +106,7 @@ namespace Ecommerce.API.Controller
         /// </summary>
         /// <param name="fabricante"></param>
         /// <returns></returns>
+        [Authorize(Policy = CustomPolicies.SomenteAdministrador)]
         [HttpPut]
         [Route("Alterar")]
         public IActionResult Alterar([FromBody] Fabricante fabricante)
@@ -124,6 +131,7 @@ namespace Ecommerce.API.Controller
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [Authorize(Policy = CustomPolicies.SomenteAdministrador)]
         [HttpDelete]
         [Route("Deletar/{id}")]
         public IActionResult Deletar(int id)

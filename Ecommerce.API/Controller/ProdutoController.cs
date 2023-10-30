@@ -1,12 +1,15 @@
 ﻿using Ecommerce.Application.Model.Produto;
 using Ecommerce.Domain.Entities.Produtos;
 using Ecommerce.Domain.Services;
+using Ecommerce.Infra.Auth.Constants;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Ecommerce.API.Controller
 {
+    [Authorize]
     [Route("api/[Controller]")]
     [ApiController]
     public class ProdutoController : ControllerBase
@@ -24,6 +27,7 @@ namespace Ecommerce.API.Controller
         /// </summary>
         /// <param name="produto"></param>
         /// <returns></returns>
+        [Authorize(Policy = CustomPolicies.SomenteAdministrador)]
         [HttpPost]
         public IActionResult Post([FromBody] ProdutoViewModel produto)
         {
@@ -47,6 +51,7 @@ namespace Ecommerce.API.Controller
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [AllowAnonymous]
         [HttpGet]
         [Route("ObterPorId/{id}")]
         public IActionResult ObterPorId(int id)
@@ -74,6 +79,7 @@ namespace Ecommerce.API.Controller
         /// Obter todos os produtos
         /// </summary>
         /// <returns></returns>
+        [AllowAnonymous]
         [HttpGet]
         [Route("ObterPorTodos")]
         public IActionResult Otertodos()
@@ -101,6 +107,7 @@ namespace Ecommerce.API.Controller
         /// </summary>
         /// <param name="produto"></param>
         /// <returns></returns>
+        [Authorize(Policy = CustomPolicies.SomenteAdministrador)]
         [HttpPut]
         [Route("Alterar")]
         public IActionResult Alterar([FromBody] Produto produto)
@@ -124,6 +131,7 @@ namespace Ecommerce.API.Controller
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [Authorize(Policy = CustomPolicies.SomenteAdministrador)]
         [HttpDelete]
         [Route("Deletar/{id}")]
         public IActionResult Deletar(int id)
@@ -141,6 +149,7 @@ namespace Ecommerce.API.Controller
             }
         }
 
+        [Authorize(Policy = CustomPolicies.SomenteAdministrador)]
         [HttpPost]
         [Route("Upload/{id}")]
         public async Task<IActionResult> Upload(IFormFile arquivo, [FromRoute] int id)
@@ -160,7 +169,7 @@ namespace Ecommerce.API.Controller
 
         }
 
-
+        [Authorize(Policy = CustomPolicies.SomenteAdministrador)]
         [HttpPost]
         [Route("DeleteImagem/{id}")]
         public async Task<IActionResult> DeleteImagem([FromRoute] int id)
