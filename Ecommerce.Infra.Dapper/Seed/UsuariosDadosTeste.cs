@@ -11,8 +11,8 @@ namespace Ecommerce.Infra.Dapper.Seed
     {
         private const string TesteSenha = "$2a$12$UtM3mPfEyKfkyahgAO/y4erVhvQk4ShIJPfCLaTkwwP60ueaufHbK";//123456
         private const string EmailTesteCliente = "cliente@hotmail.com";
-        private const string EmailTesteFuncionario = "admin@hotmail.com";
-        private const string EmailTesteEmpresa = "bill.gates@microsoft.com";
+        private const string EmailTesteFuncionarioAdmin = "admin@hotmail.com";
+        private const string EmailTesteFuncionarioPadrao = "funcionario@hotmail.com";
         
         #region Fakers
         
@@ -46,14 +46,7 @@ namespace Ecommerce.Infra.Dapper.Seed
             .RuleFor(x => x.DataAlteracao, f => f.Date.Soon())
             .RuleFor(x => x.Cargo, _ => "Tester")
             .RuleFor(x => x.Usuario, _ => FakerUsuario.Generate());
-
-        private static readonly Faker<Empresa> FakerEmpresa = new Faker<Empresa>("pt_BR")
-            .RuleFor(x => x.Cnpj, f => f.Company.Cnpj(false))
-            .RuleFor(x => x.NomeFantasia, f => f.Company.CompanyName(0))
-            .RuleFor(x => x.EmailContato, f => f.Internet.Email())
-            .RuleFor(x => x.RazaoSocial, f => f.Company.CompanyName(2))
-            .RuleFor(x => x.Usuario, _ => FakerUsuario.Generate());
-
+        
         #endregion
 
         static UsuariosDadosTeste()
@@ -65,7 +58,7 @@ namespace Ecommerce.Infra.Dapper.Seed
             usuario.Usuario.Email = email.ToLowerInvariant();
             usuario.Usuario.EmailNormalizado = email.Trim().ToUpperInvariant();
             if (usuario is Funcionario func &&
-                string.Equals(email, EmailTesteFuncionario, StringComparison.InvariantCultureIgnoreCase))
+                string.Equals(email, EmailTesteFuncionarioAdmin, StringComparison.InvariantCultureIgnoreCase))
                 func.Administrador = true;
         }
         
@@ -87,17 +80,6 @@ namespace Ecommerce.Infra.Dapper.Seed
             return pessoa;
         }
         
-        private static Empresa GerarNovo(Faker<Empresa> faker, string? email = null)
-        {
-            var empresa = faker.Generate();
-            empresa.Usuario.Perfil = PerfilUsuario.EmpresaTerceira;
-            
-            if (email is null) return empresa;
-            
-            SetEmail(email, empresa);
-            return empresa;
-        }
-        
         public static readonly Cliente[] Clientes = Enumerable.Range(1, 10)
             .Select(_ => GerarNovo(FakerCliente))
             .Union(new[]
@@ -109,14 +91,10 @@ namespace Ecommerce.Infra.Dapper.Seed
             .Select(_ => GerarNovo(FakerFuncionario))
             .Union(new[]
             {
-                GerarNovo(FakerFuncionario, EmailTesteFuncionario)
-            }).ToArray();
-        
-        public static readonly Empresa[] Empresas = Enumerable.Range(1, 10)
-            .Select(_ => GerarNovo(FakerEmpresa))
-            .Union(new[]
+                GerarNovo(FakerFuncionario, EmailTesteFuncionarioAdmin)
+            }).Union(new[]
             {
-                GerarNovo(FakerEmpresa, EmailTesteEmpresa)
+                GerarNovo(FakerFuncionario, EmailTesteFuncionarioPadrao)
             }).ToArray();
     }
 }
