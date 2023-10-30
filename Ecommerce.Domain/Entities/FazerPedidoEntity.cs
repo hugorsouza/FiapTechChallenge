@@ -4,6 +4,10 @@ namespace Ecommerce.Application.Model.Pessoas.Pedido
 {
     public class PedidoModel
     {
+        public PedidoModel()
+        {
+            
+        }
         public PedidoModel(
            string usuarioDocumento,
            string usuario,
