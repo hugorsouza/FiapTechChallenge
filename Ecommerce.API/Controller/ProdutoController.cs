@@ -28,6 +28,7 @@ namespace Ecommerce.API.Controller
         /// <param name="produto"></param>
         /// <returns></returns>
         [Authorize(Policy = CustomPolicies.SomenteAdministrador)]
+        [Route("Cadastrar")]
         [HttpPost]
         public IActionResult Post([FromBody] ProdutoViewModel produto)
         {
