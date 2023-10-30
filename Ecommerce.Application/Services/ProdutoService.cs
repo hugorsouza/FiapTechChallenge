@@ -1,7 +1,10 @@
 ﻿using Azure.Storage.Blobs;
 using Ecommerce.Application.Model.Produto;
+using Ecommerce.Application.Services.Interfaces.Autenticacao;
+using Ecommerce.Domain.Entities.Estoque;
 using Ecommerce.Domain.Entities.Produtos;
 using Ecommerce.Domain.Entity;
+using Ecommerce.Domain.Interfaces.Repository;
 using Ecommerce.Domain.Repository;
 using Ecommerce.Domain.Services;
 using Microsoft.AspNetCore.Http;
@@ -14,12 +17,20 @@ namespace Ecommerce.Application.Services
     {
 
         private readonly IProdutoRepository _produtoRepository;
-        private readonly IConfiguration _configuration;
+        private readonly IEstoqueRepository _estoqueRepository;
+        private readonly IUsuarioManager _usuarioManager;
+        private readonly IFuncionarioRepository _funcionarioRepository;
 
-        public ProdutoService(IProdutoRepository produtoRepository, IConfiguration configuration)
+        public ProdutoService(
+            IProdutoRepository produtoRepository, 
+            IEstoqueRepository estoqueRepository, 
+            IUsuarioManager usuarioManager,
+            IFuncionarioRepository funcionarioRepository)
         {
-            _produtoRepository = produtoRepository;
-            _configuration = configuration;
+            _produtoRepository = produtoRepository; 
+            _estoqueRepository = estoqueRepository;
+            _usuarioManager = usuarioManager;
+            _funcionarioRepository = funcionarioRepository;
         }
 
         public ProdutoViewModel Cadastrar(ProdutoViewModel entidade)
@@ -33,6 +44,22 @@ namespace Ecommerce.Application.Services
             _produtoRepository.Cadastrar(produto);
 
             var produtoViewModel = BuildViewModel(produto);
+
+            //Add item no estoque
+            var consultaUser = _usuarioManager.ObterUsuarioAtual();
+            if (consultaUser == null)
+                throw new Exception($"Funcionario {consultaUser.Id} não localizado");
+
+            var consultaFuncionario = _funcionarioRepository.ObterPorId(consultaUser.Id);
+            var estoque = new Estoque
+            {
+                UsuarioDocumento = consultaFuncionario.Cpf,
+                Usuario = consultaUser.NomeExibicao,
+                Produto = produto.Descricao,
+                QuantidadeAtual = 0,
+                DataUltimaMovimentacao = DateTime.UtcNow
+            };
+            _estoqueRepository.Cadastrar(estoque);
 
             return produtoViewModel;
 

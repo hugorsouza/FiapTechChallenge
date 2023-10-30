@@ -7,7 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Registration\RegistrationDapper.cs" />
+    <Compile Remove="Services\Interfaces\**" />
+    <EmbeddedResource Remove="Services\Interfaces\**" />
+    <None Remove="Services\Interfaces\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Services\CrudBaseDapper.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,25 +31,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Ecommerce.Application\Ecommerce.Application.csproj" />
     <ProjectReference Include="..\Ecommerce.Domain\Ecommerce.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="DataBase\Queries\AllQueries.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>AllQueries.tt</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="DataBase\Queries\AllQueries.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>AllQueries.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Registration\" />
   </ItemGroup>
 
   <ItemGroup>

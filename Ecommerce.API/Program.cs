@@ -5,6 +5,8 @@ using Ecommerce.API.Middleware;
 using Ecommerce.Application;
 using Ecommerce.Application.Services;
 using Ecommerce.Application.Services.Interfaces;
+using Ecommerce.Application.Services.Interfaces.Estoque;
+using Ecommerce.Application.Services.Interfaces.Pedido;
 using Ecommerce.Application.Services.Interfaces.Pessoas;
 using Ecommerce.Infra.Auth.Extensions;
 using Ecommerce.Infra.Dapper.Extensions;
@@ -22,9 +24,10 @@ builder.Services
     .AddRepositories()
     .AddAutenticacaoJwt(builder.Configuration)
     .AddValidatorsFromAssemblyContaining<IApplicationAssemblyMarker>()
-    .AddScoped<IFazerPedidoService, FazerPedidoService>()
     .AddScoped<IClienteService, ClienteService>()
     .AddScoped<IFuncionarioService, FuncionarioService>()
+    .AddScoped<IPedidoService, PedidoService>()
+    .AddScoped<IEstoqueService, EstoqueService>()
     .AddScoped<ExceptionMiddleware>()
     .AddAppServices();
 builder.Logging.ClearProviders()

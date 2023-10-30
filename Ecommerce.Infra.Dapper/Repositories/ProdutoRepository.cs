@@ -1,14 +1,7 @@
 ﻿using Dapper;
 using Ecommerce.Domain.Repository;
-using Ecommerce.Domain.Services;
-using Ecommerce.Infra.Dapper.Repositories;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Ecommerce.Infra.Dapper.Interfaces;
 using Ecommerce.Domain.Entities.Produtos;
 using System.Reflection;
@@ -93,8 +86,6 @@ namespace Ecommerce.Infra.Dapper.Repositories
 
                 throw new Exception($"Erro ao {MethodBase.GetCurrentMethod()}");
             }
-
-            
         }
 
         public override IList<Produto> ObterTodos()

@@ -20,7 +20,7 @@ public class FuncionarioController : ControllerBase
         _funcionarioService = funcionarioService;
         _usuarioManager = usuarioManager;
     }
-    
+
     /// <summary>
     /// Obter todos os funcionários.
     /// Requer permissão de administrador.
@@ -43,7 +43,7 @@ public class FuncionarioController : ControllerBase
     /// </summary>
     /// <param name="cadastro"></param>
     /// <returns></returns>
-    [Authorize(Policy = CustomPolicies.SomenteAdministrador)]
+    //[Authorize(Policy = CustomPolicies.SomenteAdministrador)]
     [HttpPost("Cadastrar")]
     [ProducesResponseType(typeof(FuncionarioViewModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
