@@ -1,10 +1,13 @@
 ﻿using Ecommerce.Application.Model.Produto;
 using Ecommerce.Domain.Entities.Produtos;
 using Ecommerce.Domain.Services;
+using Ecommerce.Infra.Auth.Constants;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ecommerce.API.Controller
 {
+    [Authorize]
     [Route("api/[Controller]")]
     [ApiController]
     public class CategoriaController : ControllerBase
@@ -22,6 +25,7 @@ namespace Ecommerce.API.Controller
         /// </summary>
         /// <param name="categoria"></param>
         /// <returns></returns>
+        [Authorize(Policy = CustomPolicies.SomenteAdministrador)]
         [HttpPost]
         [Route("Cadastrar")]
         public IActionResult Cadastrar([FromBody] CategoriaViewModel categoria)
@@ -47,6 +51,7 @@ namespace Ecommerce.API.Controller
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [AllowAnonymous]
         [HttpGet]
         [Route("ObterPorId/{id}")]
         public IActionResult ObterPorId(int id)
@@ -73,6 +78,7 @@ namespace Ecommerce.API.Controller
         /// Obter todas as categorias
         /// </summary>
         /// <returns></returns>
+        [AllowAnonymous]
         [HttpGet]
         [Route("ObterPorTodos")]
         public IActionResult Otertodos()
@@ -100,6 +106,7 @@ namespace Ecommerce.API.Controller
         /// </summary>
         /// <param name="categoria"></param>
         /// <returns></returns>
+        [Authorize(Policy = CustomPolicies.SomenteAdministrador)]
         [HttpPut]
         [Route("Alterar")]
         public IActionResult Alterar([FromBody] Categoria categoria)
@@ -123,6 +130,7 @@ namespace Ecommerce.API.Controller
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [Authorize(Policy = CustomPolicies.SomenteAdministrador)]
         [HttpDelete]
         [Route("Deletar/{id}")]
         public IActionResult Deletar(int id)
