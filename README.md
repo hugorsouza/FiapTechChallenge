@@ -19,8 +19,8 @@ Nessa carga inicial serão criados:
 * Funcionários e seus respectivos Usuários de acesso
 
 Após executar o projeto, as rotas de documentação estarão disponíveis. Elas poderão ser consultadas em:
-*Swagger: localhost:{porta}/swagger/index.html
-*Redoc: localhost:{porta}/api-docs/index.html
+* Swagger: localhost:{porta}/swagger/index.html
+* Redoc: localhost:{porta}/api-docs/index.html
 
 ## 💻 Realizando testes
 Será possível efetuar os testes na API pelo Swagger. Para isso, recomendamos o uso dos usuários cadastrados na carga inicial dados de desenvolvimento.
