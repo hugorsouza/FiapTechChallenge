@@ -20,17 +20,20 @@ namespace Ecommerce.Application.Services
         private readonly IEstoqueRepository _estoqueRepository;
         private readonly IUsuarioManager _usuarioManager;
         private readonly IFuncionarioRepository _funcionarioRepository;
+        private readonly IConfiguration _configuration;
 
         public ProdutoService(
             IProdutoRepository produtoRepository, 
             IEstoqueRepository estoqueRepository, 
             IUsuarioManager usuarioManager,
-            IFuncionarioRepository funcionarioRepository)
+            IFuncionarioRepository funcionarioRepository,
+            IConfiguration configuration)
         {
             _produtoRepository = produtoRepository; 
             _estoqueRepository = estoqueRepository;
             _usuarioManager = usuarioManager;
             _funcionarioRepository = funcionarioRepository;
+            _configuration = configuration;
         }
 
         public ProdutoViewModel Cadastrar(ProdutoViewModel entidade)
