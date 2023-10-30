@@ -79,7 +79,7 @@ namespace Ecommerce.Application.Services
             return new EstoqueModel(
                 estoque.UsuarioDocumento,
                 estoque.Usuario,
-                estoque.Produto,
+                estoque.ProdutoId,
                 estoque.QuantidadeAtual,
                 estoque.DataUltimaMovimentacao
             );

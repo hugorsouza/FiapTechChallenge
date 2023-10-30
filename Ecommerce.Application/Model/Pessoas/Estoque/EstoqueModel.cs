@@ -11,21 +11,21 @@ namespace Ecommerce.Application.Model.Pessoas.Estoque
         public EstoqueModel(
             string usuarioDocumento,
             string usuario,
-            string produto,
+            int produtoId,
             int quantidadeAtual,
             DateTime dataUltimaMovimentacao
             )
         {
             UsuarioDocumento = usuarioDocumento;
             Usuario = usuario;
-            Produto = produto;
+            ProdutoId = produtoId;
             QuantidadeAtual = quantidadeAtual;
             DataUltimaMovimentacao = dataUltimaMovimentacao;
         }
 
         public string UsuarioDocumento { get; set; }
         public string Usuario { get; set; }
-        public string Produto { get; set; }
+        public int ProdutoId { get; set; }
         public int QuantidadeAtual { get; set;}
         public DateTime DataUltimaMovimentacao { get; set; }
     }
