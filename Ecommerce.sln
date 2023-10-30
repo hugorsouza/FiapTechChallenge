@@ -25,7 +25,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ecommerce.Infra.Auth", "Eco
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ecommerce.Application.Tests", "Ecommerce.Application.Tests\Ecommerce.Application.Tests.csproj", "{72E7F734-D5DB-4BE2-8407-F4FF12FAF0BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ecommerce.Infra.Logging", "Ecommerce.Infra.Logging\Ecommerce.Infra.Logging.csproj", "{81D584AE-7A21-4F94-BA69-256E0E7AD637}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ecommerce.Infra.Logging", "Ecommerce.Infra.Logging\Ecommerce.Infra.Logging.csproj", "{81D584AE-7A21-4F94-BA69-256E0E7AD637}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{4AF13436-18CD-4401-A0ED-7D4722EC101B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -77,6 +79,7 @@ Global
 		{2FDE9079-D0C3-4F4A-B465-5933894D412B} = {D3C141E5-FB25-439B-ACBB-3D4140635D7B}
 		{72E7F734-D5DB-4BE2-8407-F4FF12FAF0BC} = {6DD40371-2F4D-4449-AD5D-9D814361AF87}
 		{81D584AE-7A21-4F94-BA69-256E0E7AD637} = {D3C141E5-FB25-439B-ACBB-3D4140635D7B}
+		{4AF13436-18CD-4401-A0ED-7D4722EC101B} = {B77AFB33-5054-49FA-AFC1-C1A6B112A191}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CD677007-6141-47A7-9CD1-4F38A7197107}
