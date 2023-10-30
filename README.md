@@ -37,6 +37,7 @@ Usuários disponíveis:
 * Perfil Cliente: cliente@hotmail.com
 * Perfil Funcionário (Admin): admin@hotmail.com
 * Perfil Funcionário (Padrão): funcionario@hotmail.com
+  
 A senha padrão de todos os usuários criados durante essa carga inicial será "123456". Existirão outros usuários com dados aleatórios, eles foram criados utilizando a biblioteca Bogus.
 
 Para se autenticar, utilize a rota /Autenticacao/login e utilize uma das credenciais disponibilizadas. Após obter o token de acesso, será necessário informar ele no botão Authorize para que assim seja possível acessar as rotas protegidas.
