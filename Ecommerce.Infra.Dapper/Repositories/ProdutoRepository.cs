@@ -6,6 +6,8 @@ using Ecommerce.Infra.Dapper.Interfaces;
 using Ecommerce.Domain.Entities.Produtos;
 using System.Reflection;
 using Ecommerce.Domain.Entity;
+using Ecommerce.Domain.Entities.Estoque;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Ecommerce.Infra.Dapper.Repositories
 {
@@ -15,22 +17,48 @@ namespace Ecommerce.Infra.Dapper.Repositories
         {
         }
 
-        public override void Cadastrar(Produto entidade)
+        public async Task<int?> CadastrarAsync(Produto produto, Estoque estoque)
         {
+            using var dbConnection = new SqlConnection(ConnectionString);
+
+            dbConnection.Open();
+            var transaction = dbConnection.BeginTransaction();
 
             try
-            {
-                using var dbConnection = new SqlConnection(ConnectionString);
+            {                
 
-                var query = @"INSERT INTO PRODUTO (Nome, Ativo, Preco, Descricao, FabricanteId, CategoriaId, UrlImagem) 
-                        values (@Nome, @Ativo, @Preco, @Descricao, @FabricanteId, @CategoriaId, @UrlImagem)";
+                var query1 = @"INSERT INTO PRODUTO (Nome, Ativo, Preco, Descricao, FabricanteId, CategoriaId, UrlImagem) 
+                        values (@Nome, @Ativo, @Preco, @Descricao, @FabricanteId, @CategoriaId, @UrlImagem);
+                        SELECT CAST(SCOPE_IDENTITY() AS INT);";
+                
 
-                dbConnection.Query(query, entidade);
+                var result = await dbConnection.QueryFirstOrDefaultAsync<int>(query1, produto, transaction);
+
+                estoque.ProdutoId= result;
+
+                var query2 = @"INSERT INTO ESTOQUE (Usuario, UsuarioDocumento, Produto, QuantidadeAtual, DataUltimaMovimentacao) 
+                        values (@Usuario, @UsuarioDocumento, @ProdutoId, @QuantidadeAtual, @DataUltimaMovimentacao)";
+
+                dbConnection.Query(query2, estoque, transaction);
+
+                transaction.Commit();
+
+                return result;
             }
             catch (Exception)
             {
+                try
+                {
+                    transaction.Rollback();
+                    return null;
 
-                throw new Exception($"Erro ao {MethodBase.GetCurrentMethod()}");
+                }
+                catch (Exception)
+                {
+                    throw new Exception($"Erro ao {MethodBase.GetCurrentMethod()}");
+                }
+
+                
             }
             
         }
@@ -139,6 +167,11 @@ namespace Ecommerce.Infra.Dapper.Repositories
                 Console.WriteLine(ex);
                 throw new Exception($"Erro ao {MethodBase.GetCurrentMethod()} do produto {idProduto}");
             }
+        }
+
+        public override void Cadastrar(Produto entidade)
+        {
+            throw new NotImplementedException();
         }
     }
 }

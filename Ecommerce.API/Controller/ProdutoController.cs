@@ -35,6 +35,7 @@ namespace Ecommerce.API.Controller
             try
             {
                 var result = _produtoservice.Cadastrar(produto);
+            
                 return Ok(result);
             }
             catch (Exception ex)

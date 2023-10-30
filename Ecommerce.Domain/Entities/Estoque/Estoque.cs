@@ -12,14 +12,14 @@ namespace Ecommerce.Domain.Entities.Estoque
         public Estoque(
             string usuarioDocumento,
             string usuario,
-            string produto,
+            int produtoId,
             int quantidadeAtual,
             DateTime dataUltimaMovimentacao
             )
         {
             UsuarioDocumento = usuarioDocumento;
             Usuario = usuario;
-            Produto = produto;
+            ProdutoId = produtoId;
             QuantidadeAtual = quantidadeAtual;
             DataUltimaMovimentacao = dataUltimaMovimentacao;
         }
@@ -33,7 +33,7 @@ namespace Ecommerce.Domain.Entities.Estoque
         public string Usuario { get; set; }
         [Required]
         [DataType(DataType.Currency, ErrorMessage = "Produto obrigatório")]
-        public string Produto { get; set; }
+        public int ProdutoId { get; set; }
 
         [Required]
         [DataType(DataType.Currency, ErrorMessage = "Quantidade obrigatório")]

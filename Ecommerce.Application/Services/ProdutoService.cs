@@ -36,15 +36,13 @@ namespace Ecommerce.Application.Services
             _configuration = configuration;
         }
 
-        public ProdutoViewModel Cadastrar(ProdutoViewModel entidade)
+        public async Task<ProdutoViewModel> Cadastrar(ProdutoViewModel entidade)
         {
             var produto = buidProduto(entidade);
 
             if (ObterTodos().Where(x => x.Nome != null)
                     .Any(x => x.Nome.Equals(produto.Nome)))
                 throw new ArgumentException($"Erro: O Produto {produto.Nome} já está cadastrado!");
-
-            _produtoRepository.Cadastrar(produto);
 
             var produtoViewModel = BuildViewModel(produto);
 
@@ -54,15 +52,20 @@ namespace Ecommerce.Application.Services
                 throw new Exception($"Funcionario {consultaUser.Id} não localizado");
 
             var consultaFuncionario = _funcionarioRepository.ObterPorId(consultaUser.Id);
+
             var estoque = new Estoque
             {
                 UsuarioDocumento = consultaFuncionario.Cpf,
                 Usuario = consultaUser.NomeExibicao,
-                Produto = produto.Descricao,
                 QuantidadeAtual = 0,
                 DataUltimaMovimentacao = DateTime.UtcNow
             };
-            _estoqueRepository.Cadastrar(estoque);
+
+            var idProdutoCadastrado = await _produtoRepository.CadastrarAsync(produto, estoque);
+
+            if (idProdutoCadastrado == null)
+                throw new ArgumentException($"Erro: Inconssitencia ao cadastrar o Produto {produto.Nome}");
+
 
             return produtoViewModel;
 
@@ -203,5 +206,6 @@ namespace Ecommerce.Application.Services
             _produtoRepository.DeletarUrlImagem(idProduto);
             
         }
+
     }
 }
