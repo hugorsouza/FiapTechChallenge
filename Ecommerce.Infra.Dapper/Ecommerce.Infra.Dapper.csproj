@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <!--<Nullable>enable</Nullable>-->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Services\Interfaces\**" />
+    <EmbeddedResource Remove="Services\Interfaces\**" />
+    <None Remove="Services\Interfaces\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Services\CrudBaseDapper.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Bogus" Version="34.0.2" />
+    <PackageReference Include="Dapper" Version="2.1.11" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.12" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ecommerce.Application\Ecommerce.Application.csproj" />
+    <ProjectReference Include="..\Ecommerce.Domain\Ecommerce.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ecommerce.Application\Ecommerce.Application.csproj" />
+  </ItemGroup>
+
+</Project>
