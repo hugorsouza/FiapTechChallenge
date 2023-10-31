@@ -36,6 +36,10 @@ namespace Ecommerce.API.Middleware
             {
                 EscreverRetornoErroValidacao(valEx, context);
             }
+            catch (ErroInternoException erroInterno)
+            {
+                EscreverRetornoErroInternoTratado(erroInterno, context);
+            }
             catch (Exception ex)
             {
                 EscreverRetornoErroPadrao(ex, context);
@@ -101,6 +105,26 @@ namespace Ecommerce.API.Middleware
             };
             _logger.LogWarning(ex, "{usuario} em {path} - {mensagem} - {tipo}",
                 ObterIdentificadorUsuario(), rota, ex.Message, ex.GetType().FullName);
+            EscreverResponse(context, statusCode, problemDetails);
+        }
+
+        private void EscreverRetornoErroInternoTratado(ErroInternoException erroInterno, HttpContext context)
+        {
+            const int statusCode = StatusCodes.Status500InternalServerError;
+            var ex = erroInterno.InnerException;
+            var esconderDetalhes = EsconderDetalhesErro();
+            var rota = ObterRota(context);
+
+            var problemDetails = new ProblemDetails()
+            {
+                Title = "Erro interno",
+                Detail = erroInterno.Message,
+                Status = statusCode,
+                Instance = context.Request.Path,
+                Type = esconderDetalhes ? "" : ex.HelpLink
+            };
+            _logger.LogError(ex, "{usuario} em {path} - {mensagem} - {stackTrace} - {tipo}",
+                ObterIdentificadorUsuario(), rota, ex.Message, ex.StackTrace, ex.GetType().FullName);
             EscreverResponse(context, statusCode, problemDetails);
         }
 

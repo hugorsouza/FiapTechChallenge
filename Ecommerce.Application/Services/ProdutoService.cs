@@ -3,14 +3,12 @@ using Ecommerce.Application.Model.Produto;
 using Ecommerce.Application.Services.Interfaces.Autenticacao;
 using Ecommerce.Domain.Entities.Estoque;
 using Ecommerce.Domain.Entities.Produtos;
-using Ecommerce.Domain.Entity;
 using Ecommerce.Domain.Exceptions;
 using Ecommerce.Domain.Interfaces.Repository;
 using Ecommerce.Domain.Repository;
 using Ecommerce.Domain.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
-using System.Globalization;
 
 namespace Ecommerce.Application.Services
 {
@@ -43,8 +41,7 @@ namespace Ecommerce.Application.Services
 
             if (ObterTodos().Where(x => x.Nome != null)
                     .Any(x => x.Nome.Equals(produto.Nome)))
-                //throw new ArgumentException($"Erro: O Produto {produto.Nome} já está cadastrado!");
-                throw RequisicaoInvalidaException.PorMotivo($"Erro: O Produto {produto.Nome} já está cadastrado!");
+                throw RequisicaoInvalidaException.PorMotivo($"O Produto {produto.Nome} já está cadastrado!");
 
 
             var produtoViewModel = BuildViewModel(produto);
@@ -52,7 +49,7 @@ namespace Ecommerce.Application.Services
             //Add item no estoque
             var consultaUser = _usuarioManager.ObterUsuarioAtual();
             if (consultaUser == null)
-                throw new Exception($"Funcionario {consultaUser.Id} não localizado");
+                throw RequisicaoInvalidaException.PorMotivo($"Funcionario {consultaUser.Id} não localizado");
 
             var consultaFuncionario = _funcionarioRepository.ObterPorId(consultaUser.Id);
 
@@ -64,12 +61,7 @@ namespace Ecommerce.Application.Services
                 DataUltimaMovimentacao = DateTime.UtcNow
             };
 
-            var idProdutoCadastrado = await _produtoRepository.CadastrarAsync(produto, estoque);
-
-            if (idProdutoCadastrado == null)
-                throw new ArgumentException($"Erro: Inconssitencia ao cadastrar o Produto {produto.Nome}");
-
-
+            await _produtoRepository.CadastrarAsync(produto, estoque);
             return produtoViewModel;
 
         }
@@ -78,21 +70,19 @@ namespace Ecommerce.Application.Services
         {
             var produto = ObterPorId(entidade.Id);
             if (produto is null)
-                throw new ArgumentException($"Erro: O Produto {entidade.Id} não está cadastrado na Base");
+                throw RequisicaoInvalidaException.PorMotivo($"O Produto {entidade.Id} não está cadastrado na Base");
 
             _produtoRepository.Alterar(entidade);
 
             return entidade;
-
-
-
         }
+
         public void Deletar(int id)
         {
             var produto = ObterPorId(id);
             if (produto is null)
             {
-                throw new ArgumentException($"Erro: O Produto {id} não está cadastrado na Base");
+                throw RequisicaoInvalidaException.PorMotivo($"O Produto {id} não está cadastrado na Base");
             }
             _produtoRepository.Deletar(id);
         }
@@ -131,10 +121,10 @@ namespace Ecommerce.Application.Services
             string diretorio;
             
             if (!ObterTodos().Any(x => x.Id == idProduto))
-                throw new ArgumentException($"Erro: O Produto Id={idProduto} não estã cadastrado, por isso não será possivel carregar a imagem");
+                throw RequisicaoInvalidaException.PorMotivo($"O Produto Id={idProduto} não estã cadastrado, por isso não será possivel carregar a imagem");
 
             if(arquivoimportado==null)
-                throw new ArgumentException($"Erro: Imagem não anexada para carregar a imagem do Produto Id={idProduto}");
+                throw RequisicaoInvalidaException.PorMotivo($"Imagem não anexada para carregar a imagem do Produto Id={idProduto}");
 
             try
             {
@@ -153,8 +143,7 @@ namespace Ecommerce.Application.Services
                 BlobClient blob = container.GetBlobClient(nomeArquivo);
 
             
-                await blob.DeleteIfExistsAsync();
-                
+                await blob.DeleteIfExistsAsync();                
                 await blob.UploadAsync(stream);
                 
 
@@ -163,7 +152,7 @@ namespace Ecommerce.Application.Services
             }
             catch (Exception ex)
             {
-                throw new ArgumentException($"Erro: Erro para carregar o Produto {idProduto} no diretório");
+                throw ErroInternoException.PorMotivo(ex, $"Erro ao carregar a imagem do Produto {idProduto} no diretório");
             }
 
 
@@ -180,7 +169,7 @@ namespace Ecommerce.Application.Services
            
 
             if (!ObterTodos().Any(x => x.Id == idProduto))
-                throw new ArgumentException($"Erro: O Produto Id={idProduto} não estã cadastrado, por isso não será possivel carregar a imagem");
+                throw RequisicaoInvalidaException.PorMotivo($"O Produto Id={idProduto} não estã cadastrado, por isso não será possivel carregar a imagem");
 
 
             try
@@ -202,7 +191,7 @@ namespace Ecommerce.Application.Services
             }
             catch (Exception ex)
             {
-                throw new ArgumentException($"Erro: Erro para Deletar a imagem do Produto {idProduto} no diretório");
+                throw ErroInternoException.PorMotivo(ex, $"Erro ao deletar a imagem do Produto {idProduto} no diretório");
             }
 
             

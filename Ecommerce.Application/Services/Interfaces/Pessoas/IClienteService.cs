@@ -12,5 +12,4 @@ public interface IClienteService
     ClienteViewModel BuildViewModel(Cliente cliente);
     Task<ClienteViewModel> Alterar(int id , AlterarClienteAdminModel model);
     Task<ClienteViewModel> Alterar(AlterarClienteModel model);
-    Task AlterarAtivo(int clienteId, bool ativo);
 }

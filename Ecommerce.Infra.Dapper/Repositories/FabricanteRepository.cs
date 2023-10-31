@@ -1,13 +1,7 @@
 ﻿using Dapper;
 using Ecommerce.Domain.Repository;
-using Ecommerce.Domain.Services;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Ecommerce.Infra.Dapper.Interfaces;
 using Ecommerce.Domain.Entities.Produtos;
 
@@ -46,15 +40,8 @@ namespace Ecommerce.Infra.Dapper.Repositories
             }
             catch (Exception)
             {
-                try
-                {
-                    transaction.Rollback();
-                }
-                catch (Exception)
-                {                    
-                    throw new Exception("Erro: Não foi possivel gravar o Fabricante");
-                }
-                
+                transaction.Rollback();
+                throw;
             }
             finally
             {
@@ -88,16 +75,10 @@ namespace Ecommerce.Infra.Dapper.Repositories
             }
             catch (Exception)
             {
-                try
-                {
-                    transaction.Rollback();
-                }
-                catch (Exception)
-                {
-                    throw new Exception("Erro: Não foi possivel salvar o Fabricante");
-                    
-                }
-            }finally
+                transaction.Rollback();
+                throw;
+            }
+            finally
             {
                 dbConnection.Close();
             }

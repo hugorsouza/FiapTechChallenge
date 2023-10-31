@@ -10,9 +10,5 @@ namespace Ecommerce.Domain.Services
         Categoria ObterPorId(int id);
         IList<Categoria> ObterTodos();
         Categoria Alterar(Categoria entidade);
-        void Deletar(int id);
-
     }
-
-   
 }

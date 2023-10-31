@@ -103,18 +103,6 @@ public class ClienteService : IClienteService
         return clienteViewModel;
     }
 
-    public async Task AlterarAtivo(int clienteId, bool ativo)
-    {
-        if (!(await _usuarioManager.SouAdministrador()))
-            throw DesautorizadoException.RequerPermissaoAdmin();
-
-        var cliente = _clienteRepository.ObterPorId(clienteId);
-        if (cliente is null)
-            throw RequisicaoInvalidaException.PorMotivo($"Cliente de ID {clienteId} não encontrado");
-
-        _clienteRepository.Deletar(clienteId);
-    }
-
     private Cliente BuildCliente(CadastroClienteModel model, Usuario usuario)
     {
         var cliente = new Cliente(
