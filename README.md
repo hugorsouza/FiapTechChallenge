@@ -8,7 +8,7 @@ Espaço destinado para tech challenges referente ao curso de pós-graduação.
 
 # Documentação 📜
 
-Documentação de negócio: https://docs.google.com/document/d/1njXBAbwb_Z5NDJMHJjPWvT2fH1nOTIHqpGJ67utbi38/edit?usp=sharing
+Documentação: [https://docs.google.com/document/d/1njXBAbwb_Z5NDJMHJjPWvT2fH1nOTIHqpGJ67utbi38/edit?usp=sharing](https://github.com/hugorsouza/FiapTechChallenge/commit/d8c9de3ffbbf26429eed97a011f3bb27bfb6489a)
 
 ## 💻 Pré-requisitos
 
