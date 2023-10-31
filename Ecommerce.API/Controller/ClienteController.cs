@@ -9,7 +9,7 @@ namespace Ecommerce.API.Controller;
 
 [Authorize(Roles = $"{PerfilUsuarioExtensions.Cliente},{PerfilUsuarioExtensions.Funcionario}")]
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class ClienteController : ControllerBase
 {
     private readonly IClienteService _clienteService;

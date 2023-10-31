@@ -10,7 +10,7 @@ namespace Ecommerce.API.Controller;
 
 [Authorize(Roles = PerfilUsuarioExtensions.Funcionario)]
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class FuncionarioController : ControllerBase
 {
     private readonly IFuncionarioService _funcionarioService;

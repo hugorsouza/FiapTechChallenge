@@ -92,6 +92,25 @@ public class ClienteRepository : Repository<Cliente>, IClienteRepository
             splitOn: "Id", 
             transaction: Transaction).FirstOrDefault();
     }
+    
+    public Cliente ObterPorCpf(string cpf)
+    {
+        const string sql = @"SELECT TOP 1
+                c.*, 
+                u.* 
+            FROM Cliente c
+            JOIN Usuario u on c.Id = u.Id
+            WHERE c.Cpf = @Cpf";
+        return Connection.Query<Cliente, Usuario, Cliente>(sql, (cliente, usuario) =>
+            {
+                cliente.Usuario ??= usuario;
+                usuario.Cliente ??= cliente;
+                return cliente;
+            }, 
+            param: new {Cpf = cpf},
+            splitOn: "Id", 
+            transaction: Transaction).FirstOrDefault();
+    }
 
     public override void Cadastrar(Cliente entidade)
     {

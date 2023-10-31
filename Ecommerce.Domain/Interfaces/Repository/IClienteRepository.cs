@@ -6,5 +6,6 @@ namespace Ecommerce.Domain.Interfaces.Repository
 {
     public interface IClienteRepository : IRepository<Cliente>
     {
+        Cliente ObterPorCpf(string cpf);
     }
 }

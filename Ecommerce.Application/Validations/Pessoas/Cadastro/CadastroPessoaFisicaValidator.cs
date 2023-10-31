@@ -1,15 +1,16 @@
 ﻿using Ecommerce.Application.Configuration;
 using Ecommerce.Application.Model.Pessoas;
 using Ecommerce.Application.Model.Pessoas.Cadastro;
+using Ecommerce.Domain.Interfaces.Repository;
 using FluentValidation;
 
 namespace Ecommerce.Application.Validations.Pessoas.Cadastro
 {
     public class CadastroPessoaFisicaValidator : AbstractValidator<CadastroPessoaModelBase>
     {
-        public CadastroPessoaFisicaValidator()
+        public CadastroPessoaFisicaValidator(IUsuarioRepository usuarioRepository)
         {
-            Include(new CadastroUsuarioValidator());
+            Include(new CadastroUsuarioValidator(usuarioRepository));
             
             RuleFor(p => p.Nome)
                 .NotEmpty();

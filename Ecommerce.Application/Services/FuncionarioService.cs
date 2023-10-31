@@ -33,7 +33,7 @@ public class FuncionarioService : IFuncionarioService
 
     public async Task<FuncionarioViewModel> Cadastrar(CadastroFuncionarioModel model)
     {
-        await _validatorCadastro.ValidateAsync(model);
+        await _validatorCadastro.ValidateAndThrowAsync(model);
         model.Cpf = model.ObterCpfSemFormatacao();
         
         _transactionService.BeginTransaction();
@@ -62,7 +62,7 @@ public class FuncionarioService : IFuncionarioService
 
     public async Task<FuncionarioViewModel> Alterar(AlterarFuncionarioModel model)
     {
-        await _validatorAlteracao.ValidateAsync(model);
+        await _validatorAlteracao.ValidateAndThrowAsync(model);
         var usuario = _usuarioManager.ObterUsuarioAtual();
         return Alterar(model, usuario);
     }
@@ -71,7 +71,7 @@ public class FuncionarioService : IFuncionarioService
     {
         if (!(await _usuarioManager.SouAdministrador()))
             throw DesautorizadoException.RequerPermissaoAdmin();
-        await _validatorAlteracao.ValidateAsync(model);
+        await _validatorAlteracao.ValidateAndThrowAsync(model);
         
         var usuario = _usuarioManager.ObterPorId(usuarioId);
         return Alterar(model, usuario);

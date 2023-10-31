@@ -33,7 +33,7 @@ public class ClienteService : IClienteService
 
     public async Task<ClienteViewModel> Cadastrar(CadastroClienteModel model)
     {
-        await _validatorCadastro.ValidateAsync(model);
+        await _validatorCadastro.ValidateAndThrowAsync(model);
         model.Cpf = model.ObterCpfSemFormatacao();
         
         _transactionService.BeginTransaction();
@@ -62,7 +62,7 @@ public class ClienteService : IClienteService
 
     public async Task<ClienteViewModel> Alterar(AlterarClienteModel model)
     {
-        await _validatorAlteracao.ValidateAsync(model);
+        await _validatorAlteracao.ValidateAndThrowAsync(model);
         var agora = DateTime.Now;
         var usuario = _usuarioManager.ObterUsuarioAtual();
         var cliente = usuario.Cliente;
@@ -77,7 +77,7 @@ public class ClienteService : IClienteService
         if (cliente is null)
             throw RequisicaoInvalidaException.PorMotivo($"Cliente de ID [{clienteId}] não foi encontrado");
         
-        await _validatorAlteracao.ValidateAsync(model);
+        await _validatorAlteracao.ValidateAndThrowAsync(model);
         var agora = DateTime.Now;
         cliente.Usuario.Ativo = model.Ativo;
 
@@ -90,6 +90,7 @@ public class ClienteService : IClienteService
         cliente.Sobrenome = model.Sobrenome;
         cliente.DataNascimento = model.DataNascimento;
         cliente.DataAlteracao = agora;
+        cliente.RecebeNewsletterEmail = model.RecebeNewsletterEmail;
 
         cliente.Usuario.DataAlteracao = agora;
         cliente.Usuario.NomeExibicao = cliente.NomeExibicao();

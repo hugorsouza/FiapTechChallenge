@@ -30,7 +30,7 @@ public class FuncionarioRepository : Repository<Funcionario>, IFuncionarioReposi
             splitOn: "Id", 
             transaction: Transaction).ToList();
     }
-
+    
     public override void Alterar(Funcionario entidade)
     {
         const string sql = @"
@@ -91,6 +91,25 @@ public class FuncionarioRepository : Repository<Funcionario>, IFuncionarioReposi
                 return funcionario;
             }, 
             param: new {Id = id},
+            splitOn: "Id", 
+            transaction: Transaction).FirstOrDefault();
+    }
+    
+    public Funcionario ObterPorCpf(string cpf)
+    {
+        const string sql = @"SELECT TOP 1
+                f.*, 
+                u.* 
+            FROM Funcionario f
+            JOIN Usuario u on f.Id = u.Id
+            WHERE f.Cpf = @Cpf";
+        return Connection.Query<Funcionario, Usuario, Funcionario>(sql, (funcionario, usuario) =>
+            {
+                funcionario.Usuario ??= usuario;
+                usuario.Funcionario ??= funcionario;
+                return funcionario;
+            }, 
+            param: new {Cpf = cpf},
             splitOn: "Id", 
             transaction: Transaction).FirstOrDefault();
     }

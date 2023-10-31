@@ -62,10 +62,6 @@ namespace Ecommerce.Application.Services
             return pedido.Select(x => buildEstoqueModel(x));
         }
         
-        public void DeletarItemEstoque(int id)
-        {
-            throw new NotImplementedException();
-;       }
         private EstoqueModel buildEstoqueModel(Estoque estoque)
         {
             if (estoque is null)
@@ -74,7 +70,7 @@ namespace Ecommerce.Application.Services
             return new EstoqueModel(
                 estoque.UsuarioDocumento,
                 estoque.Usuario,
-                estoque.ProdutoId,
+                estoque.Produto,
                 estoque.QuantidadeAtual,
                 estoque.DataUltimaMovimentacao
             );

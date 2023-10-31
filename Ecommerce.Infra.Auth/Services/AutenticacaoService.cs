@@ -71,9 +71,9 @@ namespace Ecommerce.Infra.Auth.Services
         private bool RefreshTokenInvalido(string token, int usuarioIdProprietario)
         {
             if(!_jwtHelper.TentarLerToken(token, out var jwt))
-                return false;
+                return true;
             if (!int.TryParse(jwt.Subject, out var usuarioIdToken) || usuarioIdToken != usuarioIdProprietario)
-                return false;
+                return true;
             return !jwt.TryGetClaim(CustomClaims.TipoToken, out var claimTipo)
                 || !int.TryParse(claimTipo.Value, out var tipoToken)
                 || tipoToken != (int)TipoToken.RefreshToken;
