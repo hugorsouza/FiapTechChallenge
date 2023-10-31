@@ -1,5 +1,14 @@
 # FiapTechChallenge
-Espaço destinado para tech challenges referente ao curso de Pós-graduação.
+Espaço destinado para tech challenges referente ao curso de pós-graduação.
+
+## 🤝 Colaboradores
+* Hugo Souza - rm351477 
+* Leandro Campos - rm350757 
+* Lucas Silva - rm351454
+
+# Documentação 📜
+
+Documentação de negócio: https://docs.google.com/document/d/1njXBAbwb_Z5NDJMHJjPWvT2fH1nOTIHqpGJ67utbi38/edit?usp=sharing
 
 ## 💻 Pré-requisitos
 
@@ -19,8 +28,8 @@ Nessa carga inicial serão criados:
 * Funcionários e seus respectivos Usuários de acesso
 
 Após executar o projeto, as rotas de documentação estarão disponíveis. Elas poderão ser consultadas em:
-*Swagger: localhost:{porta}/swagger/index.html
-*Redoc: localhost:{porta}/api-docs/index.html
+* Swagger: localhost:{porta}/swagger/index.html
+* Redoc: localhost:{porta}/api-docs/index.html
 
 ## 💻 Realizando testes
 Será possível efetuar os testes na API pelo Swagger. Para isso, recomendamos o uso dos usuários cadastrados na carga inicial dados de desenvolvimento.
@@ -28,4 +37,8 @@ Usuários disponíveis:
 * Perfil Cliente: cliente@hotmail.com
 * Perfil Funcionário (Admin): admin@hotmail.com
 * Perfil Funcionário (Padrão): funcionario@hotmail.com
+  
 A senha padrão de todos os usuários criados durante essa carga inicial será "123456". Existirão outros usuários com dados aleatórios, eles foram criados utilizando a biblioteca Bogus.
+
+Para se autenticar, utilize a rota /Autenticacao/login e utilize uma das credenciais disponibilizadas. Após obter o token de acesso, será necessário informar ele no botão Authorize para que assim seja possível acessar as rotas protegidas.
+
