@@ -8,6 +8,5 @@ namespace Ecommerce.Application.Services.Interfaces.Estoque
         EstoqueModel AlterarItemEstoque(int id, int quantidade);
         Task<EstoqueModel> ObterItemEstoquePorId(int id);
         Task<IEnumerable<EstoqueModel>> ObterListaCompletaEstoque();
-        void DeletarItemEstoque(int id);
     }
 }

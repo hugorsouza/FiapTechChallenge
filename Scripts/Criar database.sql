@@ -181,3 +181,8 @@ ALTER TABLE [dbo].[Funcionario] CHECK CONSTRAINT [FK_Funcionario_Usuario]
 GO
 ALTER DATABASE [ECommerce] SET  READ_WRITE 
 GO
+alter table Cliente add constraint UQ_Cliente_Cpf unique(Cpf)
+GO
+alter table Funcionario add constraint UQ_Funcionario_Cpf unique(Cpf)
+GO
+alter table Usuario add constraint UQ_Usuario_EmailNormalizado unique(EmailNormalizado)

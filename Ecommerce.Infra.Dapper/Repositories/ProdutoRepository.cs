@@ -31,7 +31,7 @@ namespace Ecommerce.Infra.Dapper.Repositories
 
                 produto.Id = await dbConnection.QueryFirstOrDefaultAsync<int>(query1, produto, transaction);
 
-                estoque.ProdutoId= produto.Id;
+                estoque.Produto = produto.Id;
 
                 var query2 = @"INSERT INTO ESTOQUE (Usuario, UsuarioDocumento, Produto, QuantidadeAtual, DataUltimaMovimentacao) 
                         values (@Usuario, @UsuarioDocumento, @ProdutoId, @QuantidadeAtual, @DataUltimaMovimentacao)";
