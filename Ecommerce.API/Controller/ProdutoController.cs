@@ -35,20 +35,8 @@ namespace Ecommerce.API.Controller
         [HttpPost]
         public IActionResult Post([FromBody] ProdutoViewModel produto)
         {
-            try
-            {
-                var result = _produtoservice.Cadastrar(produto);
-            
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                var erro = @$"{ex.Message} - {ex.StackTrace} - {ex.GetType}";
-                _logger.LogError(erro);
-                return BadRequest(ex.Message);
-            }
-
-
+            var result = _produtoservice.Cadastrar(produto);
+            return Ok(result);
         }
 
         /// <summary>
@@ -64,23 +52,12 @@ namespace Ecommerce.API.Controller
         [Route("ObterPorId/{id}")]
         public IActionResult ObterPorId(int id)
         {
-            try
-            {
-                var result = _produtoservice.ObterPorId(id);
+            var result = _produtoservice.ObterPorId(id);
 
-                if (result != null)
-                    return Ok(result);
+            if (result != null)
+                return Ok(result);
 
-
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                var erro = @$"{ex.Message} - {ex.StackTrace} - {ex.GetType}";
-                _logger.LogError(erro);
-                return BadRequest(ex.Message);
-            }
-
+            return NoContent();
         }
 
         /// <summary>
@@ -95,22 +72,12 @@ namespace Ecommerce.API.Controller
         [Route("ObterPorTodos")]
         public IActionResult Otertodos()
         {
-            try
-            {
-                var result = _produtoservice.ObterTodos();
+            var result = _produtoservice.ObterTodos();
 
-                if (result != null)
-                    return Ok(result);
+            if (result != null)
+                return Ok(result);
 
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                var erro = @$"{ex.Message} - {ex.StackTrace} - {ex.GetType}";
-                _logger.LogError(erro);
-                return BadRequest(ex.Message);
-            }
-
+            return NoContent();
         }
 
         /// <summary>
@@ -125,18 +92,8 @@ namespace Ecommerce.API.Controller
         [Route("Alterar")]
         public IActionResult Alterar([FromBody] Produto produto)
         {
-            try
-            {
-                var result = _produtoservice.Alterar(produto);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                var erro = @$"{ex.Message} - {ex.StackTrace} - {ex.GetType}";
-                _logger.LogError(erro);
-                return BadRequest(ex.Message);
-            }
-
+            var result = _produtoservice.Alterar(produto);
+            return Ok(result);
         }        
 
         [Authorize(Policy = CustomPolicies.SomenteAdministrador)]
@@ -146,19 +103,9 @@ namespace Ecommerce.API.Controller
         [Route("Upload/{id}")]
         public async Task<IActionResult> Upload(IFormFile arquivo, [FromRoute] int id)
         {
-            try
-            {
-                var result = await _produtoservice.Upload(arquivo, id);
+            var result = await _produtoservice.Upload(arquivo, id);
 
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                var erro = @$"{ex.Message} - {ex.StackTrace} - {ex.GetType}";
-                _logger.LogError(erro);
-                return BadRequest(ex.Message);
-            }
-
+            return Ok(result);
         }
 
         [Authorize(Policy = CustomPolicies.SomenteAdministrador)]
@@ -168,19 +115,9 @@ namespace Ecommerce.API.Controller
         [Route("DeleteImagem/{id}")]
         public async Task<IActionResult> DeleteImagem([FromRoute] int id)
         {
-            try
-            {
-                await _produtoservice.DeletarimagemProduto(id);
+            await _produtoservice.DeletarimagemProduto(id);
 
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                var erro = @$"{ex.Message} - {ex.StackTrace} - {ex.GetType}";
-                _logger.LogError(erro);
-                return BadRequest(ex.Message);
-            }
-
+            return Ok();
         }
     }
 }

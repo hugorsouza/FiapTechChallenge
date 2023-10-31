@@ -33,19 +33,8 @@ namespace Ecommerce.API.Controller
         [Route("Cadastrar")]
         public IActionResult Cadastrar([FromBody] CategoriaViewModel categoria)
         {
-            try
-            {
-                
-                var result = _categoriaservice.Cadastrar(categoria);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                var erro = @$"{ex.Message} - {ex.StackTrace} - {ex.GetType}";
-                _logger.LogError(erro);
-                return BadRequest(ex.Message);
-            }
-                        
+            var result = _categoriaservice.Cadastrar(categoria);
+            return Ok(result);
         }
 
         /// <summary>
@@ -61,22 +50,12 @@ namespace Ecommerce.API.Controller
         [Route("ObterPorId/{id}")]
         public IActionResult ObterPorId(int id)
         {
-            try
-            {
-                var result = _categoriaservice.ObterPorId(id);
+            var result = _categoriaservice.ObterPorId(id);
 
-                if (result != null)
-                    return Ok(result);
+            if (result != null)
+                return Ok(result);
 
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                var erro = @$"{ex.Message} - {ex.StackTrace} - {ex.GetType}";
-                _logger.LogError(erro);
-                return BadRequest(ex.Message);
-            }
-
+            return NoContent();
         }
 
         /// <summary>
@@ -91,22 +70,12 @@ namespace Ecommerce.API.Controller
         [Route("ObterPorTodos")]
         public IActionResult Otertodos()
         {
-            try
-            {
-                var result = _categoriaservice.ObterTodos();
+            var result = _categoriaservice.ObterTodos();
 
-                if (result != null)
-                    return Ok(result);
+            if (result != null)
+                return Ok(result);
 
-                return NoContent();
-            }
-            catch (Exception ex) 
-            {
-                var erro = @$"{ex.Message} - {ex.StackTrace} - {ex.GetType}";
-                _logger.LogError(erro);
-                return BadRequest(ex.Message); 
-            }
-
+            return NoContent();
         }
 
         /// <summary>
@@ -121,18 +90,9 @@ namespace Ecommerce.API.Controller
         [Route("Alterar")]
         public IActionResult Alterar([FromBody] Categoria categoria)
         {
-            try
-            {
-                var result = _categoriaservice.Alterar(categoria);
+            var result = _categoriaservice.Alterar(categoria);
 
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                var erro = @$"{ex.Message} - {ex.StackTrace} - {ex.GetType}";
-                _logger.LogError(erro);
-                return BadRequest(ex.Message);
-            }
+            return Ok(result);
         }        
     }
 }
