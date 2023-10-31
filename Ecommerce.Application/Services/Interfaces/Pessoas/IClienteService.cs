@@ -10,6 +10,7 @@ public interface IClienteService
     Task<ClienteViewModel> ObterPorId(int id);
     Task<IEnumerable<ClienteViewModel>> ObterTodos();
     ClienteViewModel BuildViewModel(Cliente cliente);
+    Task<ClienteViewModel> Alterar(int id , AlterarClienteAdminModel model);
     Task<ClienteViewModel> Alterar(AlterarClienteModel model);
-    Task Desativar(int clienteId);
+    Task AlterarAtivo(int clienteId, bool ativo);
 }
