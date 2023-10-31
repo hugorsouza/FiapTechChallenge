@@ -40,7 +40,7 @@ var app = builder.Build();
 app.UseDocumentacaoApi();
 if (app.Environment.IsDevelopment())
 {
-    app.SeedDatabase();
+    await app.SeedDatabase();
 }
 
 app.UseHttpsRedirection();
