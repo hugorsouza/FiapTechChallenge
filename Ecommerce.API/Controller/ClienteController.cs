@@ -107,7 +107,7 @@ public class ClienteController : ControllerBase
     /// <param name="cadastro"></param>
     /// <returns></returns>
     [Authorize(Policy = CustomPolicies.SomenteAdministrador)]
-    [HttpDelete("{id}")]
+    [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Desativar([FromRoute] int id)
