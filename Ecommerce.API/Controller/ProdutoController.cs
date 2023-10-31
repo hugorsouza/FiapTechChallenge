@@ -33,9 +33,9 @@ namespace Ecommerce.API.Controller
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [Route("Cadastrar")]
         [HttpPost]
-        public IActionResult Post([FromBody] ProdutoViewModel produto)
+        public async Task<IActionResult> Post([FromBody] ProdutoViewModel produto)
         {
-            var result = _produtoservice.Cadastrar(produto);
+            var result = await _produtoservice.Cadastrar(produto);
             return Ok(result);
         }
 

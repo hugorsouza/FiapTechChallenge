@@ -17,6 +17,7 @@ namespace Ecommerce.Domain.Entities.Produtos
         public string Bairro { get; set; }
         public string Cidade { get; set; }
         public string Estado { get; set; }
+        [JsonIgnore]
         public int EntidadeId { get; set; }
 
     }

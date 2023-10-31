@@ -45,12 +45,13 @@ namespace Ecommerce.Infra.Dapper.Repositories
             {
                 using var dbConnection = new SqlConnection(ConnectionString);
 
-                var query = @"UPDATE CATEGORIA SET Nome=@Nome, Ativo=@Ativo, Descricao=@Descricao Wheree Id=@Id";
+                var query = @"UPDATE CATEGORIA SET Nome=@Nome, Ativo=@Ativo, Descricao=@Descricao Where Id=@Id";
 
                 dbConnection.Query(query, entidade);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine(ex);
 
                 throw new Exception($"Erro ao {MethodBase.GetCurrentMethod()}");
             }

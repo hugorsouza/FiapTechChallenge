@@ -61,7 +61,8 @@ namespace Ecommerce.Application.Services
                 DataUltimaMovimentacao = DateTime.UtcNow
             };
 
-            await _produtoRepository.CadastrarAsync(produto, estoque);
+            var produtoId = await _produtoRepository.CadastrarAsync(produto, estoque);
+
             return produtoViewModel;
 
         }
