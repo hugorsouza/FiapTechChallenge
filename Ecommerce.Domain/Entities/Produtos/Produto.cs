@@ -34,7 +34,6 @@ namespace Ecommerce.Domain.Entities.Produtos
         public string Descricao { get; set; }
         [Required]
         public int FabricanteId { get; set; }
-        [Required(AllowEmptyStrings = false)]
         public string UrlImagem { get; set; }
         public int CategoriaId { get; set; }
 

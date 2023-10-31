@@ -105,38 +105,7 @@ namespace Ecommerce.Infra.Dapper.Repositories
 
         public override void Deletar(int id)
         {
-            using var dbConnection = new SqlConnection(ConnectionString);
-
-            dbConnection.Open();
-            var transaction = dbConnection.BeginTransaction();
-
-
-            try
-            {
-                var query1 = "DELETE FROM ENDERECO WHERE EntidadeId=@EntidadeId";
-                dbConnection.Execute(query1, new { EntidadeId = id }, transaction);
-
-                var query2 = "DELETE FROM FABRICANTE WHERE Id=@Id";
-                dbConnection.Execute(query2, new {Id=id}, transaction);
-
-
-                transaction.Commit();
-            }
-            catch (Exception)
-            {
-                try
-                {
-                    transaction.Rollback();
-                }
-                catch (Exception)
-                {
-                    throw new Exception("Erro: Não foi possivel deletar o Fabricante");
-                }
-            }
-            finally
-            {
-                dbConnection.Close();
-            }
+            throw new NotImplementedException();
         }
 
         public override Fabricante ObterPorId(int id)

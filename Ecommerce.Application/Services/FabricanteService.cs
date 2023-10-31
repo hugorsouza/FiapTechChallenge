@@ -55,12 +55,7 @@ namespace Ecommerce.Application.Services
 
         public  void Deletar(int id)
         {
-            var fabricante = ObterPorId(id);
-
-            if (fabricante is null)
-                throw new ArgumentException($"Erro: O Fabricante {id} não está cadastrado na Base");
-
-            _fabricanteRepository.Deletar(id);
+            throw new NotImplementedException();
         }
 
         public  Fabricante ObterPorId(int id)

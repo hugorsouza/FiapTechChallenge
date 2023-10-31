@@ -64,13 +64,8 @@ namespace Ecommerce.Application.Services
         
         public void DeletarItemEstoque(int id)
         {
-            var estoque = ObterItemEstoquePorId(id);
-            if (estoque is null)
-            {
-                throw new ArgumentException($"Erro: O Produto {id} não está cadastrado na Base");
-            }
-            _estoqueRepository.Deletar(id);
-        }
+            throw new NotImplementedException();
+;       }
         private EstoqueModel buildEstoqueModel(Estoque estoque)
         {
             if (estoque is null)
