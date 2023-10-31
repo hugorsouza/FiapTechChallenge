@@ -2,9 +2,9 @@
 Espaço destinado para tech challenges referente ao curso de pós-graduação.
 
 ## 🤝 Colaboradores
-* Hugo Souza
-* Leandro Campos
-* Lucas Silva
+* Hugo Souza - rm351477 
+* Leandro Campos - rm350757 
+* Lucas Silva - rm351454
 
 # Documentação 📜
 
