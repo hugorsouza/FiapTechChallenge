@@ -27,11 +27,11 @@ namespace Ecommerce.Infra.Dapper.Repositories
                 var query1 = @"INSERT INTO PRODUTO (Nome, Ativo, Preco, Descricao, FabricanteId, CategoriaId, UrlImagem) 
                         values (@Nome, @Ativo, @Preco, @Descricao, @FabricanteId, @CategoriaId, @UrlImagem);
                         SELECT CAST(SCOPE_IDENTITY() AS INT);";
-                
 
-                var result = await dbConnection.QueryFirstOrDefaultAsync<int>(query1, produto, transaction);
 
-                estoque.ProdutoId= result;
+                produto.Id = await dbConnection.QueryFirstOrDefaultAsync<int>(query1, produto, transaction);
+
+                estoque.ProdutoId= produto.Id;
 
                 var query2 = @"INSERT INTO ESTOQUE (Usuario, UsuarioDocumento, Produto, QuantidadeAtual, DataUltimaMovimentacao) 
                         values (@Usuario, @UsuarioDocumento, @ProdutoId, @QuantidadeAtual, @DataUltimaMovimentacao)";
@@ -40,7 +40,7 @@ namespace Ecommerce.Infra.Dapper.Repositories
 
                 transaction.Commit();
 
-                return result;
+                return produto.Id;
             }
             catch (Exception)
             {

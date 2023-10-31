@@ -92,7 +92,8 @@ public class UsuarioRepository : Repository<Usuario>, IUsuarioRepository
                 return usuario;
             }
             ,new {Email = email}
-            ,splitOn: "Id, Id"
+            ,splitOn: "Id, Id",
+            transaction: Transaction
             ).FirstOrDefault();
     }
 
