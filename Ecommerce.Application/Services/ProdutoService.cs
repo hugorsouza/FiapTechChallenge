@@ -4,6 +4,7 @@ using Ecommerce.Application.Services.Interfaces.Autenticacao;
 using Ecommerce.Domain.Entities.Estoque;
 using Ecommerce.Domain.Entities.Produtos;
 using Ecommerce.Domain.Entity;
+using Ecommerce.Domain.Exceptions;
 using Ecommerce.Domain.Interfaces.Repository;
 using Ecommerce.Domain.Repository;
 using Ecommerce.Domain.Services;
@@ -42,7 +43,9 @@ namespace Ecommerce.Application.Services
 
             if (ObterTodos().Where(x => x.Nome != null)
                     .Any(x => x.Nome.Equals(produto.Nome)))
-                throw new ArgumentException($"Erro: O Produto {produto.Nome} já está cadastrado!");
+                //throw new ArgumentException($"Erro: O Produto {produto.Nome} já está cadastrado!");
+                throw RequisicaoInvalidaException.PorMotivo($"Erro: O Produto {produto.Nome} já está cadastrado!");
+
 
             var produtoViewModel = BuildViewModel(produto);
 

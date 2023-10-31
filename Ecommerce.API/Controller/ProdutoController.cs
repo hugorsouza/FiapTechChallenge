@@ -1,4 +1,5 @@
-﻿using Ecommerce.Application.Model.Produto;
+﻿using Ecommerce.Application.Model.Pessoas.Cadastro;
+using Ecommerce.Application.Model.Produto;
 using Ecommerce.Domain.Entities.Produtos;
 using Ecommerce.Domain.Services;
 using Ecommerce.Infra.Auth.Constants;
@@ -28,6 +29,8 @@ namespace Ecommerce.API.Controller
         /// <param name="produto"></param>
         /// <returns></returns>
         [Authorize(Policy = CustomPolicies.SomenteAdministrador)]
+        [ProducesResponseType(typeof(ProdutoViewModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [Route("Cadastrar")]
         [HttpPost]
         public IActionResult Post([FromBody] ProdutoViewModel produto)
@@ -55,6 +58,9 @@ namespace Ecommerce.API.Controller
         /// <returns></returns>
         [AllowAnonymous]
         [HttpGet]
+        [ProducesResponseType(typeof(Produto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [Route("ObterPorId/{id}")]
         public IActionResult ObterPorId(int id)
         {
@@ -82,6 +88,9 @@ namespace Ecommerce.API.Controller
         /// </summary>
         /// <returns></returns>
         [AllowAnonymous]
+        [ProducesResponseType(typeof(IEnumerable<Produto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [HttpGet]
         [Route("ObterPorTodos")]
         public IActionResult Otertodos()
@@ -110,6 +119,8 @@ namespace Ecommerce.API.Controller
         /// <param name="produto"></param>
         /// <returns></returns>
         [Authorize(Policy = CustomPolicies.SomenteAdministrador)]
+        [ProducesResponseType(typeof(Produto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [HttpPut]
         [Route("Alterar")]
         public IActionResult Alterar([FromBody] Produto produto)
@@ -126,32 +137,11 @@ namespace Ecommerce.API.Controller
                 return BadRequest(ex.Message);
             }
 
-        }
-
-        /// <summary>
-        /// Deletar produto
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [Authorize(Policy = CustomPolicies.SomenteAdministrador)]
-        [HttpDelete]
-        [Route("Deletar/{id}")]
-        public IActionResult Deletar(int id)
-        {
-            try
-            {
-                _produtoservice.Deletar(id);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                var erro = @$"{ex.Message} - {ex.StackTrace} - {ex.GetType}";
-                _logger.LogError(erro);
-                return BadRequest(ex.Message);
-            }
-        }
+        }        
 
         [Authorize(Policy = CustomPolicies.SomenteAdministrador)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [HttpPost]
         [Route("Upload/{id}")]
         public async Task<IActionResult> Upload(IFormFile arquivo, [FromRoute] int id)
@@ -172,6 +162,8 @@ namespace Ecommerce.API.Controller
         }
 
         [Authorize(Policy = CustomPolicies.SomenteAdministrador)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [HttpPost]
         [Route("DeleteImagem/{id}")]
         public async Task<IActionResult> DeleteImagem([FromRoute] int id)

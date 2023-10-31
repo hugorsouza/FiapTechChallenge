@@ -1,4 +1,5 @@
 ﻿using Ecommerce.Application.Model.Produto;
+using Ecommerce.Domain.Entities.Pessoas.Autenticacao;
 using Ecommerce.Domain.Entities.Produtos;
 using Ecommerce.Domain.Services;
 using Ecommerce.Infra.Auth.Constants;
@@ -25,7 +26,9 @@ namespace Ecommerce.API.Controller
         /// </summary>
         /// <param name="categoria"></param>
         /// <returns></returns>
-        [Authorize(Policy = CustomPolicies.SomenteAdministrador)]
+        [Authorize(Roles = PerfilUsuarioExtensions.Funcionario)]
+        [ProducesResponseType(typeof(CategoriaViewModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [HttpPost]
         [Route("Cadastrar")]
         public IActionResult Cadastrar([FromBody] CategoriaViewModel categoria)
@@ -42,8 +45,7 @@ namespace Ecommerce.API.Controller
                 _logger.LogError(erro);
                 return BadRequest(ex.Message);
             }
-            
-            
+                        
         }
 
         /// <summary>
@@ -53,6 +55,9 @@ namespace Ecommerce.API.Controller
         /// <returns></returns>
         [AllowAnonymous]
         [HttpGet]
+        [ProducesResponseType(typeof(Categoria), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [Route("ObterPorId/{id}")]
         public IActionResult ObterPorId(int id)
         {
@@ -80,6 +85,9 @@ namespace Ecommerce.API.Controller
         /// <returns></returns>
         [AllowAnonymous]
         [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<Categoria>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [Route("ObterPorTodos")]
         public IActionResult Otertodos()
         {
@@ -106,7 +114,9 @@ namespace Ecommerce.API.Controller
         /// </summary>
         /// <param name="categoria"></param>
         /// <returns></returns>
-        [Authorize(Policy = CustomPolicies.SomenteAdministrador)]
+        [Authorize(Roles = PerfilUsuarioExtensions.Funcionario)]
+        [ProducesResponseType(typeof(Categoria), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [HttpPut]
         [Route("Alterar")]
         public IActionResult Alterar([FromBody] Categoria categoria)
@@ -123,30 +133,6 @@ namespace Ecommerce.API.Controller
                 _logger.LogError(erro);
                 return BadRequest(ex.Message);
             }
-        }
-
-        /// <summary>
-        /// Deletar categoria
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [Authorize(Policy = CustomPolicies.SomenteAdministrador)]
-        [HttpDelete]
-        [Route("Deletar/{id}")]
-        public IActionResult Deletar(int id)
-        {
-            try
-            {
-                _categoriaservice.Deletar(id);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                var erro = @$"{ex.Message} - {ex.StackTrace} - {ex.GetType}";
-                _logger.LogError(erro);
-                return BadRequest(ex.Message);
-            }
-                                  
-        }
+        }        
     }
 }

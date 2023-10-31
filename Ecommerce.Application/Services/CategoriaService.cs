@@ -53,13 +53,7 @@ namespace Ecommerce.Application.Services
 
         public void Deletar(int id)
         {
-
-            var categoria = ObterPorId(id);
-
-            if (categoria is null)
-                throw new ArgumentException($"Erro: A Categoria {id} não está cadastrada na Base");
-
-            _categoriaRepository.Deletar(id);
+            throw new NotImplementedException();
         }
 
         public Categoria ObterPorId(int id)

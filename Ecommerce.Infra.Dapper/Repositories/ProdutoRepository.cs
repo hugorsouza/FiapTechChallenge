@@ -83,19 +83,7 @@ namespace Ecommerce.Infra.Dapper.Repositories
        
         public override void Deletar(int id)
         {
-            try
-            {
-                using var dbConnection = new SqlConnection(ConnectionString);
-
-                var query = @"DELETE FROM PRODUTO WHERE Id=@Id";
-
-                dbConnection.Query(query, new { Id = id });
-            }
-            catch (Exception)
-            {
-
-                throw new Exception($"Erro ao {MethodBase.GetCurrentMethod()}");
-            }
+            throw new NotImplementedException();
 
         }
 
