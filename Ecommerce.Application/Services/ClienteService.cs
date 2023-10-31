@@ -66,24 +66,44 @@ public class ClienteService : IClienteService
         var agora = DateTime.Now;
         var usuario = _usuarioManager.ObterUsuarioAtual();
         var cliente = usuario.Cliente;
+        return await AlterarCliente(model, cliente, agora);
+    }
+
+    public async Task<ClienteViewModel> Alterar(int clienteId, AlterarClienteAdminModel model)
+    {
+        if (!(await _usuarioManager.SouAdministrador()))
+            throw DesautorizadoException.RequerPermissaoAdmin();
+        var cliente = _clienteRepository.ObterPorId(clienteId);
+        if (cliente is null)
+            throw RequisicaoInvalidaException.PorMotivo($"Cliente de ID [{clienteId}] não foi encontrado");
+        
+        await _validatorAlteracao.ValidateAsync(model);
+        var agora = DateTime.Now;
+        cliente.Usuario.Ativo = model.Ativo;
+
+        return await AlterarCliente(model, cliente, agora);
+    }
+
+    private async Task<ClienteViewModel> AlterarCliente(AlterarClienteModel model, Cliente cliente, DateTime agora)
+    {
         cliente.Nome = model.Nome;
         cliente.Sobrenome = model.Sobrenome;
         cliente.DataNascimento = model.DataNascimento;
         cliente.DataAlteracao = agora;
 
-        usuario.DataAlteracao = agora;
-        usuario.NomeExibicao = cliente.NomeExibicao();
-        
+        cliente.Usuario.DataAlteracao = agora;
+        cliente.Usuario.NomeExibicao = cliente.NomeExibicao();
+
         _transactionService.BeginTransaction();
         _clienteRepository.Alterar(cliente);
-        _usuarioManager.Alterar(usuario);
+        _usuarioManager.Alterar(cliente.Usuario);
         _transactionService.Commit();
-        
+
         var clienteViewModel = BuildViewModel(cliente);
         return clienteViewModel;
     }
 
-    public async Task Desativar(int clienteId)
+    public async Task AlterarAtivo(int clienteId, bool ativo)
     {
         if (!(await _usuarioManager.SouAdministrador()))
             throw DesautorizadoException.RequerPermissaoAdmin();
@@ -112,11 +132,12 @@ public class ClienteService : IClienteService
     public ClienteViewModel BuildViewModel(Cliente cliente)
     {
         if (cliente is null) return null;
+
         var clienteViewModel = new ClienteViewModel(id: cliente.Id, cpf: cliente.Cpf, nome: cliente.Nome, sobrenome: cliente.Sobrenome,
             dataNascimento: cliente.DataNascimento, recebeNewsletterEmail: cliente.RecebeNewsletterEmail,
             usuario: cliente.Usuario is null
                 ? null
-                : new UsuarioViewModel(email: cliente.Usuario.Email, nomeExibicao: cliente.Usuario.NomeExibicao));
+                : new UsuarioViewModel(email: cliente.Usuario.Email, nomeExibicao: cliente.Usuario.NomeExibicao, cliente.Usuario.Ativo));
         return clienteViewModel;
     }
 }

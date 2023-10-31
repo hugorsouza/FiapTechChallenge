@@ -27,18 +27,10 @@ public class UsuarioRepository : Repository<Usuario>, IUsuarioRepository
                 NomeExibicao = @NomeExibicao
                 ,DataAlteracao = @DataAlteracao
                 ,EmailConfirmado = @EmailConfirmado
+                ,Ativo = @Ativo
             WHERE Id = @Id
         ";
-        var parametros = new
-        {
-            entidade.Id,
-            entidade.NomeExibicao,
-            entidade.Email,
-            entidade.DataAlteracao,
-            entidade.Perfil,
-            entidade.EmailConfirmado
-        };
-        Connection.Execute(NovoComando(sql, parametros));
+        Connection.Execute(NovoComando(sql, entidade));
     }
     
     public void AlterarSenha(Usuario entidade)

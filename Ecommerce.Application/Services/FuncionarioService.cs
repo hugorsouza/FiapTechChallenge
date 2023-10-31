@@ -103,6 +103,7 @@ public class FuncionarioService : IFuncionarioService
 
         usuario.DataAlteracao = agora;
         usuario.NomeExibicao = funcionario.NomeExibicao();
+        usuario.Ativo = model.Ativo;
         
         _transactionService.BeginTransaction();
         _funcionarioRepository.Alterar(funcionario);
@@ -130,11 +131,13 @@ public class FuncionarioService : IFuncionarioService
     
     public FuncionarioViewModel BuildViewModel(Funcionario funcionario)
     {
+        if (funcionario is null) return null;
+
         var funcionarioViewModel = new FuncionarioViewModel(id: funcionario.Id, cpf: funcionario.Cpf, nome: funcionario.Nome, sobrenome: funcionario.Sobrenome,
             dataNascimento: funcionario.DataNascimento, administrador: funcionario.Administrador, cargo: funcionario.Cargo,
             usuario: funcionario.Usuario is null
                 ? null
-                : new UsuarioViewModel(email: funcionario.Usuario.Email, nomeExibicao: funcionario.Usuario.NomeExibicao));
+                : new UsuarioViewModel(email: funcionario.Usuario.Email, nomeExibicao: funcionario.Usuario.NomeExibicao, ativo: funcionario.Usuario.Ativo));
         return funcionarioViewModel;
     }
 }

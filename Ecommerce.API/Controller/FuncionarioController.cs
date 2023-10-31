@@ -43,7 +43,7 @@ public class FuncionarioController : ControllerBase
     /// </summary>
     /// <param name="cadastro"></param>
     /// <returns></returns>
-    //[Authorize(Policy = CustomPolicies.SomenteAdministrador)]
+    [Authorize(Policy = CustomPolicies.SomenteAdministrador)]
     [HttpPost("Cadastrar")]
     [ProducesResponseType(typeof(FuncionarioViewModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
@@ -68,8 +68,8 @@ public class FuncionarioController : ControllerBase
     {
         var resultado = await _funcionarioService.Alterar(cadastro, id);
         return Ok(resultado);
-    } 
-    
+    }
+
     /// <summary>
     /// Obter dados pessoais do funcionário logado.
     /// </summary>
@@ -92,7 +92,7 @@ public class FuncionarioController : ControllerBase
     /// <param name="cadastro"></param>
     /// <returns></returns>
     [Authorize(Policy = CustomPolicies.SomenteAdministrador)]
-    [HttpGet]
+    [HttpGet("{id}")]
     [ProducesResponseType(typeof(FuncionarioViewModel), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
@@ -100,22 +100,5 @@ public class FuncionarioController : ControllerBase
     {
         var resultado = await _funcionarioService.ObterPorId(id);
         return Ok(resultado);
-    }
-
-    /// <summary>
-    /// Desativa funcionário pelo ID.
-    /// Requer permissão de administrador.
-    /// </summary>
-    /// <param name="id"></param>
-    /// <param name="cadastro"></param>
-    /// <returns></returns>
-    [Authorize(Policy = CustomPolicies.SomenteAdministrador)]
-    [HttpPut("Desativar/{id}")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Desativar([FromRoute] int id)
-    {
-        await _funcionarioService.Desativar(id);
-        return Ok();
     }
 }
