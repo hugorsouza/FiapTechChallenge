@@ -1,16 +1,8 @@
-﻿using Ecommerce.Application.Model.Pessoas.Cadastro;
-using Ecommerce.Application.Model.Produto;
-using Ecommerce.Domain.Entities.Pessoas.Fisica;
+﻿using Ecommerce.Application.Model.Produto;
 using Ecommerce.Domain.Entities.Produtos;
-using Ecommerce.Domain.Entity;
 using Ecommerce.Domain.Exceptions;
 using Ecommerce.Domain.Repository;
 using Ecommerce.Domain.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Ecommerce.Application.Services
 {
@@ -29,7 +21,7 @@ namespace Ecommerce.Application.Services
             var categoria = ObterPorId(model.Id);
 
             if (categoria is null)
-                throw new ArgumentException($"Erro: A Categoria {model.Id} não está cadastrada na Base!");
+                throw RequisicaoInvalidaException.PorMotivo($"Erro: A Categoria {model.Id} não está cadastrada na Base!");
 
             _categoriaRepository.Alterar(model);
 
@@ -42,18 +34,13 @@ namespace Ecommerce.Application.Services
 
             if (ObterTodos().Where(x=> x!=null)
                 .Any(x => x.Nome.Equals(categoria.Nome)))
-                throw new ArgumentException($"Erro: A Categoria {categoria.Nome} Já está cadastrada!");
+                throw RequisicaoInvalidaException.PorMotivo($"Erro: A Categoria {categoria.Nome} Já está cadastrada!");
 
             _categoriaRepository.Cadastrar(categoria);
 
             var categoriaViewModel = BuildViewModel(categoria);
 
             return categoriaViewModel;
-        }
-
-        public void Deletar(int id)
-        {
-            throw new NotImplementedException();
         }
 
         public Categoria ObterPorId(int id)

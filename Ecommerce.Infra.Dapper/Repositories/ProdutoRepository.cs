@@ -4,10 +4,7 @@ using Microsoft.Extensions.Configuration;
 using System.Data.SqlClient;
 using Ecommerce.Infra.Dapper.Interfaces;
 using Ecommerce.Domain.Entities.Produtos;
-using System.Reflection;
-using Ecommerce.Domain.Entity;
 using Ecommerce.Domain.Entities.Estoque;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Ecommerce.Infra.Dapper.Repositories
 {
@@ -17,7 +14,7 @@ namespace Ecommerce.Infra.Dapper.Repositories
         {
         }
 
-        public async Task<int?> CadastrarAsync(Produto produto, Estoque estoque)
+        public async Task<int> CadastrarAsync(Produto produto, Estoque estoque)
         {
             using var dbConnection = new SqlConnection(ConnectionString);
 
@@ -47,37 +44,18 @@ namespace Ecommerce.Infra.Dapper.Repositories
             }
             catch (Exception)
             {
-                try
-                {
-                    transaction.Rollback();
-                    return null;
-
-                }
-                catch (Exception)
-                {
-                    throw new Exception($"Erro ao {MethodBase.GetCurrentMethod()}");
-                }
-
-                
+                transaction.Rollback();
+                throw;
             }
-            
         }
+
         public override void Alterar(Produto entidade)
         {
-            try
-            {
-                using var dbConnection = new SqlConnection(ConnectionString);
+            using var dbConnection = new SqlConnection(ConnectionString);
 
-                var query = @"UPDATE PRODUTO SET Nome=@Nome, Ativo=@Ativo, Preco=@Preco, Descricao=@Descricao,CategoriaId=@CategoriaId, FabricanteId=@FabricanteId WHERE Id=@Id";
+            var query = @"UPDATE PRODUTO SET Nome=@Nome, Ativo=@Ativo, Preco=@Preco, Descricao=@Descricao,CategoriaId=@CategoriaId, FabricanteId=@FabricanteId WHERE Id=@Id";
 
-                dbConnection.Query(query, entidade);
-            }
-            catch (Exception)
-            {
-
-                throw new Exception($"Erro ao {MethodBase.GetCurrentMethod()}");
-            }
-
+            dbConnection.Query(query, entidade);
         }
 
        
@@ -89,72 +67,39 @@ namespace Ecommerce.Infra.Dapper.Repositories
 
         public override Produto ObterPorId(int id)
         {
-            try
-            {
-                using var dbConnection = new SqlConnection(ConnectionString);
+            using var dbConnection = new SqlConnection(ConnectionString);
 
-                var query = @"SELECT * FROM PRODUTO WHERE Id=@Id";
+            var query = @"SELECT * FROM PRODUTO WHERE Id=@Id";
 
-                return dbConnection.Query<Produto>(query, new { Id = id }).FirstOrDefault();
-            }
-            catch (Exception)
-            {
-
-                throw new Exception($"Erro ao {MethodBase.GetCurrentMethod()}");
-            }
+            return dbConnection.Query<Produto>(query, new { Id = id }).FirstOrDefault();
         }
 
         public override IList<Produto> ObterTodos()
         {
-            try
-            {
-                using var dbConnection = new SqlConnection(ConnectionString);
+            using var dbConnection = new SqlConnection(ConnectionString);
 
-                var query = @"SELECT * FROM PRODUTO";
+            var query = @"SELECT * FROM PRODUTO";
 
-                return dbConnection.Query<Produto>(query).ToList();
-            }
-            catch (Exception)
-            {
-
-                throw new Exception($"Erro ao {MethodBase.GetCurrentMethod()}");
-            }
-
+            return dbConnection.Query<Produto>(query).ToList();
         }
 
         public void AdicionaUrlImagem(int idProduto, string diretorio)
         {
-            try
-            {
-                using var dbConnection = new SqlConnection(ConnectionString);
+            using var dbConnection = new SqlConnection(ConnectionString);
 
-                var query = @"UPDATE PRODUTO SET UrlImagem=@UrlImagem WHERE Id=@Id";
+            var query = @"UPDATE PRODUTO SET UrlImagem=@UrlImagem WHERE Id=@Id";
 
-                dbConnection.Query(query, new {Id= idProduto, UrlImagem= diretorio});
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-                throw new Exception($"Erro ao {MethodBase.GetCurrentMethod()} do produto {idProduto}");
-            }
+            dbConnection.Query(query, new { Id = idProduto, UrlImagem = diretorio });
         }
 
 
         public void DeletarUrlImagem(int idProduto)
         {
-            try
-            {
-                using var dbConnection = new SqlConnection(ConnectionString);
+            using var dbConnection = new SqlConnection(ConnectionString);
 
-                var query = @"UPDATE PRODUTO SET UrlImagem=null WHERE Id=@Id";
+            var query = @"UPDATE PRODUTO SET UrlImagem=null WHERE Id=@Id";
 
-                dbConnection.Query(query, new { Id = idProduto});
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-                throw new Exception($"Erro ao {MethodBase.GetCurrentMethod()} do produto {idProduto}");
-            }
+            dbConnection.Query(query, new { Id = idProduto });
         }
 
         public override void Cadastrar(Produto entidade)
