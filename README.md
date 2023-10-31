@@ -1,5 +1,6 @@
 # FiapTechChallenge
 Espaço destinado para tech challenges referente ao curso de pós-graduação.
+Link para repositório: https://github.com/hugorsouza/FiapTechChallenge
 
 ## 🤝 Colaboradores
 * Hugo Souza - rm351477 
