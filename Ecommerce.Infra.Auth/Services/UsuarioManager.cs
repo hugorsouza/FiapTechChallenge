@@ -96,7 +96,6 @@ public class UsuarioManager : IUsuarioManager
             case PerfilUsuario.Funcionario:
                 usuario.Funcionario = _funcionarioRepository.ObterPorId(usuario.Id);
                 break;
-            case PerfilUsuario.EmpresaTerceira:
             default:
                 break;
         }

@@ -30,8 +30,6 @@ namespace Ecommerce.Infra.Auth.Extensions
                     claims.AddRange(ObterClaimsPessoa(usuario.Funcionario));
                     claims.Add(new(CustomClaims.FlagAdmin, usuario.Funcionario.Administrador.ToString().ToLower()));
                     break;
-                case PerfilUsuario.EmpresaTerceira:
-                    break;
                 default:
                     throw new InvalidEnumArgumentException($"O perfil {usuario.Perfil} não foi implementado");
             }

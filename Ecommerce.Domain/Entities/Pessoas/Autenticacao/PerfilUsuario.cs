@@ -3,15 +3,13 @@
 public enum PerfilUsuario
 {
     Cliente,
-    Funcionario,
-    EmpresaTerceira
+    Funcionario
 }
 
 public static class PerfilUsuarioExtensions
 {
     public const string Cliente = "C";
     public const string Funcionario = "F";
-    public const string EmpresaTerceira = "T";
 
     public static string ObterClaimPerfil(PerfilUsuario perfil)
     {
@@ -19,7 +17,6 @@ public static class PerfilUsuarioExtensions
         {
             PerfilUsuario.Cliente => Cliente,
             PerfilUsuario.Funcionario => Funcionario,
-            PerfilUsuario.EmpresaTerceira => EmpresaTerceira,
             _ => throw new NotImplementedException($"Perfil [{perfil}] não implementado")
         };
     }
