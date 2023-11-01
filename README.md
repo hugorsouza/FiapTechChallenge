@@ -3,9 +3,14 @@ Espaço destinado para tech challenges referente ao curso de pós-graduação.
 Link para repositório: https://github.com/hugorsouza/FiapTechChallenge
 
 ## 🤝 Colaboradores
-* Hugo Souza - rm351477 
-* Leandro Campos - rm350757 
+* Hugo Souza - rm351477
+https://github.com/hugorsouza
+
+* Leandro Campos - rm350757
+https://github.com/lhcdev
+
 * Lucas Silva - rm351454
+https://github.com/rslucas1
 
 # Documentação 📜
 
